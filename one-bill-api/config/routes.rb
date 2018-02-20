@@ -1,3 +1,13 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  # User credentials login route
+  post 'auth/login', to: 'authentication#authenticate'
+
+  # OAuth login routes
+  OAUTH_PROVIDERS.keys.each do |oauth_provider|
+    post "auth/#{oauth_provider}", to: "authentication##{oauth_provider}_oauth"
+  end
+
+  # User credentials signup
+  post 'signup', to: 'users#create'
 end
