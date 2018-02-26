@@ -10,4 +10,6 @@ Rails.application.routes.draw do
 
   # User credentials signup
   post 'signup', to: 'users#create'
+
+  resources :accounts, only: [:index, :show]
 end

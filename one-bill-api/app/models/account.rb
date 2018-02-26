@@ -16,10 +16,14 @@ class Account < ApplicationRecord
   has_many :bills, through: :municipality_accounts
   has_many :payments
 
-  has_many :user_of_accounts
+  has_many :user_of_accounts, -> { where is_removed: false }
   has_many :users, :through => :user_of_accounts
 
   belongs_to :physical_address
 
   validates_presence_of :account_number
+
+  def amount_due
+    bills.preload(:payment_applications).sum(&:amount_due)
+  end
 end

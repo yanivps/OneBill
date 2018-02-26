@@ -16,4 +16,8 @@ class MunicipalityAccount < ApplicationRecord
   belongs_to :category
 
   validates_presence_of :municipality_account_number
+
+  def amount_due
+    bills.preload(:payment_applications).sum(&:amount_due)
+  end
 end
