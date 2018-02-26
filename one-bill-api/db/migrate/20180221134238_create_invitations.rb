@@ -4,7 +4,8 @@ class CreateInvitations < ActiveRecord::Migration[5.1]
       t.references :account, foreign_key: true, null: false
       t.string :phone_number
       t.string :token, null: false
-      t.date :expires_at, null: false
+      t.datetime :expires_at, null: false
+      t.datetime :used_at
 
       t.timestamps
     end

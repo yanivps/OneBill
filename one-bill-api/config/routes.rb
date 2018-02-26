@@ -11,5 +11,9 @@ Rails.application.routes.draw do
   # User credentials signup
   post 'signup', to: 'users#create'
 
-  resources :accounts, only: [:index, :show]
+  resources :accounts, only: [:index, :show] do
+    resources :users, only: [:index, :destroy], controller: 'account_users'
+  end
+
+  post 'accounts/users', to: 'account_users#create_from_invitation'
 end

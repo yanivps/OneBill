@@ -10,7 +10,7 @@
 #  uid               :string(255)      not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  phone_number      :integer
+#  phone_number      :string(255)      not null
 #  is_verified       :boolean
 #  verification_code :string(255)
 #

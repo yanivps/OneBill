@@ -6,7 +6,8 @@
 #  account_id   :integer          not null
 #  phone_number :string(255)
 #  token        :string(255)      not null
-#  expires_at   :date             not null
+#  expires_at   :datetime         not null
+#  used_at      :datetime
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #

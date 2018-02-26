@@ -76,7 +76,8 @@ ActiveRecord::Schema.define(version: 20180221134238) do
     t.bigint "account_id", null: false
     t.string "phone_number"
     t.string "token", null: false
-    t.date "expires_at", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "used_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_invitations_on_account_id"
@@ -182,10 +183,11 @@ ActiveRecord::Schema.define(version: 20180221134238) do
     t.string "uid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "phone_number"
+    t.string "phone_number", null: false
     t.boolean "is_verified"
     t.string "verification_code"
     t.index ["email", "provider"], name: "index_users_on_email_and_provider", unique: true
+    t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
