@@ -25,7 +25,7 @@ class User < ApplicationRecord
 
   # validations
   validates_presence_of :name, :email, :password_digest
-  validates :email, uniqueness: { scope: :provider }
+  validates :email, uniqueness: { scope: :provider }, email: true
   validates :uid, uniqueness: { scope: :provider }
   validates :password, length: { minimum: 6 }, allow_nil: true
 

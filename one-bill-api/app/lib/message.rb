@@ -24,6 +24,10 @@ class Message
       'Sorry, an internal server error has occured'
     end
 
+    def not_allowed
+      'You are not not allowed to perform this operation'
+    end
+
     def account_user_association_not_created
       "Could not associate user with the account"
     end
@@ -48,8 +52,20 @@ class Message
       'The invitation was already used'
     end
 
-    def missing_invitation_token
-      'Missing invitation_token'
+    def missing_parameter(param)
+      "Missing parameter: #{param}"
+    end
+
+    def incorrect_phone_number
+      "Phone number is incorrect"
+    end
+
+    def incorrect_verification_code
+      "Verification code is incorrect"
+    end
+
+    def user_not_verified
+      "User is not verified"
     end
   end
 end

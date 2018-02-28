@@ -50,13 +50,15 @@ def create_bills(municipality_account, bills_count: 3, bill_period_in_days: 60, 
   end
 end
 
-User.create!(name: 'Test User', email: 'test@email.com', password: 'test1234', phone_number: Faker::PhoneNumber.cell_phone)
-User.create!(name: 'Test User2', email: 'test2@email.com', password: 'test1234', phone_number: Faker::PhoneNumber.cell_phone)
-User.create!(name: 'Test User3', email: 'test3@email.com', password: 'test1234', phone_number: Faker::PhoneNumber.cell_phone)
+User.create!(name: 'Test User', email: 'test@email.com', password: 'test1234', is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
+User.create!(name: 'Test User2', email: 'test2@email.com', password: 'test1234', is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
+User.create!(name: 'Test User3', email: 'test3@email.com', password: 'test1234', is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
 
-User.create!(name: 'Test User4', email: 'test4@email.com', password: 'test1234', phone_number: Faker::PhoneNumber.cell_phone)
-User.create!(name: 'Test User5', email: 'test5@email.com', password: 'test1234', phone_number: Faker::PhoneNumber.cell_phone)
-User.create!(name: 'Test User6', email: 'test6@email.com', password: 'test1234', phone_number: Faker::PhoneNumber.cell_phone)
+User.create!(name: 'Test User4', email: 'test4@email.com', password: 'test1234', is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
+User.create!(name: 'Test User5', email: 'test5@email.com', password: 'test1234', is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
+User.create!(name: 'Test User6', email: 'test6@email.com', password: 'test1234', is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
+
+User.create!(name: 'Unverified User', email: 'unverified@email.com', password: 'test1234', phone_number: Faker::PhoneNumber.cell_phone)
 
 create_one_time_data
 create_cities_and_streets(10)

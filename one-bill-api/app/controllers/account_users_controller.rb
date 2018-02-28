@@ -18,7 +18,7 @@ class AccountUsersController < ApplicationController
   end
 
   def create_from_invitation
-    raise ExceptionHandler::BadRequest, Message.missing_invitation_token if params[:invitation_token].blank?
+    raise ExceptionHandler::BadRequest, Message.missing_parameter(:invitation_token) if params[:invitation_token].blank?
 
     invitation = Invitation.find_by_token(params[:invitation_token])
     if invitation.nil? || invitation.expires_at.past?
