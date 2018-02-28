@@ -15,6 +15,9 @@
 class Invitation < ApplicationRecord
   belongs_to :account
 
+  # TODO: Change to format validation with phone number regex
+  validates :phone_number, presence: true
+
   validates_presence_of :token
   validates_presence_of :expires_at
 end

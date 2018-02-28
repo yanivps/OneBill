@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20180221134238) do
 
   create_table "invitations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "account_id", null: false
-    t.string "phone_number"
+    t.string "phone_number", null: false
     t.string "token", null: false
     t.datetime "expires_at", null: false
     t.datetime "used_at"

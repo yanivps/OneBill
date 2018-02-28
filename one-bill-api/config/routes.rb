@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :accounts, only: [:index, :show] do
     resources :users, only: [:index, :destroy], controller: 'account_users'
   end
-
   post 'accounts/users', to: 'account_users#create_from_invitation'
+
+  resources :invitations, only: [:create]
 end
