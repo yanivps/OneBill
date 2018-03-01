@@ -12,9 +12,15 @@ Rails.application.routes.draw do
   post 'signup', to: 'users#create'
 
   resources :accounts, only: [:index, :show] do
+    # /accounts/:account_id/users
     resources :users, only: [:index, :destroy], controller: 'account_users'
+
+    # /accounts/:account_id/payments
+    resources :payments, only: [:index, :create], controller: 'account_payments'
   end
   post 'accounts/users', to: 'account_users#create_from_invitation'
 
   resources :invitations, only: [:create]
+
+  resources :payments, only: [:index]
 end

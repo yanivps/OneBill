@@ -1,3 +1,7 @@
+def random_digits_string(digits)
+    Array(1..digits).map!{|x| x == 1 ? (1..9).to_a.sample : (0..9).to_a.sample}.join
+end
+
 def create_one_time_data
   [:electricity, :water, :property_tax].each do |category|
     Category.create!(name: category)
@@ -11,7 +15,7 @@ def create_one_time_data
     PaymentProcessor.create!(name: payment_processor)
   end
 
-  [:visa, :mastercard, :amex].each do |credit_card_type|
+  [:visa, :mastercard, :amex, :discover, :diners].each do |credit_card_type|
     CreditCardType.create!(name: credit_card_type)
   end
 end
@@ -84,19 +88,21 @@ create_cities_and_streets(10)
   create_bills(water_municipality_account, bill_period_in_days: 30)
 
   bill1, bill2, bill3 = electricity_municipality_account.bills.sample(3)
-  credit_card = CreditCard.create!(card_type: CreditCardType.all.sample,
-    last_4: Faker::Business.credit_card_number.split('-').last, token: nil, expires_at: 1.year.from_now, user: User.first)
+  credit_card1 = CreditCard.create!(card_type: CreditCardType.all.sample,
+    last_4: random_digits_string(4), token: nil, expires_at: 1.year.from_now)
+  credit_card2 = CreditCard.create!(card_type: CreditCardType.all.sample,
+    last_4: random_digits_string(4), token: "CREDIT_CARD_TOKEN", expires_at: 1.year.from_now, user: User.first)
 
   payment_date = 1.day.ago
   payment_amount = Money.new(Faker::Commerce.price(bill1.amount_cents))
   payment = Payment.create(amount: payment_amount, account: account, user: User.first,
-    payment_method: credit_card, payment_source: PaymentSource.find_by_name(:manual), processing_status: :success,
+    payment_method: credit_card1, payment_source: PaymentSource.find_by_name(:manual), processing_status: :success,
     processor: PaymentProcessor.all.sample, processor_request_uid: SecureRandom.uuid, created_at: payment_date)
   PaymentApplication.create(amount: payment.amount, payment: payment, bill: bill1, created_at: payment_date)
 
   payment_application_amounts = [bill2.amount, Money.new(Faker::Commerce.price(bill3.amount_cents))]
   payment = Payment.create(amount: payment_application_amounts.sum, account: account, user: User.first,
-    payment_method: credit_card, payment_source: PaymentSource.find_by_name(:manual), processing_status: :success,
+    payment_method: credit_card2, payment_source: PaymentSource.find_by_name(:manual), processing_status: :success,
     processor: PaymentProcessor.all.sample, processor_request_uid: SecureRandom.uuid)
   PaymentApplication.create(amount: payment_application_amounts[0], payment: payment, bill: bill2)
   PaymentApplication.create(amount: payment_application_amounts[1], payment: payment, bill: bill3)

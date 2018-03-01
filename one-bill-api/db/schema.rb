@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20180221134238) do
     t.string "last_4", limit: 4, null: false
     t.string "token"
     t.date "expires_at", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["credit_card_type_id"], name: "index_credit_cards_on_credit_card_type_id"

@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many :user_of_accounts
   has_many :accounts, :through => :user_of_accounts
   has_many :payments
+  has_many :credit_cards
 
   # validations
   validates_presence_of :name, :email, :password_digest
