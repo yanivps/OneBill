@@ -11,11 +11,11 @@ def create_one_time_data
     PaymentSource.create!(name: payment_source)
   end
 
-  [:tranzila, :braintree, :z_credit].each do |payment_processor|
+  [:tranzila, :first_data, :z_credit].each do |payment_processor|
     PaymentProcessor.create!(name: payment_processor)
   end
 
-  [:visa, :mastercard, :amex, :discover, :diners].each do |credit_card_type|
+  [:visa, :mastercard, :amex, :discover, :diners, :unknown].each do |credit_card_type|
     CreditCardType.create!(name: credit_card_type)
   end
 end
@@ -88,22 +88,28 @@ create_cities_and_streets(10)
   create_bills(water_municipality_account, bill_period_in_days: 30)
 
   bill1, bill2, bill3 = electricity_municipality_account.bills.sample(3)
-  credit_card1 = CreditCard.create!(card_type: CreditCardType.all.sample,
-    last_4: random_digits_string(4), token: nil, expires_at: 1.year.from_now)
-  credit_card2 = CreditCard.create!(card_type: CreditCardType.all.sample,
-    last_4: random_digits_string(4), token: "CREDIT_CARD_TOKEN", expires_at: 1.year.from_now, user: User.first)
 
   payment_date = 1.day.ago
   payment_amount = Money.new(Faker::Commerce.price(bill1.amount_cents))
-  payment = Payment.create(amount: payment_amount, account: account, user: User.first,
-    payment_method: credit_card1, payment_source: PaymentSource.find_by_name(:manual), processing_status: :success,
-    processor: PaymentProcessor.all.sample, processor_request_uid: SecureRandom.uuid, created_at: payment_date)
+  payment_application_amounts = [bill2.amount, Money.new(Faker::Commerce.price(bill3.amount_cents))]
+
+  credit_card1 = CreditCard.create!(card_type: CreditCardType.all.sample,
+    last_4: random_digits_string(4), token: nil, expires_at: 1.year.from_now)
+  credit_card_transaction1 = CreditCardTransaction.create!(
+    processor_authorization_code: "ET164365;2244957440;#{payment_amount.cents}", credit_card: credit_card1,
+    payment_processor: PaymentProcessor.all.sample)
+  credit_card2 = CreditCard.create!(card_type: CreditCardType.all.sample,
+    last_4: random_digits_string(4), token: "CREDIT_CARD_TOKEN", expires_at: 1.year.from_now, user: User.first)
+  credit_card_transaction2 = CreditCardTransaction.create!(
+    processor_authorization_code: "ET275476;3355068551;#{payment_application_amounts.sum.cents}", credit_card: credit_card2,
+    payment_processor: PaymentProcessor.all.sample)
+
+  payment = Payment.create(amount: payment_amount, account: account, user: User.first, status: :success,
+    payment_method: credit_card_transaction1, payment_source: PaymentSource.find_by_name(:manual), created_at: payment_date)
   PaymentApplication.create(amount: payment.amount, payment: payment, bill: bill1, created_at: payment_date)
 
-  payment_application_amounts = [bill2.amount, Money.new(Faker::Commerce.price(bill3.amount_cents))]
-  payment = Payment.create(amount: payment_application_amounts.sum, account: account, user: User.first,
-    payment_method: credit_card2, payment_source: PaymentSource.find_by_name(:manual), processing_status: :success,
-    processor: PaymentProcessor.all.sample, processor_request_uid: SecureRandom.uuid)
+  payment = Payment.create(amount: payment_application_amounts.sum, account: account, user: User.first, status: :success,
+    payment_method: credit_card_transaction2, payment_source: PaymentSource.find_by_name(:manual))
   PaymentApplication.create(amount: payment_application_amounts[0], payment: payment, bill: bill2)
   PaymentApplication.create(amount: payment_application_amounts[1], payment: payment, bill: bill3)
 end

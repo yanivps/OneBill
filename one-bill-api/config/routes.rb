@@ -16,11 +16,16 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :destroy], controller: 'account_users'
 
     # /accounts/:account_id/payments
-    resources :payments, only: [:index, :create], controller: 'account_payments'
+    resources :payments, only: [:index], controller: 'account_payments'
+
+    # /accounts/:account_id/credit_card_transactions
+    resources :credit_card_transactions, only: [:create], controller: 'account_credit_card_transactions'
   end
   post 'accounts/users', to: 'account_users#create_from_invitation'
 
   resources :invitations, only: [:create]
 
   resources :payments, only: [:index]
+
+  resources :credit_cards, only: [:index, :destroy]
 end

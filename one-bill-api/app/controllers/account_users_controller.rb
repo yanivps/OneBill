@@ -46,12 +46,10 @@ class AccountUsersController < ApplicationController
     end
 
     def delete_association
-      byebug
       @account.user_of_accounts.where.has { |t| t.user_id == @user.id }.destroy_all
     end
 
     def mark_association_as_removed
-      byebug
       @account.user_of_accounts.where.has { |t| t.user_id == @user.id }.update(is_removed: true)
     end
 end

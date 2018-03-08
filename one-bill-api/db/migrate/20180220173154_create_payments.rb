@@ -6,11 +6,10 @@ class CreatePayments < ActiveRecord::Migration[5.1]
       t.references :user, foreign_key: true
       t.references :payment_method, polymorphic: true
       t.references :payment_source, foreign_key: true, null: false
-      t.integer :processing_status
-      t.references :payment_processor, foreign_key: true
-      t.string :processor_request_uid
+      t.integer :status, null: false
 
       t.timestamps
     end
+    add_index :payments, :status
   end
 end

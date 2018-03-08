@@ -26,4 +26,8 @@ class Account < ApplicationRecord
   def amount_due
     bills.preload(:payment_applications).sum(&:amount_due)
   end
+
+  def amount_due_with_pending_payments
+    bills.sum(&:amount) - payments.non_failed.sum(&:amount)
+  end
 end

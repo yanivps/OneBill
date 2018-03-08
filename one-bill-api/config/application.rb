@@ -18,6 +18,9 @@ Bundler.require(*Rails.groups)
 
 module OneBillApi
   class Application < Rails::Application
+    config.autoload_paths << "#{Rails.root}/app/auth/providers"
+    config.autoload_paths << "#{Rails.root}/app/payments/processors"
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
@@ -31,5 +34,9 @@ module OneBillApi
     config.api_only = true
 
     Jbuilder.key_format camelize: :lower
+
+    config.x.payment_transactions.unique_ids_initial_values = {
+      "CreditCardTransaction" => { prefix: '1', initial_value: 1000 }
+    }
   end
 end

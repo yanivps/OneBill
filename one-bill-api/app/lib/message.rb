@@ -1,7 +1,7 @@
 class Message
   class << self
     def not_found(record = 'record')
-      "Sorry, #{record} not found."
+      "Sorry, #{record} not found"
     end
 
     def invalid_credentials
@@ -41,7 +41,7 @@ class Message
     end
 
     def expired_token
-      'Sorry, your token has expired. Please login to continue.'
+      'Sorry, your token has expired. Please login to continue'
     end
 
     def invalid_invitation_token
@@ -66,6 +66,34 @@ class Message
 
     def user_not_verified
       "User is not verified"
+    end
+
+    def credit_card_declined
+      "The credit card you provided was declined. Please double check your information and try again"
+    end
+
+    def credit_card_invalid
+      "The credit card information you provided is not valid. Please double check the information you provided and then try again"
+    end
+
+    def payment_processor_general_error
+      "Payment error. Please contact us or try again later"
+    end
+
+    def invalid_min_payment_amount(min_range)
+      "Payment amount should be more than #{min_range}"
+    end
+
+    def invalid_max_payment_amount(max_range)
+      "Payment amount can not be more than #{max_range}"
+    end
+
+    def account_balance_was_updated(account_balance)
+      "Account balance was updated. " + invalid_max_payment_amount(account_balance)
+    end
+
+    def credit_card_not_removed
+      "Credit card could not be removed"
     end
   end
 end

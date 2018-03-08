@@ -6,9 +6,7 @@ json.account do
   json.address payment.account.physical_address, partial: 'physical_addresses/physical_address', as: :address
 end
 
-if payment.payment_method_type == "CreditCard"
-  json.payment_method do
-    json.last_4 payment.payment_method.last_4
-    json.credit_card_type payment.payment_method.card_type.name
-  end
+if payment.payment_method_type == "CreditCardTransaction"
+  json.payment_method(payment.payment_method,
+    partial: 'payments/credit_card_transaction', as: :credit_card_transaction)
 end

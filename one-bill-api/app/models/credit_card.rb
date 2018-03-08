@@ -7,7 +7,7 @@
 #  last_4              :string(4)        not null
 #  token               :string(255)
 #  expires_at          :date             not null
-#  user_id             :integer          not null
+#  user_id             :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #

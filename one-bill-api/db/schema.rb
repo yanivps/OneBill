@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180221134238) do
+ActiveRecord::Schema.define(version: 20180302120311) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "account_number", null: false
@@ -51,6 +51,18 @@ ActiveRecord::Schema.define(version: 20180221134238) do
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_cities_on_code", unique: true
     t.index ["name"], name: "index_cities_on_name", unique: true
+  end
+
+  create_table "credit_card_transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "payment_processor_id", null: false
+    t.string "processor_authorization_code"
+    t.bigint "credit_card_id"
+    t.string "unique_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_card_id"], name: "index_credit_card_transactions_on_credit_card_id"
+    t.index ["payment_processor_id"], name: "index_credit_card_transactions_on_payment_processor_id"
+    t.index ["unique_id"], name: "index_credit_card_transactions_on_unique_id", unique: true
   end
 
   create_table "credit_card_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -128,15 +140,13 @@ ActiveRecord::Schema.define(version: 20180221134238) do
     t.string "payment_method_type"
     t.bigint "payment_method_id"
     t.bigint "payment_source_id", null: false
-    t.integer "processing_status"
-    t.bigint "payment_processor_id"
-    t.string "processor_request_uid"
+    t.integer "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_payments_on_account_id"
     t.index ["payment_method_type", "payment_method_id"], name: "index_payments_on_payment_method_type_and_payment_method_id"
-    t.index ["payment_processor_id"], name: "index_payments_on_payment_processor_id"
     t.index ["payment_source_id"], name: "index_payments_on_payment_source_id"
+    t.index ["status"], name: "index_payments_on_status"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
@@ -193,6 +203,8 @@ ActiveRecord::Schema.define(version: 20180221134238) do
 
   add_foreign_key "accounts", "physical_addresses"
   add_foreign_key "bills", "municipality_accounts"
+  add_foreign_key "credit_card_transactions", "credit_cards"
+  add_foreign_key "credit_card_transactions", "payment_processors"
   add_foreign_key "credit_cards", "credit_card_types"
   add_foreign_key "credit_cards", "users"
   add_foreign_key "invitations", "accounts"
@@ -201,7 +213,6 @@ ActiveRecord::Schema.define(version: 20180221134238) do
   add_foreign_key "payment_applications", "bills"
   add_foreign_key "payment_applications", "payments"
   add_foreign_key "payments", "accounts"
-  add_foreign_key "payments", "payment_processors"
   add_foreign_key "payments", "payment_sources"
   add_foreign_key "payments", "users"
   add_foreign_key "physical_addresses", "cities"

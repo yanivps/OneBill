@@ -6,11 +6,6 @@ class AccountPaymentsController < ApplicationController
     @payments = @account.payments.where.has { created_at >= user_join_date }
   end
 
-  def create
-    # make a payment
-    # Process with ProcessPayment simple command
-  end
-
   private
     def set_account
       @account = current_user.accounts.find(params[:account_id])
