@@ -9,12 +9,11 @@ class InvitationsController < ApplicationController
     @invitation = Invitation.create!(
       invitation_params.merge(account_id: @account.id, token: token, expires_at: expires_at))
 
-    # TODO: implement sender
-    # if @invited_user
-    #   SmsSender.watch_new_account_invitation(@invitation.phone_number, @invitation)
-    # else
-    #   SmsSender.register_invitation(@invitation.phone_number, @invitation)
-    # end
+    if @invited_user
+      SmsSender.login_to_new_account_invitation(@invitation.phone_number, @invitation)
+    else
+      SmsSender.register_invitation(@invitation.phone_number, @invitation)
+    end
 
     render :show, status: :created
   end

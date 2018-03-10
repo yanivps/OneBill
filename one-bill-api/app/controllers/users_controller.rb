@@ -24,8 +24,7 @@ class UsersController < ApplicationController
       return json_response({ code: code }, :created)
     end
 
-    # TODO: implement sender
-    # SmsSender.verification_code(params[:phone_number], code)
+    SmsSender.verification_code(params[:phone_number], code)
   end
 
   def verify
