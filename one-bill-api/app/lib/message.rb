@@ -88,12 +88,16 @@ class Message
       "Payment amount can not be more than #{max_range}"
     end
 
-    def account_balance_was_updated(account_balance)
-      "Account balance was updated. " + invalid_max_payment_amount(account_balance)
-    end
-
     def credit_card_not_removed
       "Credit card could not be removed"
+    end
+
+    def invalid_paypal_token
+      "PayPal token is invalid"
+    end
+
+    def payment_was_already_processed
+      "Payment was already processed"
     end
   end
 end

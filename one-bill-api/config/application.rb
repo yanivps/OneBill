@@ -36,7 +36,8 @@ module OneBillApi
     Jbuilder.key_format camelize: :lower
 
     config.x.payment_transactions.unique_ids_initial_values = {
-      "CreditCardTransaction" => { prefix: '1', initial_value: 1000 }
+      "CreditCardTransaction" => { prefix: '1', initial_value: 1000 },
+      "PaypalTransaction" => { prefix: '2', initial_value: 1000 }
     }
   end
 end

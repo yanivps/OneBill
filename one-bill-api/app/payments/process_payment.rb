@@ -4,8 +4,6 @@ class ProcessPayment
     @account = payment_processor_attributes[:account]
     @credit_card = payment_processor_attributes[:credit_card]
     @store_card = payment_processor_attributes[:store_card]
-
-    validate_amount(payment_processor_attributes[:amount])
   end
 
   def call
@@ -15,15 +13,4 @@ class ProcessPayment
       @payment_processor.process(store_card: @store_card)
     end
   end
-
-  private
-    def validate_amount(amount)
-      if Money.from_amount(amount) <= 0
-        raise ExceptionHandler::InvalidOperation, Message.invalid_min_payment_amount(0)
-      end
-
-      if Money.from_amount(amount) > @account.amount_due_with_pending_payments
-        raise ExceptionHandler::InvalidOperation, Message.invalid_max_payment_amount(@account.amount_due.format)
-      end
-    end
 end

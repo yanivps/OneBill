@@ -1,6 +1,7 @@
 module Processors
   class FirstData
     require "active_merchant/billing/rails"
+    include Processors::PaymentProcessorCommon
 
     # Payment Processor required fields
     attr_accessor :card_security_code
@@ -9,9 +10,6 @@ module Processors
     attr_accessor :expiration_year
     attr_accessor :first_name
     attr_accessor :last_name
-    attr_accessor :amount
-    attr_accessor :account_id
-    attr_accessor :user_id
 
     def initialize(attributes)
       @card_security_code = attributes[:card_security_code]
@@ -20,7 +18,7 @@ module Processors
       @expiration_year = attributes[:expiration_year]
       @first_name = attributes[:first_name]
       @last_name = attributes[:last_name]
-      @amount = attributes[:amount]
+      @amount = Money.from_amount(attributes[:amount].to_f)
       @account_id = attributes[:account_id]
       @user_id = attributes[:user_id]
     end
@@ -74,7 +72,7 @@ module Processors
       end
 
       def purchase(payment_method)
-        response = GATEWAY.purchase(amount * 100, payment_method)
+        response = GATEWAY.purchase(amount.cents, payment_method)
         handle_unsuccessful_response(response) if !response.success?
 
         @credit_card_transaction.update_attribute(:processor_authorization_code, response.authorization)
@@ -110,23 +108,7 @@ module Processors
 
       def create_payment_with_credit_card_transaction
         @credit_card_transaction = CreditCardTransaction.new(payment_processor: PaymentProcessor.find_by_name(:first_data))
-
-        Payment.transaction do
-          validate_amount_to_pay
-          @credit_card_transaction.save!
-          Payment.create!(account_id: account_id, user_id: user_id, amount: amount, status: :pending,
-            payment_method: @credit_card_transaction, payment_source: PaymentSource.find_by_name(:manual))
-        end
-      end
-
-      def validate_amount_to_pay
-        account = Account.lock.find(account_id)
-        Account.uncached do
-          account_amount_due_with_pending_payments = account.amount_due_with_pending_payments
-          if Money.from_amount(amount) > account_amount_due_with_pending_payments
-            raise ExceptionHandler::InvalidOperation, Message.account_balance_was_updated(account_amount_due_with_pending_payments.format)
-          end
-        end
+        create_payment_for_transaction(@credit_card_transaction)
       end
   end
 end

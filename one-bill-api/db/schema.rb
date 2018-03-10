@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180302120311) do
+ActiveRecord::Schema.define(version: 20180309123525) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "account_number", null: false
@@ -150,6 +150,21 @@ ActiveRecord::Schema.define(version: 20180302120311) do
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
+  create_table "paypal_transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "token"
+    t.string "payer"
+    t.string "processor_authorization_code"
+    t.bigint "user_id"
+    t.bigint "account_id"
+    t.string "unique_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_paypal_transactions_on_account_id"
+    t.index ["token"], name: "index_paypal_transactions_on_token", unique: true
+    t.index ["unique_id"], name: "index_paypal_transactions_on_unique_id", unique: true
+    t.index ["user_id"], name: "index_paypal_transactions_on_user_id"
+  end
+
   create_table "physical_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "city_id", null: false
     t.bigint "street_id", null: false
@@ -215,6 +230,8 @@ ActiveRecord::Schema.define(version: 20180302120311) do
   add_foreign_key "payments", "accounts"
   add_foreign_key "payments", "payment_sources"
   add_foreign_key "payments", "users"
+  add_foreign_key "paypal_transactions", "accounts"
+  add_foreign_key "paypal_transactions", "users"
   add_foreign_key "physical_addresses", "cities"
   add_foreign_key "physical_addresses", "streets"
   add_foreign_key "streets", "cities"

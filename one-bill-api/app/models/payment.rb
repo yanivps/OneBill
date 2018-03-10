@@ -10,6 +10,7 @@
 #  payment_method_type :string(255)
 #  payment_method_id   :integer
 #  payment_source_id   :integer          not null
+#  status              :integer          not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
