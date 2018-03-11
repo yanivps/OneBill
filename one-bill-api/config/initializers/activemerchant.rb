@@ -18,7 +18,7 @@ elsif Rails.env == "production"
   paypal_signature = ENV['PAYPAL_SIGNATURE']
 end
 
-GATEWAY = ActiveMerchant::Billing::FirstdataE4Gateway.new({
+FIRST_DATA_GATEWAY = ActiveMerchant::Billing::FirstdataE4Gateway.new({
       login: login,
       password: password
 })
