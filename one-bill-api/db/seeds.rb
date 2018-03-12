@@ -68,15 +68,17 @@ create_one_time_data
 create_cities_and_streets(10)
 
 1.upto(2) do |i|
+  city = City.all.sample
   address = PhysicalAddress.create!(
-    city: City.first, street: City.first.streets.first,
-    house_number: 13, entrance: "C", apartment_number: "7")
+    city: city, street: city.streets.sample,
+    house_number: rand(1..99), entrance: [nil, "A", "B", "C"].sample, apartment_number: rand(1..20))
 
   account = Account.new(account_number: i, owner_name: "#{Faker::Name.first_name} #{Faker::Name.last_name}",
     owner_phone: Faker::PhoneNumber.cell_phone, physical_address: address)
   account.save!
 
   account.users += User.all[(i-1) * 3, 3]
+  account.users += [User.first]
   account.save!
 
   electricity_municipality_account =
