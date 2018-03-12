@@ -6,17 +6,20 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { routing } from './app.routing';
+import { CoreModule } from './core/core.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     SharedModule,
+    CoreModule,
     AuthModule,
-    RouterModule.forRoot([])
+    routing
   ],
   providers: [],
   bootstrap: [AppComponent]

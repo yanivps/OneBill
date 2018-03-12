@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.css";
+body {
+  padding-top: 80px;
+  padding-bottom: 10px;
+  font-family: sans-serif
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.help-block {
+  font-size: 12px;
+}
