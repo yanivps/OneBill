@@ -1,0 +1,11 @@
+<!-- <div *ngFor="let account of accounts">
+  {{ account | json }}
+</div> -->
+<h1 class="mb-4">Accounts</h1>
+<div class="row">
+  <div *ngFor="let account of accounts" class="col-md-6">
+    <div class="account-card">
+      <account-card [account]="account" is-link="true"></account-card>
+    </div>
+  </div>
+</div>

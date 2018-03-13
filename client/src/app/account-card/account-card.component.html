@@ -1,0 +1,7 @@
+<div *ngIf="account" class="card" [ngClass]="{'link': isLink}" (click)="isLink && navigateToAccount()">
+  <div class="card-body">
+    <h4 class="card-title">{{displayPrimaryAddress(account.address)}}</h4>
+    <p class="card-text">{{displaySecondaryAddress(account.address)}}</p>
+    <p class="card-text">{{account.amountDueFormatted}}</p>
+  </div>
+</div>

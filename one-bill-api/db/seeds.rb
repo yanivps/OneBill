@@ -86,7 +86,7 @@ create_cities_and_streets(10)
   create_bills(electricity_municipality_account)
 
   water_municipality_account =
-    MunicipalityAccount.create!(municipality_account_number: "W#{account.account_number}", account: account, category: Category.find_by_name(:water))
+    MunicipalityAccount.new(municipality_account_number: "W#{account.account_number}", account: account, category: Category.find_by_name(:water))
   create_bills(water_municipality_account, bill_period_in_days: 30)
 
   bill1, bill2, bill3 = electricity_municipality_account.bills.sample(3)
@@ -115,6 +115,10 @@ create_cities_and_streets(10)
   PaymentApplication.create(amount: payment_application_amounts[0], payment: payment, bill: bill2)
   PaymentApplication.create(amount: payment_application_amounts[1], payment: payment, bill: bill3)
 end
+
+property_tax_municipality_account =
+    MunicipalityAccount.new(municipality_account_number: "P#{Account.first.account_number}", account: Account.first, category: Category.find_by_name(:property_tax))
+  create_bills(property_tax_municipality_account, bills_count: 1)
 
 Invitation.create!(phone_number: Account.first.users.first.phone_number,
   account_id: Account.last.id, token: "A_VALID_TOKEN", expires_at: 1.year.from_now)

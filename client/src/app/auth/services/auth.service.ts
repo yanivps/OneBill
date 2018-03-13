@@ -14,17 +14,18 @@ import { UnauthorizedError } from '../models/unauthorized-error';
 import { BaseAuthProvider } from './base-auth-provider';
 import { FacebookAuthProvider } from './facebook-auth-provider';
 import { GoogleAuthProvider } from './google-auth-provider';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AuthService {
-  private apiAuthUrl = "http://localhost:3000/auth/"
+  private apiAuthUrl = environment.apiHost + "/auth/";
   private googleAuth: GoogleAuthProvider = new GoogleAuthProvider();
   private facebookAuth: FacebookAuthProvider = new FacebookAuthProvider();
-  
+
   constructor(private http: HttpClient) {
   }
 
-  
+
   logout() {
     localStorage.removeItem('token');
   }
@@ -32,7 +33,7 @@ export class AuthService {
   isLoggedIn() {
     return tokenNotExpired();
   }
-  
+
   public get currentUser() {
     let token = localStorage.getItem('token');
     if (!token) return null;
@@ -72,7 +73,7 @@ export class AuthService {
   loginWithFacebookRedirect() {
     this.facebookAuth.loginWithRedirect();
   }
-  
+
   loginWithFacebookCallback(callbackParams: { [key: string]: any }) {
     return this.loginWithCallback(callbackParams, this.facebookAuth)
   }
@@ -85,7 +86,7 @@ export class AuthService {
   private loginWithCallback(callbackParams: { [key: string]: any }, provider: BaseAuthProvider): Observable<void> {
     let authorizationCode = null;
     try {
-      authorizationCode = provider.getAuthCodeFromCallback(callbackParams)      
+      authorizationCode = provider.getAuthCodeFromCallback(callbackParams)
     } catch (error) {
       return Observable.throw(error)
     }
@@ -98,7 +99,7 @@ export class AuthService {
         if (!response || !response['auth_token']) {
           throw new OAuthError("Server did not respond with auth_token parameter");
         }
-        
+
         localStorage.setItem("token", response['auth_token']);
       });
   }
