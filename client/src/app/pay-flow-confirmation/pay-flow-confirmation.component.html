@@ -9,8 +9,11 @@
 <div class="form-group text-center space-20">
   <button class="btn btn-outline-rounded btn-default" (click)="goToPrevious()">
     <span style="margin-right:10px;" class="fa fa-arrow-left"></span> Previous</button>
-  <button class="btn btn-outline-rounded btn-info" [disabled]="!isPayFlowValid" (click)="submit()">
+  <button *ngIf="!isLoading; else loading" class="btn btn-outline-rounded btn-info" [disabled]="!isPayFlowValid" (click)="submit()">
     <i style="margin-right:10px;" class="fa fa-lock fa-lg"></i>
     Pay Now
   </button>
+  <ng-template #loading>
+    <i class="fa fa-spinner fa-spin fa-2x align-middle"></i>
+  </ng-template>
 </div>

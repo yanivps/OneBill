@@ -19,8 +19,12 @@ export class PaymentComponent implements OnInit {
   ngOnInit() {
     this.transaction = this.payFlowDataService.getPaymentTransaction();
     if (!this.transaction) {
-      let accountId = this.route.snapshot.paramMap.get('id');
-      this.router.navigate([`/accounts/${accountId}`]);
+      this.goToAccount();
     }
+  }
+
+  goToAccount() {
+    let accountId = this.route.snapshot.paramMap.get('id');
+    this.router.navigate([`/accounts/${accountId}`]);
   }
 }

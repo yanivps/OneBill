@@ -14,6 +14,7 @@ export class PayFlowConfirmationComponent implements OnInit {
   title = 'Confirm you payment';
   payFlowData: PayFlowData;
   isPayFlowValid: boolean = false;
+  isLoading: boolean = false;
   private _accountId: string;
 
   constructor(
@@ -34,6 +35,7 @@ export class PayFlowConfirmationComponent implements OnInit {
   }
 
   submit(form: any) {
+    this.isLoading = true;
     if (this.payFlowData.paypalToken && this.payFlowData.paypalPayerId) {
       this.makePayPalPayment().subscribe(
         res => this.handlePaymentSuccess(res),
@@ -54,21 +56,47 @@ export class PayFlowConfirmationComponent implements OnInit {
   }
 
   private handlePaymentError(error: any) {
-    this.resetData();
     this.alertService.error(error.error.message, true);
-    this.router.navigate([`/accounts/${this._accountId}`], { relativeTo: this.route });
+    this.router.navigate(['../method'], { relativeTo: this.route });
   }
 
   private makePayPalPayment() {
-    return this.paymentService.createPaypal(this._accountId, this.payFlowData.paypalToken, this.payFlowData.paypalPayerId)
+    return this.paymentService.createPaypalPayment(this._accountId, this.payFlowData.paypalToken, this.payFlowData.paypalPayerId)
   }
 
   private makeCreditCardPayment() {
-    return this.paymentService.createCreditCard(this._accountId, this.payFlowData);
+    let params = this.buildCreditCardParams();
+    return this.paymentService.createCreditCardPayment(this._accountId, params);
   }
 
   private resetData() {
     this.payFlowData = this.payFlowDataService.resetPayFlowData();
     this.isPayFlowValid = false;
+  }
+
+  private buildCreditCardParams() {
+    if (this.payFlowData.storedCardId) {
+      return {
+        amount: this.payFlowData.amountToPay,
+        creditCardId: this.payFlowData.storedCardId
+      }
+    }
+
+    let expirationMonthStr = this.payFlowData.creditCardExpirationDate.split('/')[0].trim();
+    let expirationMonth = parseInt(expirationMonthStr);
+    let expirationYearStr = this.payFlowData.creditCardExpirationDate.split('/')[1].trim();
+    let expirationYear = parseInt(expirationYearStr);
+    if (expirationYearStr.length == 2) expirationYear += 2000;
+
+    return {
+      firstName: this.payFlowData.cardHolderFirstName,
+      lastName: this.payFlowData.cardHolderLastName,
+      creditCardNumber: this.payFlowData.creditCardNumber + "1",
+      expirationMonth: expirationMonth,
+      expirationYear: expirationYear,
+      cardSecurityCode: this.payFlowData.creditCardSecurityCode,
+      amount: this.payFlowData.amountToPay,
+      storeCard: this.payFlowData.storeCard
+    };
   }
 }

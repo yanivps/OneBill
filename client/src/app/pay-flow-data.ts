@@ -4,6 +4,9 @@ export class PayFlowData {
   amountToPay: number = 0;
   currencyCode: string = '';
 
+  paymentMethodSection: string = '';
+  storedCardId: string = '';
+
   creditCardNumber: string = '';
   creditCardSecurityCode: string = '';
   creditCardExpirationDate: string = '';
@@ -31,6 +34,7 @@ export class PayFlowData {
     this.paypalToken = '';
     this.paypalPayerId = '';
 
+    this.paymentMethodSection = '';
     this.storeCard = false
     this.paymentTransaction = null;
   }
@@ -44,6 +48,8 @@ export class Options {
 }
 
 export class PaymentMethod {
+  storedCardId: string = '';
+
   creditCardNumber: string = '';
   creditCardSecurityCode: string = '';
   creditCardExpirationDate: string = '';

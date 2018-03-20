@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PayFlowDataService } from '../pay-flow-data.service';
 import { PaymentMethod, Options, PayFlowData } from '../pay-flow-data';
 import { PaymentService } from '../payment.service';
+import { CreditCardService } from '../credit-card.service';
+import { AlertService } from '../shared/services/alert.service';
 
 @Component({
   selector: 'pay-flow-payment-method',
@@ -14,16 +16,32 @@ export class PayFlowPaymentMethodComponent implements OnInit {
   payFlowData: PayFlowData;
   paymentMethod: PaymentMethod;
   cardType: string;
+  storedCards: any[];
+  selectedCardId;
+  isLoading: boolean = false;
+  isLoadingCards: boolean = true;
 
   constructor(
     private router: Router,
     private payFlowDataService: PayFlowDataService,
     private paymentSerivce: PaymentService,
+    private creditCardService: CreditCardService,
+    private alertService: AlertService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.payFlowData = this.payFlowDataService.getPayFlowData();
     this.paymentMethod = this.payFlowDataService.getPaymentMethod();
+    this.creditCardService.getAll().subscribe(
+      res => {
+        this.isLoadingCards = false;
+        this.storedCards = res as any[];
+        if (!this.payFlowData.paymentMethodSection) {
+          this.payFlowData.paymentMethodSection = this.storedCards.length == 0 ? "newCard" : "storedCard"
+        }
+      },
+      error => this.handleError(error)
+    )
   }
 
   save(form: any): boolean {
@@ -31,6 +49,7 @@ export class PayFlowPaymentMethodComponent implements OnInit {
       return false;
     }
 
+    this.payFlowDataService.setPaymentMethodSection(this.payFlowData.paymentMethodSection);
     this.payFlowDataService.setPaymentMethod(this.paymentMethod);
     return true;
   }
@@ -46,7 +65,29 @@ export class PayFlowPaymentMethodComponent implements OnInit {
     }
   }
 
+  deleteStoredCard(card: any) {
+    if (!confirm("Are you sure you want to delete card xx" + card.last4))
+      return;
+
+    let index = this.storedCards.indexOf(card);
+    if (index != -1) {
+      this.storedCards.splice(index, 1);
+      this.creditCardService.delete(card.id)
+        .subscribe(
+          null,
+          err => {
+            this.alertService.error("There was an error. Card xx" + card.last4 + "was not deleted");
+            this.storedCards.splice(index, 0, card);
+          }
+        );
+      if (this.storedCards.length == 0) {
+        this.payFlowData.paymentMethodSection = "newCard";
+      }
+    }
+  }
+
   generatePaypalLink() {
+    this.isLoading = true;
     let accountId = this.route.parent.snapshot.paramMap.get('id');
     let amount = this.payFlowData.amountToPay;
     let currencyCode = this.payFlowData.currencyCode;
@@ -56,8 +97,18 @@ export class PayFlowPaymentMethodComponent implements OnInit {
       cancelReturnUrl: window.location.href.replace('/method', '/options')
     }
     this.paymentSerivce.generatePaypalLink(accountId, params).subscribe(
-      res => window.location.href = res['paypal_express_url']
+      res => window.location.href = res['paypal_express_url'],
+      error => this.handleError(error)
     );
+  }
+
+  private handleError(error: any) {
+    this.isLoadingCards = false;
+    this.isLoading = false;
+    if (!this.payFlowData.paymentMethodSection)
+      this.payFlowData.paymentMethodSection = "newCard";
+
+    this.alertService.error(error.error.message);
   }
 
   knownCardType() {

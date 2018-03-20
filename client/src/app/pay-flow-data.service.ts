@@ -37,6 +37,7 @@ export class PayFlowDataService {
   getPaymentMethod(): PaymentMethod {
     // Return the PaymentMethod data
     var paymentMethod: PaymentMethod = {
+      storedCardId: this.payFlowData.storedCardId,
       creditCardNumber: this.payFlowData.creditCardNumber,
       creditCardSecurityCode: this.payFlowData.creditCardSecurityCode,
       creditCardExpirationDate: this.payFlowData.creditCardExpirationDate,
@@ -52,6 +53,7 @@ export class PayFlowDataService {
   setPaymentMethod(data: PaymentMethod) {
     // Update the PaymentMethod data only when the PaymentMethod Form had been validated successfully
     this.isPaymentMethodFormValid = true;
+    this.payFlowData.storedCardId = data.storedCardId;
     this.payFlowData.creditCardNumber = data.creditCardNumber;
     this.payFlowData.creditCardSecurityCode = data.creditCardSecurityCode;
     this.payFlowData.creditCardExpirationDate = data.creditCardExpirationDate;
@@ -70,6 +72,14 @@ export class PayFlowDataService {
 
   setPaymentTransaction(paymentTransaction: any) {
     this.payFlowData.paymentTransaction = paymentTransaction;
+  }
+
+  getPaymentMethodSection(): string {
+    return this.payFlowData.paymentMethodSection;
+  }
+
+  setPaymentMethodSection(paymentMethodSection: string) {
+    this.payFlowData.paymentMethodSection = paymentMethodSection;
   }
 
   getPayFlowData(): PayFlowData {

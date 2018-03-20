@@ -26,6 +26,7 @@ import { ExpirationDateValidator } from './pay-flow-payment-method/expiration-da
 import { PaymentService } from './payment.service';
 import { PaypalCallbackComponent } from './paypal-callback/paypal-callback.component';
 import { PaymentComponent } from './payment/payment.component';
+import { CreditCardService } from './credit-card.service';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { PaymentComponent } from './payment/payment.component';
     PayFlowDataService,
     PayFlowValidatorService,
     PayFlowGuard,
-    PaymentService
+    PaymentService,
+    CreditCardService
   ],
   bootstrap: [AppComponent]
 })
