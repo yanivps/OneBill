@@ -1,0 +1,26 @@
+<div class="wizard-inner">
+  <div class="connecting-line"></div>
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="nav-item">
+      <a [class.active]="router.url.endsWith('/options')" data-toggle="tab" aria-controls="step1" role="tab" title="Select amount" class="nav-link disabled">
+        <span class="round-tab">
+          <i class="fa fa-calculator"></i>
+        </span>
+      </a>
+    </li>
+    <li role="presentation" class="nav-item">
+      <a [class.active]="router.url.endsWith('/method')" routerLinkActive="active" data-toggle="tab" aria-controls="step2" role="tab" title="Choose payment method" class="nav-link disabled">
+        <span class="round-tab">
+          <i class="fa fa-credit-card"></i>
+        </span>
+      </a>
+    </li>
+    <li role="presentation" class="nav-item">
+      <a [class.active]="router.url.endsWith('/confirmation')" routerLinkActive="active" data-toggle="tab" aria-controls="step5" role="tab" title="Confirm" class="nav-link disabled">
+        <span class="round-tab">
+          <i class="fa fa-check"></i>
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>

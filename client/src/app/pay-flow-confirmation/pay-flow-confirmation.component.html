@@ -1,0 +1,16 @@
+<h4 class="head text-center my-4">{{title}}</h4>
+<h5 class="text-center mb-4">Payment amount {{payFlowData.amountToPay | currency:payFlowData.currencyCode:'symbol':'1.2-2'}}</h5>
+<div *ngIf="payFlowData.creditCardNumber" class="form-check text-center mb-4">
+  <input class="form-check-input" type="checkbox" [(ngModel)]="payFlowData.storeCard" name="storeCard" value="" id="storeCard">
+  <label class="form-check-label" for="storeCard">
+    Save credit card for faster future payments
+  </label>
+</div>
+<div class="form-group text-center space-20">
+  <button class="btn btn-outline-rounded btn-default" (click)="goToPrevious()">
+    <span style="margin-right:10px;" class="fa fa-arrow-left"></span> Previous</button>
+  <button class="btn btn-outline-rounded btn-info" [disabled]="!isPayFlowValid" (click)="submit()">
+    <i style="margin-right:10px;" class="fa fa-lock fa-lg"></i>
+    Pay Now
+  </button>
+</div>

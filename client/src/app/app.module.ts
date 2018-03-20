@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CustomFormsModule } from 'ng2-validation'
 
 
 import { AppComponent } from './app.component';
@@ -12,6 +13,19 @@ import { CoreModule } from './core/core.module';
 import { AccountService } from './account.service';
 import { AccountCardComponent } from './account-card/account-card.component';
 import { AccountComponent } from './account/account.component';
+import { PayFlowComponent } from './pay-flow/pay-flow.component';
+import { PayFlowOptionsComponent } from './pay-flow-options/pay-flow-options.component';
+import { PayFlowConfirmationComponent } from './pay-flow-confirmation/pay-flow-confirmation.component';
+import { PayFlowNavbarComponent } from './pay-flow-navbar/pay-flow-navbar.component';
+import { PayFlowDataService } from './pay-flow-data.service';
+import { FormsModule } from '@angular/forms';
+import { PayFlowPaymentMethodComponent } from './pay-flow-payment-method/pay-flow-payment-method.component';
+import { PayFlowValidatorService } from './pay-flow/pay-flow.service';
+import { PayFlowGuard } from './pay-flow/pay-flow-guard.service';
+import { ExpirationDateValidator } from './pay-flow-payment-method/expiration-date-validator.directive';
+import { PaymentService } from './payment.service';
+import { PaypalCallbackComponent } from './paypal-callback/paypal-callback.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 @NgModule({
@@ -19,17 +33,31 @@ import { AccountComponent } from './account/account.component';
     AppComponent,
     AccountsComponent,
     AccountCardComponent,
-    AccountComponent
+    AccountComponent,
+    PayFlowComponent,
+    PayFlowOptionsComponent,
+    PayFlowPaymentMethodComponent,
+    PayFlowConfirmationComponent,
+    PayFlowNavbarComponent,
+    ExpirationDateValidator,
+    PaypalCallbackComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
     SharedModule,
     CoreModule,
     AuthModule,
-    routing
+    routing,
+    FormsModule,
+    CustomFormsModule
   ],
   providers: [
-    AccountService
+    AccountService,
+    PayFlowDataService,
+    PayFlowValidatorService,
+    PayFlowGuard,
+    PaymentService
   ],
   bootstrap: [AppComponent]
 })

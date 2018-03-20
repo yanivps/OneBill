@@ -3,4 +3,6 @@ json.address account.physical_address, partial: 'physical_addresses/physical_add
 json.amount_due_cents account.amount_due.cents
 json.amount_due_formatted account.amount_due.format
 
+json.currency_code account.amount_due.currency.iso_code
+
 json.municipality_accounts account.municipality_accounts, partial: 'municipality_accounts/municipality_account', as: :municipality_account

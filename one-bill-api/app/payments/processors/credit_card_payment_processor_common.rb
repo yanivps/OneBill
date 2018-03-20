@@ -29,10 +29,15 @@ module Processors
         create_payment_with_credit_card_transaction
         response = purchase(token || credit_card_information)
 
-        card_type = response.params[@card_type_key]&.downcase&.to_sym
-        credit_card = create_credit_card(card_type, token)
-        @credit_card_transaction.credit_card = credit_card
-        @credit_card_transaction.save!
+        begin
+          card_type = response.params[@card_type_key]&.downcase&.to_sym
+          credit_card = create_credit_card(card_type, token)
+          @credit_card_transaction.credit_card = credit_card
+          @credit_card_transaction.save!
+        rescue Exception => e
+          Rails.logger.error "Failed storing credit card. Error #{e.class}: #{e.message}\n#{e.backtrace.join("\n")}"
+        end
+
         @credit_card_transaction
       end
     end
@@ -91,7 +96,7 @@ module Processors
 
       def create_credit_card(card_type = :unknown, token = nil)
         credit_card = CreditCard.new(last_4: credit_card_number[-4..-1],
-          expires_at: Date.new(expiration_year, expiration_month).end_of_month,
+          expires_at: Date.new(expiration_year.to_i, expiration_month.to_i).end_of_month,
           card_type: CreditCardType.find_by_name(card_type) || CreditCardType.find_by_name(:unknown))
         if token
           credit_card.token = token
