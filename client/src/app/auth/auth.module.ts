@@ -9,6 +9,7 @@ import { TokenInterceptor } from './helpers/token.interceptor';
 import { AuthService } from './services/auth.service';
 import { FacebookAuthProvider } from './services/facebook-auth-provider';
 import { GoogleAuthProvider } from './services/google-auth-provider';
+import { AuthGuard } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -19,13 +20,14 @@ import { GoogleAuthProvider } from './services/google-auth-provider';
     HttpClientModule,
     RouterModule.forChild([
       { path: "auth/:provider", component: AuthComponent }
-    ])    
+    ])
   ],
   providers: [
     AUTH_PROVIDERS,
     GoogleAuthProvider,
     FacebookAuthProvider,
     AuthService,
+    AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ]
 })

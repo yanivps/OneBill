@@ -15,6 +15,7 @@ export class PayFlowOptionsComponent implements OnInit {
   account: any;
   options: Options;
   amountPattern = "^[1-9]+\\.?[0-9]{0,2}$"
+  isLoading: boolean = true;
 
   constructor(
     private router: Router,
@@ -28,8 +29,11 @@ export class PayFlowOptionsComponent implements OnInit {
       this.alertService.error("Paypal payment was canceled");
 
     let accountId = this.route.parent.snapshot.paramMap.get('id');
-    this.accountService.get(accountId).subscribe(res => this.account = res);
     this.options = this.payFlowDataService.getOptions();
+    this.accountService.get(accountId).subscribe(res => {
+      this.isLoading = false;
+      this.account = res;
+    });
   }
 
   save(form: any): boolean {

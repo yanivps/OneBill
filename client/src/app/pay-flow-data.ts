@@ -35,6 +35,7 @@ export class PayFlowData {
     this.paypalPayerId = '';
 
     this.paymentMethodSection = '';
+    this.storedCardId = '';
     this.storeCard = false
     this.paymentTransaction = null;
   }

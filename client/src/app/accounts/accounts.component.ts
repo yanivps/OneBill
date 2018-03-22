@@ -8,11 +8,16 @@ import { AccountService } from '../account.service';
 })
 export class AccountsComponent implements OnInit {
   accounts: any[];
+  isLoading: boolean = true;
+
   constructor(private accountService: AccountService) { }
 
   ngOnInit() {
     this.accountService.getAll().subscribe(
-      res => this.accounts = res as any[]
+      res => {
+        this.accounts = res as any[];
+        this.isLoading = false;
+      }
     );
   }
 }

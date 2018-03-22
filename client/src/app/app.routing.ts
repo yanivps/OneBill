@@ -10,13 +10,17 @@ import { PayFlowPaymentMethodComponent } from './pay-flow-payment-method/pay-flo
 import { PayFlowGuard } from './pay-flow/pay-flow-guard.service';
 import { PaypalCallbackComponent } from './paypal-callback/paypal-callback.component';
 import { PaymentComponent } from './payment/payment.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { AuthGuard } from './auth/services/auth-guard.service';
+import { AccountPaymentsComponent } from './account-payments/account-payments.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'accounts', component: AccountsComponent },
-  { path: 'accounts/:id', component: AccountComponent },
-  { path: 'accounts/:id/pay', component: PayFlowComponent,
+  { path: 'accounts', component: AccountsComponent, canActivate: [AuthGuard] },
+  { path: 'accounts/:id', component: AccountComponent, canActivate: [AuthGuard] },
+  { path: 'accounts/:id/payments', component: AccountPaymentsComponent, canActivate: [AuthGuard] },
+  { path: 'accounts/:id/pay', component: PayFlowComponent, canActivate: [AuthGuard],
     children: [
       { path: 'options', component: PayFlowOptionsComponent, canActivate: [PayFlowGuard] },
       { path: 'method', component: PayFlowPaymentMethodComponent, canActivate: [PayFlowGuard] },
@@ -25,8 +29,9 @@ const appRoutes: Routes = [
       { path: '**', redirectTo: 'options' }
     ]
   },
-  { path: 'accounts/:id/payment', component: PaymentComponent },
-  { path: 'callback/paypal', component: PaypalCallbackComponent },
+  { path: 'accounts/:id/payment', component: PaymentComponent, canActivate: [AuthGuard] },
+  { path: 'my/payments', component: PaymentsComponent, canActivate: [AuthGuard] },
+  { path: 'callback/paypal', component: PaypalCallbackComponent, canActivate: [AuthGuard] },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

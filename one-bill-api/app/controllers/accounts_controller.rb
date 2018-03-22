@@ -4,6 +4,7 @@ class AccountsController < ApplicationController
   # GET /accounts
   def index
     @accounts = current_user.accounts
+    @accounts = @accounts.select{ |acc| acc.amount_due > 0 }
   end
 
   # GET /accounts/1

@@ -91,7 +91,7 @@ export class PayFlowConfirmationComponent implements OnInit {
     return {
       firstName: this.payFlowData.cardHolderFirstName,
       lastName: this.payFlowData.cardHolderLastName,
-      creditCardNumber: this.payFlowData.creditCardNumber + "1",
+      creditCardNumber: this.payFlowData.creditCardNumber,
       expirationMonth: expirationMonth,
       expirationYear: expirationYear,
       cardSecurityCode: this.payFlowData.creditCardSecurityCode,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -10,14 +10,20 @@ import { ActivatedRoute } from '@angular/router';
 export class AccountComponent implements OnInit {
   private billIndex = 0;
   account: any;
+  isLoading: boolean = true;
 
-  constructor(private accountService: AccountService, private route: ActivatedRoute) { }
+  constructor(private accountService: AccountService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     let accountId = this.route.snapshot.paramMap.get('id');
     this.accountService.get(accountId).subscribe(
       res => {
+        this.isLoading = false;
         this.account = res;
+        if (this.account.amountDueCents <= 0) {
+          this.router.navigate(['/accounts']);
+          return;
+        }
         this.filterBills();
       }
     );

@@ -1,19 +1,14 @@
-<!-- {{ account | json }} -->
+<i *ngIf="isLoading" class="fa fa-spinner fa-spin fa-3x"></i>
 <div class="row">
   <div *ngIf="account" class="invoice-container col-md-10 offset-md-1">
     <main>
       <div id="details" class="clearfix">
         <div id="client">
           <div class="to"></div>
-          <h2 class="name">Account # {{ account.accountNumber }}</h2>
-          <div class="address">{{displayPrimaryAddress(account.address)}}</div>
-          <div class="email">{{displaySecondaryAddress(account.address)}}</div>
+          <h4 class="address">{{displayPrimaryAddress(account.address)}}</h4>
+          <h6 class="email">{{displaySecondaryAddress(account.address)}}</h6>
+          <h6 class="name">Account # {{ account.accountNumber }}</h6>
         </div>
-        <!-- <div id="invoice">
-          <h1>INVOICE 3-2-1</h1>
-          <div class="date">Date of Invoice: 01/06/2014</div>
-          <div class="date">Due Date: 30/06/2014</div>
-        </div> -->
       </div>
       <table border="0" cellspacing="0" cellpadding="0" class="">
         <thead>
@@ -53,6 +48,7 @@
           </tr>
         </tfoot>
       </table>
+      <button *ngIf="account.paymentsCount > 0" class="btn btn-primary mb-3" [routerLink]="['payments']">Payments History</button>
       <div id="notices">
         <div>NOTICE:</div>
         <div class="notice">A finance charge may be applied on unpaid balances after due date.</div>

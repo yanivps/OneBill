@@ -27,6 +27,9 @@ import { PaymentService } from './payment.service';
 import { PaypalCallbackComponent } from './paypal-callback/paypal-callback.component';
 import { PaymentComponent } from './payment/payment.component';
 import { CreditCardService } from './credit-card.service';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { PaymentsComponent } from './payments/payments.component';
+import { AccountPaymentsComponent } from './account-payments/account-payments.component';
 
 
 @NgModule({
@@ -42,7 +45,9 @@ import { CreditCardService } from './credit-card.service';
     PayFlowNavbarComponent,
     ExpirationDateValidator,
     PaypalCallbackComponent,
-    PaymentComponent
+    PaymentComponent,
+    PaymentsComponent,
+    AccountPaymentsComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +56,8 @@ import { CreditCardService } from './credit-card.service';
     AuthModule,
     routing,
     FormsModule,
-    CustomFormsModule
+    CustomFormsModule,
+    NgbModule.forRoot()
   ],
   providers: [
     AccountService,

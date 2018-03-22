@@ -13,6 +13,10 @@ export class PaymentService {
     return this.http.get(this.paymentBaseUrl);
   }
 
+  getAccountPayments(accountId: string) {
+    return this.http.get(this.accountPaymentBaseUrl + accountId + "/payments/");
+  }
+
   generatePaypalLink(accountId: string, params: {amount: number, returnUrl: string, cancelReturnUrl: string}) {
     return this.http.post(`${this.accountPaymentBaseUrl}${accountId}/generate_paypal_link`, params);
   }

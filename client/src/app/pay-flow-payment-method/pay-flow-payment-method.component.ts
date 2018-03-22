@@ -76,7 +76,7 @@ export class PayFlowPaymentMethodComponent implements OnInit {
         .subscribe(
           null,
           err => {
-            this.alertService.error("There was an error. Card xx" + card.last4 + "was not deleted");
+            this.alertService.error("There was an error. Card xx" + card.last4 + " was not deleted");
             this.storedCards.splice(index, 0, card);
           }
         );
