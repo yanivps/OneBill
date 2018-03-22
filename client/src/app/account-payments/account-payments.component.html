@@ -15,9 +15,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let payment of payments">
+      <tr *ngFor="let payment of payments" [ngClass]="{'font-weight-bold': payment.userId == authService.currentUser.user_id}">
         <td>{{ payment.amountFormatted }}</td>
-        <td>{{ payment.createdAt | date:mediumDate }}</td>
+        <td>{{ payment.createdAt | date:'MMM d, y HH:mm' }}</td>
         <td>{{ payment.user?.name }}</td>
       </tr>
     </tbody>

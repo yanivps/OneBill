@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentService } from '../payment.service';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-account-payments',
@@ -10,7 +11,10 @@ import { PaymentService } from '../payment.service';
 export class AccountPaymentsComponent implements OnInit {
   payments: any[];
   isLoading: boolean = true;
-  constructor(private route: ActivatedRoute, private paymentsService: PaymentService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private paymentsService: PaymentService,
+    public authService: AuthService) { }
 
   ngOnInit() {
     let accountId = this.route.snapshot.paramMap.get('id');

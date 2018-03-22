@@ -14,7 +14,7 @@
         </div>
         <form class="mb-4">
           <div *ngIf="storedCards && storedCards.length" class="form-check">
-            <input class="form-check-input" type="radio" [(ngModel)]="payFlowData.paymentMethodSection" name="paymentMethodSection" id="storedCardRadio"
+            <input [disabled]="isLoadingPaypal" class="form-check-input" type="radio" [(ngModel)]="payFlowData.paymentMethodSection" name="paymentMethodSection" id="storedCardRadio"
               value="storedCard" required>
             <label class="form-check-label" for="storedCardRadio">
               Pay with a saved credit cards
@@ -22,7 +22,7 @@
           </div>
 
           <div class="form-check">
-            <input class="form-check-input" type="radio" [(ngModel)]="payFlowData.paymentMethodSection" name="paymentMethodSection" id="newCardRadio"
+            <input [disabled]="isLoadingPaypal" class="form-check-input" type="radio" [(ngModel)]="payFlowData.paymentMethodSection" name="paymentMethodSection" id="newCardRadio"
               value="newCard" required>
             <label class="form-check-label" for="newCardRadio">
               Enter a new credit card
@@ -30,7 +30,7 @@
           </div>
 
           <div class="form-check">
-            <input class="form-check-input" type="radio" [(ngModel)]="payFlowData.paymentMethodSection" name="paymentMethodSection" id="paypalRadio"
+            <input [disabled]="isLoadingPaypal" class="form-check-input" type="radio" [(ngModel)]="payFlowData.paymentMethodSection" name="paymentMethodSection" id="paypalRadio"
               value="paypal" required>
             <label class="form-check-label" for="paypalRadio">
               Pay with PayPal
@@ -120,9 +120,11 @@
         </form>
 
         <div *ngIf="payFlowData.paymentMethodSection === 'paypal'">
-          <button type="button" class="btn btn-outline-rounded btn-default" (click)="goToPrevious()">
-            <span style="margin-right:10px;" class="fa fa-arrow-left"></span> Previous</button>
-          <button *ngIf="!isLoading; else loading" type="button" class="btn btn-primary" (click)="generatePaypalLink()">Pay with PayPal</button>
+          <ng-container *ngIf="!isLoadingPaypal; else loading">
+            <button type="button" class="btn btn-outline-rounded btn-default" (click)="goToPrevious()">
+              <span style="margin-right:10px;" class="fa fa-arrow-left"></span> Previous</button>
+            <button type="button" class="btn btn-primary" (click)="generatePaypalLink()">Pay with PayPal</button>
+          </ng-container>
           <ng-template #loading>
             <i class="fa fa-spinner fa-spin fa-2x align-middle"></i>
           </ng-template>

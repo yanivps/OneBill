@@ -18,8 +18,8 @@ export class PayFlowPaymentMethodComponent implements OnInit {
   cardType: string;
   storedCards: any[];
   selectedCardId;
-  isLoading: boolean = false;
   isLoadingCards: boolean = true;
+  isLoadingPaypal: boolean = false;
 
   constructor(
     private router: Router,
@@ -87,7 +87,7 @@ export class PayFlowPaymentMethodComponent implements OnInit {
   }
 
   generatePaypalLink() {
-    this.isLoading = true;
+    this.isLoadingPaypal = true;
     let accountId = this.route.parent.snapshot.paramMap.get('id');
     let amount = this.payFlowData.amountToPay;
     let currencyCode = this.payFlowData.currencyCode;
@@ -104,7 +104,7 @@ export class PayFlowPaymentMethodComponent implements OnInit {
 
   private handleError(error: any) {
     this.isLoadingCards = false;
-    this.isLoading = false;
+    this.isLoadingPaypal = false;
     if (!this.payFlowData.paymentMethodSection)
       this.payFlowData.paymentMethodSection = "newCard";
 

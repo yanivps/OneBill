@@ -14,7 +14,7 @@
   <tbody>
     <tr *ngFor="let payment of payments">
       <td>{{ payment.amountFormatted }}</td>
-      <td>{{ payment.createdAt | date:mediumDate }}</td>
+      <td>{{ payment.createdAt | date:'MMM d, y HH:mm' }}</td>
       <td>{{ payment.account.accountNumber }}</td>
       <td>{{ formatAddress(payment.account.address) }}</td>
       <td>{{ formatPaymentMethod(payment.paymentMethodType, payment.paymentMethod) }}</td>
