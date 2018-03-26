@@ -27,6 +27,10 @@ module ExceptionHandler
       json_response({ message: e.message }, :not_found)
     end
 
+    rescue_from ActiveRecord::RecordNotUnique do |e|
+      json_response({ message: Message.already_exists }, :unprocessable_entity)
+    end
+
     # JSON response with message; Status code 422 - unprocessable entity
     def four_twenty_two(e)
       json_response({ message: e.message }, :unprocessable_entity)

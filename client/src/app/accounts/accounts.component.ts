@@ -15,7 +15,7 @@ export class AccountsComponent implements OnInit {
   ngOnInit() {
     this.accountService.getAll().subscribe(
       res => {
-        this.accounts = res as any[];
+        this.accounts = res;
         this.isLoading = false;
       }
     );

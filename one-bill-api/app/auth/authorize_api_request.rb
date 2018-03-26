@@ -4,7 +4,7 @@ class AuthorizeApiRequest
   end
 
   def call
-    { user: user }
+    { user: user, token_expiration: decode_token[:exp] }
   end
 
   private

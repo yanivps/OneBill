@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   # User credentials login route
   post 'auth/login', to: 'authentication#authenticate'
+  get 'auth/refresh_token', to: 'authentication#refresh_token'
 
   # OAuth login routes
   OAUTH_PROVIDERS.keys.each do |oauth_provider|
@@ -9,7 +10,9 @@ Rails.application.routes.draw do
   end
 
   # User credentials signup
-  post 'signup', to: 'users#create'
+  resources :users, only: [:create], defaults: {format: :json}
+  post '/users/verify', to: 'users#verify'
+  post '/users/send_verification_code_sms', to: 'users#send_verification_code_sms'
 
   post 'accounts/:account_id/generate_paypal_link', to: 'account_paypal_transactions#generate_paypal_link'
 
@@ -29,6 +32,7 @@ Rails.application.routes.draw do
   post 'accounts/users', to: 'account_users#create_from_invitation'
 
   resources :invitations, only: [:create], defaults: {format: :json}
+  get 'invitations/', to: 'invitations#show', defaults: {format: :json}
 
   resources :payments, only: [:index], defaults: {format: :json}
 

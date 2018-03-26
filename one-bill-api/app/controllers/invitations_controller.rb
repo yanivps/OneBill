@@ -1,6 +1,12 @@
 class InvitationsController < ApplicationController
+  skip_before_action :authorize_request, only: [:show]
+
   before_action :set_account, only: [:create]
   before_action :set_invited_user, only: [:create]
+  before_action :set_invitation_by_token, only: [:show]
+
+  def show
+  end
 
   # POST /invitations
   def create
@@ -32,5 +38,15 @@ class InvitationsController < ApplicationController
 
     def set_invited_user
       @invited_user = User.find_by_phone_number(params[:phone_number])
+    end
+
+    def set_invitation_by_token
+      raise ExceptionHandler::BadRequest, Message.missing_parameter(:invitation_token) if params[:invitation_token].blank?
+
+      @invitation = Invitation.find_by_token(params[:invitation_token])
+      if @invitation.nil? || @invitation.expires_at.past?
+        raise ExceptionHandler::InvalidOperation, Message.invalid_invitation_token
+      end
+      @invited_user = User.find_by_phone_number(@invitation.phone_number)
     end
 end

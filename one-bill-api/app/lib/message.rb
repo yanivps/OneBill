@@ -4,6 +4,10 @@ class Message
       "Sorry, #{record} not found"
     end
 
+    def already_exists(record = 'Record')
+      "#{record} is not unique"
+    end
+
     def invalid_credentials
       'Invalid credentials'
     end
@@ -28,8 +32,8 @@ class Message
       'You are not not allowed to perform this operation'
     end
 
-    def account_user_association_not_created
-      "Could not associate user with the account"
+    def invitation_does_not_belong_to_this_user
+      "Invitation does not belong to this user"
     end
 
     def account_created

@@ -34,6 +34,11 @@ export class AuthService {
     return tokenNotExpired();
   }
 
+  refreshToken() {
+    return this.http.get(this.apiAuthUrl + 'refresh_token')
+      .map(this.setToken)
+  }
+
   public get currentUser() {
     let token = localStorage.getItem('token');
     if (!token) return null;
@@ -47,13 +52,7 @@ export class AuthService {
 
   loginWithUserCredential(credentials: {email: string, password: string}): Observable<void> {
     return this.http.post(this.apiAuthUrl + 'login', credentials)
-      .map(response => {
-        if (!response || !response['auth_token']) {
-          throw new OAuthError("Server did not respond with auth_token parameter");
-        }
-
-        localStorage.setItem("token", response['auth_token']);
-      })
+      .map(this.setToken)
       .catch(this.handleError)
   }
 
@@ -102,6 +101,14 @@ export class AuthService {
 
         localStorage.setItem("token", response['auth_token']);
       });
+  }
+
+  private setToken(response: Object) {
+    if (!response || !response['auth_token']) {
+      throw new OAuthError("Server did not respond with auth_token parameter");
+    }
+
+    localStorage.setItem("token", response['auth_token']);
   }
 
   private handleError(response: HttpErrorResponse) {

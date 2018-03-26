@@ -13,14 +13,18 @@ import { PaymentComponent } from './payment/payment.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { AuthGuard } from './auth/services/auth-guard.service';
 import { AccountPaymentsComponent } from './account-payments/account-payments.component';
+import { InvitationSignUpComponent } from './invitation-sign-up/invitation-sign-up.component';
+import { VerifiedUserGuard } from './verified-user-guard.service';
+import { VerifyUserComponent } from './verify-user/verify-user.component';
+import { ActivateInvitationComponent } from './activate-invitation/activate-invitation.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'accounts', component: AccountsComponent, canActivate: [AuthGuard] },
-  { path: 'accounts/:id', component: AccountComponent, canActivate: [AuthGuard] },
-  { path: 'accounts/:id/payments', component: AccountPaymentsComponent, canActivate: [AuthGuard] },
-  { path: 'accounts/:id/pay', component: PayFlowComponent, canActivate: [AuthGuard],
+  { path: 'accounts', component: AccountsComponent, canActivate: [AuthGuard, VerifiedUserGuard] },
+  { path: 'accounts/:id', component: AccountComponent, canActivate: [AuthGuard, VerifiedUserGuard] },
+  { path: 'accounts/:id/payments', component: AccountPaymentsComponent, canActivate: [AuthGuard, VerifiedUserGuard] },
+  { path: 'accounts/:id/pay', component: PayFlowComponent, canActivate: [AuthGuard, VerifiedUserGuard],
     children: [
       { path: 'options', component: PayFlowOptionsComponent, canActivate: [PayFlowGuard] },
       { path: 'method', component: PayFlowPaymentMethodComponent, canActivate: [PayFlowGuard] },
@@ -29,9 +33,12 @@ const appRoutes: Routes = [
       { path: '**', redirectTo: 'options' }
     ]
   },
-  { path: 'accounts/:id/payment', component: PaymentComponent, canActivate: [AuthGuard] },
-  { path: 'my/payments', component: PaymentsComponent, canActivate: [AuthGuard] },
-  { path: 'callback/paypal', component: PaypalCallbackComponent, canActivate: [AuthGuard] },
+  { path: 'accounts/:id/payment', component: PaymentComponent, canActivate: [AuthGuard, VerifiedUserGuard] },
+  { path: 'my/payments', component: PaymentsComponent, canActivate: [AuthGuard, VerifiedUserGuard] },
+  { path: 'callback/paypal', component: PaypalCallbackComponent, canActivate: [AuthGuard, VerifiedUserGuard] },
+  { path: 'invitation/signup', component: InvitationSignUpComponent },
+  { path: 'invitation', component: ActivateInvitationComponent, canActivate: [AuthGuard, VerifiedUserGuard] },
+  { path: 'verify', component: VerifyUserComponent, canActivate: [AuthGuard] },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

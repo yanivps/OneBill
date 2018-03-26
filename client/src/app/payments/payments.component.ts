@@ -16,7 +16,7 @@ export class PaymentsComponent implements OnInit {
     this.paymentService.getAll().subscribe(
       res => {
         this.isLoading = false;
-        this.payments = res as any[];
+        this.payments = res;
       }
     )
   }

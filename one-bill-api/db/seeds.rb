@@ -120,8 +120,11 @@ property_tax_municipality_account =
     MunicipalityAccount.new(municipality_account_number: "P#{Account.first.account_number}", account: Account.first, category: Category.find_by_name(:property_tax))
   create_bills(property_tax_municipality_account, bills_count: 1)
 
-Invitation.create!(phone_number: Account.first.users.first.phone_number,
-  account_id: Account.last.id, token: "A_VALID_TOKEN", expires_at: 1.year.from_now)
+Invitation.create!(phone_number: Account.first.users.last.phone_number,
+  account_id: Account.last.id, token: "A_VALID_TOKEN_EXISTING_PHONE", expires_at: 1.year.from_now)
+
+Invitation.create!(phone_number: Faker::PhoneNumber.cell_phone,
+  account_id: Account.last.id, token: "A_VALID_TOKEN_NEW_PHONE", expires_at: 1.year.from_now)
 
 Invitation.create!(phone_number: Account.last.users.first.phone_number,
   account_id: Account.first.id, token: "AN_EXPIRED_TOKEN", expires_at: 1.day.ago)

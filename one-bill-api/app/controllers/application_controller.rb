@@ -5,6 +5,7 @@ class ApplicationController < ActionController::API
   before_action :authorize_request
 
   attr_reader :current_user
+  attr_reader :token_expiration
 
   private
 
@@ -14,6 +15,8 @@ class ApplicationController < ActionController::API
   end
 
   def authorize_request_from_non_verified_user
-    @current_user = AuthorizeApiRequest.new(request.headers).call[:user]
+    result = AuthorizeApiRequest.new(request.headers).call
+    @current_user = result[:user]
+    @token_expiration = result[:token_expiration]
   end
 end

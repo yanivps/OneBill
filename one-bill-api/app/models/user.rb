@@ -19,7 +19,7 @@ class User < ApplicationRecord
   # encrypt password
   has_secure_password
 
-  has_many :user_of_accounts
+  has_many :user_of_accounts, dependent: :destroy
   has_many :accounts, :through => :user_of_accounts
   has_many :payments
   has_many :credit_cards

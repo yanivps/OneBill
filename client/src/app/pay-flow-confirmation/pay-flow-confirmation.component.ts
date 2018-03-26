@@ -15,7 +15,7 @@ export class PayFlowConfirmationComponent implements OnInit {
   payFlowData: PayFlowData;
   isPayFlowValid: boolean = false;
   isLoading: boolean = false;
-  private _accountId: string;
+  private accountId: string;
 
   constructor(
     private router: Router,
@@ -25,7 +25,7 @@ export class PayFlowConfirmationComponent implements OnInit {
     private alertService: AlertService) { }
 
   ngOnInit() {
-    this._accountId = this.route.parent.snapshot.paramMap.get('id');
+    this.accountId = this.route.parent.snapshot.paramMap.get('id');
     this.payFlowData = this.payFlowDataService.getPayFlowData();
     this.isPayFlowValid = this.payFlowDataService.isPayFlowValid();
   }
@@ -52,7 +52,7 @@ export class PayFlowConfirmationComponent implements OnInit {
   private handlePaymentSuccess(res: Object) {
     this.resetData();
     this.payFlowDataService.setPaymentTransaction(res);
-    this.router.navigate([`/accounts/${this._accountId}/payment`]);
+    this.router.navigate([`/accounts/${this.accountId}/payment`]);
   }
 
   private handlePaymentError(error: any) {
@@ -61,12 +61,12 @@ export class PayFlowConfirmationComponent implements OnInit {
   }
 
   private makePayPalPayment() {
-    return this.paymentService.createPaypalPayment(this._accountId, this.payFlowData.paypalToken, this.payFlowData.paypalPayerId)
+    return this.paymentService.createPaypalPayment(this.accountId, this.payFlowData.paypalToken, this.payFlowData.paypalPayerId)
   }
 
   private makeCreditCardPayment() {
     let params = this.buildCreditCardParams();
-    return this.paymentService.createCreditCardPayment(this._accountId, params);
+    return this.paymentService.createCreditCardPayment(this.accountId, params);
   }
 
   private resetData() {

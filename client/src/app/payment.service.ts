@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { PaymentMethod, PayFlowData } from './pay-flow-data';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PaymentService {
@@ -9,11 +10,11 @@ export class PaymentService {
   private accountPaymentBaseUrl: string = environment.apiHost + "/accounts/"
   constructor(private http: HttpClient) { }
 
-  getAll() {
+  getAll(): Observable<any> {
     return this.http.get(this.paymentBaseUrl);
   }
 
-  getAccountPayments(accountId: string) {
+  getAccountPayments(accountId: string): Observable<any> {
     return this.http.get(this.accountPaymentBaseUrl + accountId + "/payments/");
   }
 

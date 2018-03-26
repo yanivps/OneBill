@@ -9,11 +9,11 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Object> {
+  getAll(): Observable<any> {
     return this.http.get(this.baseUrl);
   }
 
-  get(accountId): Observable<Object> {
+  get(accountId): Observable<any> {
     return this.http.get(this.baseUrl + accountId);
   }
 }

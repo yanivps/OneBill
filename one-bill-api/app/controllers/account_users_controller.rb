@@ -26,7 +26,7 @@ class AccountUsersController < ApplicationController
     end
     raise ExceptionHandler::InvalidOperation, Message.invitation_already_used if invitation.used_at.present?
     if current_user.phone_number != invitation.phone_number
-      raise ExceptionHandler::Forbidden, Message.account_user_association_not_created
+      raise ExceptionHandler::Forbidden, Message.invitation_does_not_belong_to_this_user
     end
 
     UserOfAccount.create!(account_id: invitation.account_id, user_id: current_user.id)

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CreditCardService {
@@ -8,7 +9,7 @@ export class CreditCardService {
 
   constructor(private http: HttpClient) { }
 
-  getAll() {
+  getAll(): Observable<any> {
     return this.http.get(this.baseUrl);
   }
 

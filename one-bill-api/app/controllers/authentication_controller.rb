@@ -1,9 +1,15 @@
 class AuthenticationController < ApplicationController
-  skip_before_action :authorize_request
+  skip_before_action :authorize_request, except: [:refresh_token]
 
   # POST /auth/login
   def authenticate
     token = AuthenticateUser.new(auth_params[:email], auth_params[:password]).call
+    json_response({auth_token: token})
+  end
+
+  def refresh_token
+    u = current_user
+    token = JsonWebToken.encode({ user_id: u.id, name: u.name, verified: u.is_verified }, token_expiration)
     json_response({auth_token: token})
   end
 

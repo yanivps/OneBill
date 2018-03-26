@@ -30,6 +30,12 @@ import { CreditCardService } from './credit-card.service';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { PaymentsComponent } from './payments/payments.component';
 import { AccountPaymentsComponent } from './account-payments/account-payments.component';
+import { InvitationSignUpComponent } from './invitation-sign-up/invitation-sign-up.component';
+import { UserService } from './user.service';
+import { InvitationService } from './invitation.service';
+import { VerifyUserComponent } from './verify-user/verify-user.component';
+import { VerifiedUserGuard } from './verified-user-guard.service';
+import { ActivateInvitationComponent } from './activate-invitation/activate-invitation.component';
 
 
 @NgModule({
@@ -47,7 +53,10 @@ import { AccountPaymentsComponent } from './account-payments/account-payments.co
     PaypalCallbackComponent,
     PaymentComponent,
     PaymentsComponent,
-    AccountPaymentsComponent
+    AccountPaymentsComponent,
+    InvitationSignUpComponent,
+    VerifyUserComponent,
+    ActivateInvitationComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +74,10 @@ import { AccountPaymentsComponent } from './account-payments/account-payments.co
     PayFlowValidatorService,
     PayFlowGuard,
     PaymentService,
-    CreditCardService
+    CreditCardService,
+    UserService,
+    InvitationService,
+    VerifiedUserGuard
   ],
   bootstrap: [AppComponent]
 })

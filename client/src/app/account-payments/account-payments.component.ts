@@ -20,7 +20,7 @@ export class AccountPaymentsComponent implements OnInit {
     let accountId = this.route.snapshot.paramMap.get('id');
     this.paymentsService.getAccountPayments(accountId).subscribe(res => {
       this.isLoading = false;
-      this.payments = res as any[];
+      this.payments = res;
     });
   }
 

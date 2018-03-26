@@ -35,7 +35,7 @@ export class PayFlowPaymentMethodComponent implements OnInit {
     this.creditCardService.getAll().subscribe(
       res => {
         this.isLoadingCards = false;
-        this.storedCards = res as any[];
+        this.storedCards = res;
         if (!this.payFlowData.paymentMethodSection) {
           this.payFlowData.paymentMethodSection = this.storedCards.length == 0 ? "newCard" : "storedCard"
         }
