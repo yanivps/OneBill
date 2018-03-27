@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { CustomFormsModule } from 'ng2-validation'
 
 
@@ -36,6 +36,7 @@ import { InvitationService } from './invitation.service';
 import { VerifyUserComponent } from './verify-user/verify-user.component';
 import { VerifiedUserGuard } from './verified-user-guard.service';
 import { ActivateInvitationComponent } from './activate-invitation/activate-invitation.component';
+import { AppErrorHandler } from './core/helpers/app-error-handler';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { ActivateInvitationComponent } from './activate-invitation/activate-invi
     CreditCardService,
     UserService,
     InvitationService,
-    VerifiedUserGuard
+    VerifiedUserGuard,
+    { provide: ErrorHandler, useClass: AppErrorHandler }
   ],
   bootstrap: [AppComponent]
 })

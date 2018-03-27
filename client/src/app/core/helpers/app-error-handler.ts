@@ -11,9 +11,9 @@ export class AppErrorHandler implements ErrorHandler {
     console.error(error);
   }
 
-  
+
   private get alertService() : AlertService {
     return this.injector.get(AlertService);
   }
-  
+
 }
