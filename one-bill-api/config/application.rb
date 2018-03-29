@@ -39,5 +39,11 @@ module OneBillApi
       "CreditCardTransaction" => { prefix: '1', initial_value: 1000 },
       "PaypalTransaction" => { prefix: '2', initial_value: 1000 }
     }
+
+    # TODO: Change to production url
+    config.x.invitation_urls = {
+      register: "http://localhost:4200/invitation/signup/",
+      login: "http://localhost:4200/invitation/"
+    }
   end
 end

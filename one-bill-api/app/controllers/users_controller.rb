@@ -24,9 +24,10 @@ class UsersController < ApplicationController
     code = generate_verification_code
     current_user.update(verification_code: code)
 
-    if Rails.env.development? || Rails.env.test?
-      return json_response({ code: code }, :created)
-    end
+    # TODO: Uncomment this when done with SMS demonstration
+    # if Rails.env.development? || Rails.env.test?
+    #   return json_response({ code: code }, :created)
+    # end
 
     SmsSender.verification_code(params[:phone_number], code)
     head :no_content

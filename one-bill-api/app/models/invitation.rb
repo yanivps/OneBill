@@ -20,4 +20,17 @@ class Invitation < ApplicationRecord
 
   validates_presence_of :token
   validates_presence_of :expires_at
+
+  def self.create_invitation(account, phone_number)
+    token = SecureRandom.urlsafe_base64(32, false)
+    expires_at = 1.month.from_now
+    invitation = Invitation.create!(phone_number: phone_number, account_id: account.id, token: token, expires_at: expires_at)
+
+    invited_user = User.find_by_phone_number(phone_number)
+    if invited_user
+      SmsSender.login_to_new_account_invitation(invitation.phone_number, invitation)
+    else
+      SmsSender.register_invitation(invitation.phone_number, invitation)
+    end
+  end
 end

@@ -30,7 +30,8 @@ export class VerifyUserComponent {
         res => {
           this.verificationSent = true;
           this.isLoading = false;
-          console.log(res.code);
+          // TODO: Remove verification code from here
+          if (res) console.log(res.code);
         },
         error => this.handleError(error));
   }

@@ -103,5 +103,9 @@ class Message
     def payment_was_already_processed
       "Payment was already processed"
     end
+
+    def sms_failed
+      "Failed to send SMS message"
+    end
   end
 end
