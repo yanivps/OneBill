@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService } from '../payment.service';
+import { AppError } from '../shared/models/app-error';
 
 @Component({
   selector: 'app-payments',
@@ -17,8 +18,12 @@ export class PaymentsComponent implements OnInit {
       res => {
         this.isLoading = false;
         this.payments = res;
+      },
+      (error: AppError) => {
+        this.isLoading = false;
+        throw error;
       }
-    )
+    );
   }
 
   formatAddress(address: any) {

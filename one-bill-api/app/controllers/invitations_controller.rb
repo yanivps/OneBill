@@ -44,10 +44,9 @@ class InvitationsController < ApplicationController
     def set_invitation_by_token
       raise ExceptionHandler::BadRequest, Message.missing_parameter(:invitation_token) if params[:invitation_token].blank?
 
-      @invitation = Invitation.find_by_token(params[:invitation_token])
-      if @invitation.nil? || @invitation.expires_at.past?
-        raise ExceptionHandler::InvalidOperation, Message.invalid_invitation_token
-      end
+      @invitation = Invitation.find_by_token!(params[:invitation_token])
+      raise ExceptionHandler::InvalidOperation, Message.invitation_was_expired if @invitation.expires_at.past?
+
       @invited_user = User.find_by_phone_number(@invitation.phone_number)
     end
 end

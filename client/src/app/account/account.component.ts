@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppError } from '../shared/models/app-error';
+import { NotFoundError } from '../shared/models/not-found-error';
+import { AlertService } from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-account',
@@ -12,7 +15,11 @@ export class AccountComponent implements OnInit {
   account: any;
   isLoading: boolean = true;
 
-  constructor(private accountService: AccountService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private accountService: AccountService,
+    private alertService: AlertService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     let accountId = this.route.snapshot.paramMap.get('id');
@@ -25,6 +32,12 @@ export class AccountComponent implements OnInit {
           return;
         }
         this.filterBills();
+      },
+      (error: AppError) => {
+        this.router.navigate(['accounts']);
+        if (error instanceof NotFoundError) {
+          this.alertService.error("Page was not found", true);
+        } else throw error;
       }
     );
   }

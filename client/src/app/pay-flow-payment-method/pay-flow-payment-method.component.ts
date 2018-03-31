@@ -5,6 +5,8 @@ import { PaymentMethod, Options, PayFlowData } from '../pay-flow-data';
 import { PaymentService } from '../payment.service';
 import { CreditCardService } from '../credit-card.service';
 import { AlertService } from '../shared/services/alert.service';
+import { AppError } from '../shared/models/app-error';
+import { NotFoundError } from '../shared/models/not-found-error';
 
 @Component({
   selector: 'pay-flow-payment-method',
@@ -40,8 +42,13 @@ export class PayFlowPaymentMethodComponent implements OnInit {
           this.payFlowData.paymentMethodSection = this.storedCards.length == 0 ? "newCard" : "storedCard"
         }
       },
-      error => this.handleError(error)
-    )
+      (error: AppError) => {
+        this.isLoadingCards = false;
+        this.alertService.error("Could not load saved credit cards. Try refresh the page");
+        if (!this.payFlowData.paymentMethodSection)
+          this.payFlowData.paymentMethodSection = "newCard";
+      }
+    );
   }
 
   save(form: any): boolean {
@@ -72,14 +79,18 @@ export class PayFlowPaymentMethodComponent implements OnInit {
     let index = this.storedCards.indexOf(card);
     if (index != -1) {
       this.storedCards.splice(index, 1);
-      this.creditCardService.delete(card.id)
-        .subscribe(
-          null,
-          err => {
-            this.alertService.error("There was an error. Card xx" + card.last4 + " was not deleted");
+      this.creditCardService.delete(card.id).subscribe(
+        null,
+        (error: AppError) => {
+          if (error instanceof NotFoundError) {
+            // Do nothing
+          } else {
+            this.alertService.error("Error: Card xx" + card.last4 + " could not be deleted");
             this.storedCards.splice(index, 0, card);
           }
-        );
+        }
+      );
+
       if (this.storedCards.length == 0) {
         this.payFlowData.paymentMethodSection = "newCard";
       }
@@ -98,17 +109,11 @@ export class PayFlowPaymentMethodComponent implements OnInit {
     }
     this.paymentSerivce.generatePaypalLink(accountId, params).subscribe(
       res => window.location.href = res['paypal_express_url'],
-      error => this.handleError(error)
+      (error: AppError) => {
+        this.isLoadingPaypal = false;
+        throw error;
+      }
     );
-  }
-
-  private handleError(error: any) {
-    this.isLoadingCards = false;
-    this.isLoadingPaypal = false;
-    if (!this.payFlowData.paymentMethodSection)
-      this.payFlowData.paymentMethodSection = "newCard";
-
-    this.alertService.error(error.error.message);
   }
 
   knownCardType() {

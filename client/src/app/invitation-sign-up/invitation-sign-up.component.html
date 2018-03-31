@@ -9,29 +9,41 @@
           <label class="col-form-label">{{invitation.phoneNumber}}</label>
         </div>
       </div>
-      <div class="form-group" [ngClass]="{ 'is-invalid': f.submitted && !firstName.valid }">
+      <div class="form-group">
         <label for="firstName">First Name</label>
-        <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
+        <input type="text" [ngClass]="{ 'is-invalid': f.submitted && !firstName.valid }" class="form-control"
+               name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
         <div *ngIf="f.submitted && !firstName.valid" class="help-block text-danger">First Name is required</div>
       </div>
-      <div class="form-group" [ngClass]="{ 'is-invalid': f.submitted && !lastName.valid }">
+      <div class="form-group">
         <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
+        <input type="text" [ngClass]="{ 'is-invalid': f.submitted && !lastName.valid }" class="form-control"
+               name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
         <div *ngIf="f.submitted && !lastName.valid" class="help-block text-danger">Last Name is required</div>
       </div>
-      <div class="form-group" [ngClass]="{ 'is-invalid': f.submitted && !email.valid }">
+      <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required email />
+        <input type="text" [ngClass]="{ 'is-invalid': f.submitted && (!email.valid || validationErrors.email) }" class="form-control"
+               name="email" [(ngModel)]="model.email" #email="ngModel" required email />
         <div *ngIf="f.submitted && !email.valid" class="help-block text-danger">A valid Email is required</div>
+        <div *ngIf="validationErrors.email">
+           <div *ngFor="let error of validationErrors.email" class="help-block text-danger">Email {{error}}</div>
+        </div>
       </div>
-      <div class="form-group" [ngClass]="{ 'is-invalid': f.submitted && !password.valid }">
+      <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
-        <div *ngIf="f.submitted && !password.valid" class="help-block text-danger">Password is required</div>
+        <input type="password" [ngClass]="{ 'is-invalid': f.submitted && (!password.valid || validationErrors.password) }"
+               class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required minlength="6" />
+        <div *ngIf="f.submitted && password.errors?.required" class="help-block text-danger">Password is required</div>
+        <div *ngIf="f.submitted && !password.errors?.required && password.errors?.minlength" class="help-block text-danger">Password should be at least {{password.errors.minlength.requiredLength}} characters</div>
+        <div *ngIf="validationErrors.password">
+          <div *ngFor="let error of validationErrors.password" class="help-block text-danger">Password {{error}}</div>
+        </div>
       </div>
-      <div class="form-group" [ngClass]="{ 'is-invalid': f.submitted && !passwordConfirmation.valid }">
+      <div class="form-group">
         <label for="passwordConfirmation">Confirm Password</label>
-        <input type="password" class="form-control" name="passwordConfirmation" [(ngModel)]="model.passwordConfirmation" #passwordConfirmation="ngModel"
+        <input type="password" [ngClass]="{ 'is-invalid': f.submitted && !passwordConfirmation.valid }" class="form-control"
+               name="passwordConfirmation" [(ngModel)]="model.passwordConfirmation" #passwordConfirmation="ngModel"
           required [equalTo]="password" />
         <div *ngIf="f.submitted && passwordConfirmation.errors?.required" class="help-block text-danger">Password Confirmation is required</div>
         <div *ngIf="f.submitted && !passwordConfirmation.errors?.required && passwordConfirmation.errors?.equalTo" class="help-block text-danger">Password Confirmation does not match Password</div>

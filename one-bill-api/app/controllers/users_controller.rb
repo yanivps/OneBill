@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def create
     User.create!(user_params.merge(phone_number: @invitation.phone_number))
     token = AuthenticateUser.new(user_params[:email], user_params[:password]).call
-    response = { auth_token: token, message: Message.account_created }
+    response = Message.account_created(token)
     json_response(response, :created)
   end
 
@@ -56,9 +56,8 @@ class UsersController < ApplicationController
     raise ExceptionHandler::BadRequest, Message.missing_parameter(:invitation_token) if params[:invitation_token].blank?
 
     @invitation = Invitation.find_by_token(params[:invitation_token])
-    if @invitation.nil? || @invitation.expires_at.past?
-      raise ExceptionHandler::InvalidOperation, Message.invalid_invitation_token
-    end
+    raise ExceptionHandler::InvalidOperation, Message.invalid_invitation_token if @invitation.nil?
+    raise ExceptionHandler::InvalidOperation, Message.invitation_was_expired if @invitation.expires_at.past?
     raise ExceptionHandler::InvalidOperation, Message.invitation_already_used if @invitation.used_at.present?
   end
 end

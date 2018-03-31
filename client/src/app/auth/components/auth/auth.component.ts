@@ -11,8 +11,8 @@ import { AlertService } from '../../../shared/services/alert.service';
 })
 export class AuthComponent implements OnInit {
   constructor(
-    private route: ActivatedRoute, 
-    private router: Router, 
+    private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthService,
     private alertService: AlertService) {
   }
@@ -35,7 +35,7 @@ export class AuthComponent implements OnInit {
           this.router.navigate(['login']);
           if (error instanceof OAuthAccessDenied) {
             this.alertService.error('You must grant permissions to this application in order to login');
-          } else throw error
+          } else throw error;
         }
       );
   }

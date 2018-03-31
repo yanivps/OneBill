@@ -28,7 +28,7 @@ class SmsSender
         response = Net::HTTP.post_form(uri, 'apikey' => TEXT_LOCAL_API_KEY, 'username' => TEXT_LOCAL_USERNAME, 'hash' => TEXT_LOCAL_HASH, 'message' => message, 'numbers' => phone_number)
         response_data = JSON.parse(response.body)
         if response_data["status"] != "success"
-          Rails.logger.error Message.sms_failed + " Errors: #{response_data['errors']}"
+          Rails.logger.error Message.sms_failed[:description] + " Errors: #{response_data['errors']}"
           raise ExceptionHandler::InternalError, Message.sms_failed
         end
         if Rails.env.development?

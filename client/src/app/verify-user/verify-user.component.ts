@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
+import { AppError } from '../shared/models/app-error';
+import { VerificationIncorrectPhoneNumberError, IncorrectVerificationCodeError } from '../verification-errors';
 
 @Component({
   selector: 'app-verify-user',
@@ -25,41 +27,42 @@ export class VerifyUserComponent {
   sendVerificationCode() {
     this.isLoading = true;
     let userId = this.authService.currentUser.user_id;
-    this.userService.sendVerificationCodeSms(userId, this.phoneNumber)
-      .subscribe(
-        res => {
-          this.verificationSent = true;
-          this.isLoading = false;
-          // TODO: Remove verification code from here
-          if (res) console.log(res.code);
-        },
-        error => this.handleError(error));
+    this.userService.sendVerificationCodeSms(userId, this.phoneNumber).subscribe(
+      res => {
+        this.verificationSent = true;
+        this.isLoading = false;
+        // TODO: Remove verification code from here
+        if (res) console.log(res.code);
+      },
+      (error: AppError) => {
+        this.isLoading = false;
+        if (error instanceof VerificationIncorrectPhoneNumberError) {
+          this.alertService.error("Phone number is incorrect");
+        } else throw error;
+      }
+    );
   }
 
   verify() {
     this.isLoading = true;
     let userId = this.authService.currentUser.user_id;
-    this.userService.verify(userId, this.verificationCode)
-      .subscribe(
-        res => {
-          // TODO: Remove verification code from here
-          console.log(res)
-          this.alertService.success("User was verified");
-          this.authService.refreshToken()
-            .subscribe(res => this.navigate());
-        },
-        error => this.handleError(error)
-      )
+    this.userService.verify(userId, this.verificationCode).subscribe(
+      res => {
+        this.alertService.success("User was verified");
+        this.authService.refreshToken()
+          .subscribe(res => this.navigate());
+      },
+      (error: AppError) => {
+        this.isLoading = false;
+        if (error instanceof IncorrectVerificationCodeError) {
+          this.alertService.error("Verification code is incorrect",);
+        } else throw error;
+      }
+    );
   }
 
   private navigate() {
     let returnUrl = this.route.snapshot.queryParams['returnUrl'];
     this.router.navigateByUrl(returnUrl || '/');
   }
-
-  private handleError(error) {
-    this.isLoading = false;
-    this.alertService.error(error.error.message);
-  }
-
 }

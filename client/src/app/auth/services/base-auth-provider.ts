@@ -33,7 +33,7 @@ export abstract class BaseAuthProvider {
   getAuthCodeFromCallback(callbackParams: { [key: string]: any }) {
     if (callbackParams[this.errorParamName]) {
       // throw this.errorMapping(callbackParams)
-      throw new OAuthAccessDenied("Server did not respond with auth_token parameter123");
+      throw new OAuthAccessDenied("Server did not respond with auth_token parameter");
     }
     return callbackParams[this.codeParamName]
   }
@@ -73,8 +73,8 @@ export abstract class BaseAuthProvider {
       return new OAuthTemporarilyUnavailable(errorParams[this.errorDescriptionParamName], errorParams)
 
     return new OAuthError(errorParams[this.errorDescriptionParamName], errorParams)
-  }  
-  
+  }
+
 
   private openInPopup(uri, paramsToExtract: string[]) {
     let self = this
@@ -125,7 +125,7 @@ export abstract class BaseAuthProvider {
     var regex = new RegExp(regexS);
     var results = regex.exec(url);
     if (!results) return null;
-    
+
     return results[1];
   }
 }

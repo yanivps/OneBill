@@ -4,6 +4,8 @@ import { PayFlowDataService } from '../pay-flow-data.service';
 import { PayFlowData } from '../pay-flow-data';
 import { PaymentService } from '../payment.service';
 import { AlertService } from '../shared/services/alert.service';
+import { AppError } from '../shared/models/app-error';
+import { CreditCardDeclinedError, PaymentProcessorError, CreditCardInvalidError } from '../payment-errors';
 
 @Component({
   selector: 'app-pay-flow-confirmation',
@@ -39,13 +41,27 @@ export class PayFlowConfirmationComponent implements OnInit {
     if (this.payFlowData.paypalToken && this.payFlowData.paypalPayerId) {
       this.makePayPalPayment().subscribe(
         res => this.handlePaymentSuccess(res),
-        error => this.handlePaymentError(error)
+        (error: AppError) => {
+          this.router.navigate(['../method'], { relativeTo: this.route })
+          if (error instanceof PaymentProcessorError) {
+            this.alertService.error("Your transaction could not be processed", true);
+          } else throw error;
+        }
       )
     } else {
       this.makeCreditCardPayment().subscribe(
         res => this.handlePaymentSuccess(res),
-        error => this.handlePaymentError(error)
-      )
+        (error: AppError) => {
+          this.router.navigate(['../method'], { relativeTo: this.route })
+          if (error instanceof PaymentProcessorError) {
+            this.alertService.error("Your transaction could not be processed", true);
+          } else if (error instanceof CreditCardInvalidError) {
+            this.alertService.error("The credit card information you provided is not valid. Please double check the information you provided and then try again", true);
+          } else if (error instanceof CreditCardDeclinedError) {
+            this.alertService.error("The credit card you provided was declined. Please double check your information and try again", true);
+          } else throw error;
+        }
+      );
     }
   }
 
@@ -53,11 +69,6 @@ export class PayFlowConfirmationComponent implements OnInit {
     this.resetData();
     this.payFlowDataService.setPaymentTransaction(res);
     this.router.navigate([`/accounts/${this.accountId}/payment`]);
-  }
-
-  private handlePaymentError(error: any) {
-    this.alertService.error(error.error.message, true);
-    this.router.navigate(['../method'], { relativeTo: this.route });
   }
 
   private makePayPalPayment() {

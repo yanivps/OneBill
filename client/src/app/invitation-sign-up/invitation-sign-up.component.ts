@@ -4,6 +4,10 @@ import { AlertService } from '../shared/services/alert.service';
 import { UserService } from '../user.service';
 import { InvitationService } from '../invitation.service';
 import { AuthService } from '../auth/services/auth.service';
+import { NotFoundError } from '../shared/models/not-found-error';
+import { InvitationExpiredError } from '../invitation-errors';
+import { AppError } from '../shared/models/app-error';
+import { ValidationError } from '../validation-error';
 
 @Component({
   selector: 'app-invitation-sign-up',
@@ -16,6 +20,7 @@ export class InvitationSignUpComponent implements OnInit {
   token: string;
   isLoading = true;
   isLoadingRegister = false;
+  validationErrors = {};
 
   constructor(
     private router: Router,
@@ -36,37 +41,40 @@ export class InvitationSignUpComponent implements OnInit {
 
   register() {
     this.isLoadingRegister = true;
-    this.userService.create(this.model, this.token)
-      .subscribe(
-        data => {
-          this.alertService.success('Registration successful', true);
-          this.router.navigate(['/login'], { queryParams: { returnUrl: `/invitation?token=${this.token}&account=${this.invitation.account.id}` } });
-        },
-        error => {
-          this.handleRegisterError(error);
-        });
+    this.userService.create(this.model, this.token).subscribe(
+      data => {
+        this.alertService.success('Registration successful', true);
+        this.router.navigate(['/login'], { queryParams: { returnUrl: `/invitation?token=${this.token}&account=${this.invitation.account.id}` } });
+      },
+      (error: AppError) => {
+        this.isLoadingRegister = false;
+        if (error instanceof ValidationError) {
+          this.validationErrors = error.validations;
+          this.alertService.error("Some of the input fields are invalid");
+        } else throw error;
+      }
+    );
   }
 
   private loadInvitation() {
-    this.invitationService.get(this.token)
-      .subscribe(
-        res => {
-          this.isLoading = false;
-          this.invitation = res;
-          if (this.invitation.usedAt)
-            return this.handleInvitationAlreadyUsed();
-          if (this.invitation.invitedUserId)
-            return this.handleInvitedUserAlreadyRegistered();
-        },
-        error => {
-          this.handleLoadingError(error);
-          this.router.navigate(['/']);
-        }
-      );
-  }
-
-  private redirectToLogin() {
-    this.router.navigate(['/login'], { queryParams: { returnUrl: `/invitation?token=${this.token}&account=${this.invitation.account.id}` } });
+    this.invitationService.get(this.token).subscribe(
+      res => {
+        this.isLoading = false;
+        this.invitation = res;
+        if (this.invitation.usedAt)
+          return this.handleInvitationAlreadyUsed();
+        if (this.invitation.invitedUserId)
+          return this.handleInvitedUserAlreadyRegistered();
+      },
+      (error: AppError) => {
+        this.router.navigate(['/']);
+        if (error instanceof NotFoundError) {
+          this.alertService.error("Invitation token is invalid", true);
+        } else if (error instanceof InvitationExpiredError) {
+          this.alertService.error("Invitation was expired", true);
+        } else throw error;
+      }
+    );
   }
 
   private handleInvitedUserAlreadyRegistered() {
@@ -82,18 +90,12 @@ export class InvitationSignUpComponent implements OnInit {
     }
   }
 
+  private redirectToLogin() {
+    this.router.navigate(['/login'], { queryParams: { returnUrl: `/invitation?token=${this.token}&account=${this.invitation.account.id}` } });
+  }
+
   private handleInvitationAlreadyUsed() {
     this.alertService.error("Invitation was already used", true);
-    this.router.navigate(['/']);
-  }
-
-  private handleRegisterError(error) {
-    this.isLoadingRegister = false;
-    this.alertService.error(error.error.message, true);
-  }
-
-  private handleLoadingError(error) {
-    this.alertService.error(error.error.message, true);
     this.router.navigate(['/']);
   }
 }

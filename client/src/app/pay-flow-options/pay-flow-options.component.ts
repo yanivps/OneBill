@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PayFlowDataService } from '../pay-flow-data.service';
 import { Options } from '../pay-flow-data';
 import { AlertService } from '../shared/services/alert.service';
+import { AppError } from '../shared/models/app-error';
+import { NotFoundError } from '../shared/models/not-found-error';
 
 @Component({
   selector: 'app-pay-flow-options',
@@ -30,10 +32,18 @@ export class PayFlowOptionsComponent implements OnInit {
 
     let accountId = this.route.parent.snapshot.paramMap.get('id');
     this.options = this.payFlowDataService.getOptions();
-    this.accountService.get(accountId).subscribe(res => {
-      this.isLoading = false;
-      this.account = res;
-    });
+    this.accountService.get(accountId).subscribe(
+      res => {
+        this.isLoading = false;
+        this.account = res;
+      },
+      (error: AppError) => {
+        this.router.navigate(['accounts']);
+        if (error instanceof NotFoundError) {
+          this.alertService.error("Page was not found", true);
+        } else throw error;
+      }
+    );
   }
 
   save(form: any): boolean {

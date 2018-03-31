@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { AlertService } from '../../../shared/services/alert.service';
+import { AuthError } from '../../../auth/models/auth-error';
+import { UnauthorizedError } from '../../../auth/models/unauthorized-error';
 
 @Component({
   selector: 'app-login',
@@ -35,9 +37,11 @@ export class LoginComponent implements OnInit {
         data => {
           this.router.navigateByUrl(this.returnUrl);
         },
-        error => {
-          this.alertService.error(error.originalError.message);
+        (error: AuthError) => {
           this.loading = false;
+          if (error instanceof UnauthorizedError) {
+            this.alertService.error("Invalid credentials");
+          } else throw error;
         });
   }
 }

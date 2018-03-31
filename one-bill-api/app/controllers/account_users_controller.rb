@@ -21,10 +21,10 @@ class AccountUsersController < ApplicationController
     raise ExceptionHandler::BadRequest, Message.missing_parameter(:invitation_token) if params[:invitation_token].blank?
 
     invitation = Invitation.find_by_token(params[:invitation_token])
-    if invitation.nil? || invitation.expires_at.past?
-      raise ExceptionHandler::InvalidOperation, Message.invalid_invitation_token
-    end
+    raise ExceptionHandler::InvalidOperation, Message.invalid_invitation_token if invitation.nil?
+    raise ExceptionHandler::InvalidOperation, Message.invitation_was_expired if invitation.expires_at.past?
     raise ExceptionHandler::InvalidOperation, Message.invitation_already_used if invitation.used_at.present?
+
     if current_user.phone_number != invitation.phone_number
       raise ExceptionHandler::Forbidden, Message.invitation_does_not_belong_to_this_user
     end
