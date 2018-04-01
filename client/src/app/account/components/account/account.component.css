@@ -1,0 +1,227 @@
+@font-face {
+  font-family: SourceSansPro;
+  src: url("../../../../assets/fonts/SourceSansPro-Regular.ttf");
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #0087C3;
+  text-decoration: none;
+}
+
+.invoice-container {
+  background-color: red;
+  /* position: relative; */
+  /* width: 21cm; */
+  /* height: 29.7cm; */
+  /* margin: 0 auto; */
+  color: #555555;
+  background: #FFFFFF;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-family: SourceSansPro;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #AAAAAA;
+}
+
+#logo {
+  float: left;
+  margin-top: 8px;
+}
+
+#logo img {
+  height: 70px;
+}
+
+#company {
+  float: right;
+  text-align: right;
+}
+
+#details {
+  margin-bottom: 25px;
+}
+
+#client {
+  padding-left: 6px;
+  border-left: 6px solid #0087C3;
+  float: left;
+}
+
+#client .to {
+  color: #777777;
+}
+
+h2.name {
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 0;
+}
+
+#invoice {
+  float: right;
+  text-align: right;
+}
+
+#invoice h1 {
+  color: #0087C3;
+  font-size: 2.4em;
+  line-height: 1em;
+  font-weight: normal;
+  margin: 0 0 10px 0;
+}
+
+#invoice .date {
+  font-size: 1.1em;
+  color: #777777;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+table th, table td {
+  padding: 0.7em;
+  background: #EEEEEE;
+  text-align: center;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+table th {
+  background: #DDDDDD;
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+table td {
+  text-align: center;
+}
+
+table td h3 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 0 0 0.2em 0;
+}
+
+table td.category.property-tax {
+  color: #6dbf4a;
+}
+
+table td.category.water {
+  color: #52b7db;
+}
+
+table td.category.electricity {
+  color: #f7a94e;
+}
+
+table td.no {
+  color: #FFFFFF;
+  font-size: 1.6em;
+}
+
+table th.no {
+  font-size: 1.6em;
+}
+
+table .no.property-tax {
+  background: #6dbf4a;
+}
+
+table .no.water {
+  background: #52b7db;
+}
+
+table .no.electricity {
+  background: #f7a94e;
+}
+
+table .desc {
+  text-align: left;
+}
+
+/* COLORS: #6dbf4a , #52b7db , #f7a94e */
+
+table td.total {
+  color: #FFFFFF;
+}
+
+table .total.property-tax {
+  background: #6dbf4a;
+}
+
+table .total.water {
+  background: #52b7db;
+}
+
+table .total.electricity {
+  background: #f7a94e;
+}
+
+table td.unit, table td.category, table td.total {
+  font-size: 1.2em;
+}
+
+table tbody tr:last-child td {
+  border: none;
+}
+
+table tfoot td {
+  padding: 10px 20px;
+  background: #FFFFFF;
+  border-bottom: none;
+  font-size: 1.2em;
+  white-space: nowrap;
+  border-top: 1px solid #AAAAAA;
+}
+
+table tfoot tr:first-child td {
+  border-top: none;
+}
+
+table tfoot tr.balance td {
+  color: #6dbf4a;
+  font-size: 1.4em;
+  /* border-top: 1px solid #6dbf4a; */
+}
+
+table tfoot tr td:first-child {
+  border: none;
+}
+
+#thanks {
+  font-size: 2em;
+  margin-bottom: 50px;
+}
+
+#notices {
+  padding-left: 6px;
+  border-left: 6px solid #0087C3;
+}
+
+#notices .notice {
+  font-size: 1.2em;
+}
+
+footer {
+  color: #777777;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #AAAAAA;
+  padding: 8px 0;
+  text-align: center;
+}
