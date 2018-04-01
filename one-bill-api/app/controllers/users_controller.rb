@@ -17,12 +17,12 @@ class UsersController < ApplicationController
   def send_verification_code_sms
     raise ExceptionHandler::BadRequest, Message.missing_parameter(:phone_number) if params[:phone_number].blank?
     raise ExceptionHandler::Forbidden Message.not_allowed if current_user.id != params[:id]
-    phone_number = params[:phone_number].gsub(/[() -]/, '')
-    user_phone_number = current_user.phone_number.gsub(/[() -]/, '')
-    raise ExceptionHandler::InvalidOperation, Message.incorrect_phone_number if user_phone_number != phone_number
+
+    phone_number_match = compare_phone_numbers(params[:phone_number], current_user.phone_number)
+    raise ExceptionHandler::InvalidOperation, Message.incorrect_phone_number if !phone_number_match
 
     code = generate_verification_code
-    current_user.update(verification_code: code)
+    current_user.update_attribute(:verification_code, code)
 
     # TODO: Uncomment this when done with SMS demonstration
     # if Rails.env.development? || Rails.env.test?
@@ -59,5 +59,17 @@ class UsersController < ApplicationController
     raise ExceptionHandler::InvalidOperation, Message.invalid_invitation_token if @invitation.nil?
     raise ExceptionHandler::InvalidOperation, Message.invitation_was_expired if @invitation.expires_at.past?
     raise ExceptionHandler::InvalidOperation, Message.invitation_already_used if @invitation.used_at.present?
+  end
+
+  def compare_phone_numbers(phone_number, user_phone_number)
+    phone_number = phone_number.gsub(/[()-]/, '')
+    user_phone_number = user_phone_number.gsub(/[() -]/, '')
+
+    country_code, number = phone_number.split(' ')
+    number.gsub!(/^0+/, '')
+
+    return true if "#{country_code}#{number}" == user_phone_number
+    return true if "#{country_code}0#{number}" == user_phone_number
+    return false
   end
 end

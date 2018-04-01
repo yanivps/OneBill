@@ -28,6 +28,7 @@
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "ng2-validation": "^4.2.0",
+    "ng4-intl-phone": "^1.2.1",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },

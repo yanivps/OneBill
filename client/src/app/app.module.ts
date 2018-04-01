@@ -37,7 +37,7 @@ import { VerifyUserComponent } from './verify-user/verify-user.component';
 import { VerifiedUserGuard } from './verified-user-guard.service';
 import { ActivateInvitationComponent } from './activate-invitation/activate-invitation.component';
 import { AppErrorHandler } from './core/helpers/app-error-handler';
-
+import { InternationalPhoneModule } from 'ng4-intl-phone';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,8 @@ import { AppErrorHandler } from './core/helpers/app-error-handler';
     routing,
     FormsModule,
     CustomFormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    InternationalPhoneModule
   ],
   providers: [
     AccountService,

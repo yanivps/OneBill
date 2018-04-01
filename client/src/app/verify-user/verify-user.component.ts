@@ -5,6 +5,8 @@ import { AuthService } from '../auth/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
 import { AppError } from '../shared/models/app-error';
 import { VerificationIncorrectPhoneNumberError, IncorrectVerificationCodeError } from '../verification-errors';
+import { NgModel } from '@angular/forms';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone';
 
 @Component({
   selector: 'app-verify-user',
@@ -24,10 +26,20 @@ export class VerifyUserComponent {
     private authService: AuthService,
     private userService: UserService) { }
 
-  sendVerificationCode() {
+  sendVerificationCode(phoneNumberInput: NgModel) {
+    let selectedCountry = (phoneNumberInput.valueAccessor as IntPhonePrefixComponent).selectedCountry;
+    if(!selectedCountry) {
+      phoneNumberInput.control.setErrors({'requiredCountryCode': true});
+      return;
+    }
+
+    let formattedPhoneNumber = this.phoneNumber;
+    if (formattedPhoneNumber.indexOf("+" + selectedCountry.dialCode + " ") == -1) {
+      formattedPhoneNumber = formattedPhoneNumber.replace("+" + selectedCountry.dialCode, "+" + selectedCountry.dialCode + " ")
+    }
     this.isLoading = true;
     let userId = this.authService.currentUser.user_id;
-    this.userService.sendVerificationCodeSms(userId, this.phoneNumber).subscribe(
+    this.userService.sendVerificationCodeSms(userId, formattedPhoneNumber).subscribe(
       res => {
         this.verificationSent = true;
         this.isLoading = false;

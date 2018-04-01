@@ -28,3 +28,41 @@ body {
   user-select: none;
   /* Standard */
 }
+
+.flag-container .dropdown-toggle::after {
+  display: none
+}
+
+.flagInput .dropdown-content {
+  margin-bottom: 20px;
+}
+
+.flagInput {
+  position: absolute;
+  z-index: 100;
+  top: 1px;
+  left: 2px;
+}
+
+.flagInput .dropbtn {
+  height: 35px;
+}
+
+.flagInput+input {
+  padding-left: 50px;
+  z-index: 0;
+}
+
+/* flag selector arrow */
+.flagInput .dropdown::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  margin-top: -2px;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 4px solid #555;
+}
