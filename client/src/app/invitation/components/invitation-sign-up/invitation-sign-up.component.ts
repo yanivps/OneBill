@@ -66,6 +66,8 @@ export class InvitationSignUpComponent implements OnInit {
           return this.handleInvitationAlreadyUsed();
         if (this.invitation.invitedUserId)
           return this.handleInvitedUserAlreadyRegistered();
+        // Logout, as we are going to register with a new user
+        this.authService.logout();
       },
       (error: AppError) => {
         this.router.navigate(['/']);
