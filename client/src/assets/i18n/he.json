@@ -1,41 +1,141 @@
 {
-  "an_unexpected_error_occurred": "אירעה שגיאה לא ידועה",
-  "auth": {
-    "oauth": {
-      "must_grant_permissions": "יש לתת הרשאות לאפליקציה זאת על מנת להתחבר"
-    }
-  },
-  "common": {
-    "invitation_token_is_invalid": "קוד ההזמנה אינו תקין",
-    "page_was_not_found": "העמוד לא נמצא",
-    "invitation_was_already_used": "בוצע כבר שימוש בהזמנה זאת",
-    "invitation_was_expired": "פג תוקף ההזמנה"
-  },
-  "invitation_sign_up": {
-    "registration_successful": "המשתמש נוצר בהצלחה",
-    "some_of_the_input_fields_are_invalid": "חלק המשדות אינם תקינים"
-  },
-  "login": {
-    "invalid_credentials": "שם משתמש או סיסמא שגויים"
-  },
-  "pay_flow_confirmation": {
-    "credit_card_declined": "כרטיס האשראי שסיפקת נדחה. יש לבדוק שנית את הפרטים ולנסות שוב",
-    "credit_card_not_valid": "כרטיס האשראי שסיפקת אינו תקין. יש לבדוק שנית את הפרטים ולנסות שוב",
-    "your_transaction_could_not_be_processed": "ביצוע העסקה נכשל"
-  },
-  "pay_flow_options": {
-    "paypal_payment_was_canceled": "תשלום פייפל בוטל"
-  },
-  "pay_flow_payment": {
-    "card_could_not_be_deleted": "נכשלה מחיקת הכרטיס xx{{params.card.last4}}",
-    "could_not_load_saved_credit_cards": "המערכת לא הצליחה לטעון את כרטיסי האשראי השמורים"
-  },
-  "paypal_callback": {
-    "error_has_occured_in_paypal_payment": "אירעה שגיאה בתשלום הפייפל"
-  },
-  "verify": {
-    "phone_number_is_incorrect": "מספר הטלפון שגוי",
-    "user_was_verified": "המשתמש אומת",
-    "verification_code_is_incorrect": "קוד האימות שגוי"
-  }
+	"account": {
+		"finance_charge_may_be_applied_on_unpaid_balances": "תשלומים שלא משולמים לאחר התאריך האחרון לתשלום עלולים לגרור חיובים נוספים",
+		"pay_now": "שלם עכשיו",
+		"payments_history": "תשלומים שבוצעו"
+	},
+	"account_payments": {
+		"no_payments_were_made_on_this_account": "לא בוצעו תשלומים בחשבון זה"
+	},
+	"accounts": {
+		"you_are_an_excellent_citizen": "אזרח למופת!",
+		"you_have_no_open_accounts": "אין לך חשבונות פתוחים"
+	},
+	"an_unexpected_error_occurred": "אירעה שגיאה לא ידועה",
+	"auth": {
+		"oauth": {
+			"must_grant_permissions": "יש לתת הרשאות לאפליקציה זאת על מנת להתחבר"
+		}
+	},
+	"common": {
+		"account_#": "מס' חשבון",
+		"accounts": "חשבונות",
+		"address": "כתובת",
+		"amount": "סכום",
+		"amount_to_pay": "סכום לתשלום",
+		"bill_number": "מספר חשבון",
+		"cancel": "ביטול",
+		"category": "סוג",
+		"date": "תאריך",
+		"email": "אימייל",
+		"first_name": "שם פרטי",
+		"invitation_token_is_invalid": "קוד ההזמנה אינו תקין",
+		"invitation_was_already_used": "בוצע כבר שימוש בהזמנה זאת",
+		"invitation_was_expired": "פג תוקף ההזמנה",
+		"last_name": "שם משפחה",
+		"login": "התחבר",
+		"next": "הבא",
+		"notice": "הערה",
+		"page_was_not_found": "העמוד לא נמצא",
+		"password": "סיסמא",
+		"pay_until": "שלם עד",
+		"payment_method": "אמצעי תשלום",
+		"payments": "תשלומים",
+		"period": "תקופה",
+		"phone_number": "מספר טלפון",
+		"previous": "הקודם",
+		"send": "שלח",
+		"submit": "שלח",
+		"unique_id": "אסמכתא",
+		"user": "משתמש"
+	},
+	"home": {
+		"welcome_to_onebill": "ברוכים הבאים ל OneBill"
+	},
+	"invitation_sign_up": {
+		"a_valid_email_is_required": "יש להכניס כתובת אימייל תקינה",
+		"confirm_password": "אימות סיסמא",
+		"last_name_is_required": "יש להכניס שם משפחה",
+		"password_confirmation_does_not_match_password": "שדה אימות סיסמא אינו תואם לסיסמא",
+		"password_confirmation_is_required": "יש לאמת את סיסמא",
+		"password_is_required": "יש להכניס סיסמא",
+		"password_should_be_at_least_x_characters": "הסיסמא חייבת להכיל לפחות {{characters}} תווים",
+		"register": "הרשמה",
+		"register_button": "הרשם",
+		"registration_successful": "המשתמש נוצר בהצלחה",
+		"some_of_the_input_fields_are_invalid": "חלק המשדות אינם תקינים"
+	},
+	"login": {
+		"email_is_required": "יש להכניס כתובת אימייל",
+		"invalid_credentials": "שם משתמש או סיסמא שגויים",
+		"password_is_required": "יש להכניס סיסמא"
+	},
+	"navbar": {
+		"accounts": "חשבונות",
+		"home": "בית",
+		"login": "התחבר",
+		"logout": "התנתק",
+		"my_payments": "התשלומים שלי"
+	},
+	"pay_flow_confirmation": {
+		"confirm_your_payment": "אשר את התשלום",
+		"credit_card_declined": "כרטיס האשראי שסיפקת נדחה. יש לבדוק שנית את הפרטים ולנסות שוב",
+		"credit_card_not_valid": "כרטיס האשראי שסיפקת אינו תקין. יש לבדוק שנית את הפרטים ולנסות שוב",
+		"make_payment": "בצע תשלום",
+		"save_credit_card_for_faster_future_payments": "שמור כרטיס אשראי לתשלום מהיר בעתיד",
+		"your_transaction_could_not_be_processed": "ביצוע העסקה נכשל"
+	},
+	"pay_flow_options": {
+		"amount_is_required": "יש לכניס סכום",
+		"amount_should_be_higher_than": "הסכום צריך להיות גדול מ",
+		"max_payment_amount_is": "הסכום המירבי לתשלום הוא",
+		"pay_another_amount": "שלם סכום אחר",
+		"pay_full_amount": "שלם את כל הסכום",
+		"paypal_payment_was_canceled": "תשלום פייפל בוטל",
+		"please_enter_a_valid_positive_number": "יש להכניס מספר תקין",
+		"select_amount_to_pay": "בחר סכום לשלם"
+	},
+	"pay_flow_payment": {
+		"card_could_not_be_deleted": "נכשלה מחיקת הכרטיס xx{{params.card.last4}}",
+		"could_not_load_saved_credit_cards": "המערכת לא הצליחה לטעון את כרטיסי האשראי השמורים"
+	},
+	"pay_flow_payment_method": {
+		"credit_card_number": "מספר כרטיס אשראי",
+		"enter_a_new_credit_card": "הכנס כרטיס אשראי חדש",
+		"expiration": "תוקף",
+		"expires_at": "תוקף",
+		"first_name_on_card": "שם פרטי",
+		"how_do_you_want_to_pay?": "איך ברצונך לשלם?",
+		"last_name_on_card": "שם משפחה",
+		"pay_with_a_saved_credit_card": "שלם באמצעות כרטיס אשראי שמור",
+		"pay_with_paypal": "שלם באמצעות פייפל",
+		"please_enter_a_valid_credit_card_number": "מספר כרטיס האשראי אינו תקין",
+		"please_enter_a_valid_month_and_year": "תאריך התפוגה אינו תקין",
+		"please_enter_a_valid_security_code": "קוד האבטחה אינו תקין",
+		"please_enter_the_card_expiration_date": "יש להכניס את תאריך התפוגה שעל הכרטיס",
+		"please_enter_the_first_name_on_card": "יש להכניס את השם הפרטי שעל הכרטיס",
+		"please_enter_the_last_name_on_card": "יש להכניס את שם המשפחה שעל הכרטיס",
+		"saved_credit_cards": "כרטיסי אשראי שמורים",
+		"security_code": "קוד אבטחה"
+	},
+	"payment_confirmation": {
+		"back_to_account": "בחזרה לחשבון",
+		"payment_amount": "סכום התשלום",
+		"payment_unique_id": "אסמכתא",
+		"thank_you_for_your_payment": "אנו מודים לך על התשלום!"
+	},
+	"paypal_callback": {
+		"error_has_occured_in_paypal_payment": "אירעה שגיאה בתשלום הפייפל"
+	},
+	"remaining_balance": "יתרה",
+	"verify": {
+		"country_code_is_missing": "קידומת מדינה חסרה",
+		"enter_verification_code": "הכנס את קוד האימות",
+		"enter_your_phone_number": "הכנס את מספר הטלפון שלך",
+		"phone_number_is_incorrect": "מספר הטלפון שגוי",
+		"user_was_verified": "המשתמש אומת",
+		"verification_code_is_incorrect": "קוד האימות שגוי",
+		"verification_code_sent_to_your_phone": "קוד אימות נשלח אליך",
+		"verify_your_mobile_number": "אמת את מספר הטלפון שלך"
+	}
 }

@@ -15,7 +15,6 @@ import { TRANSLATE } from '../../../translation-marker';
   styleUrls: ['./pay-flow-confirmation.component.css']
 })
 export class PayFlowConfirmationComponent implements OnInit {
-  title = 'Confirm you payment';
   payFlowData: PayFlowData;
   isPayFlowValid: boolean = false;
   isLoading: boolean = false;

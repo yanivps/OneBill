@@ -3,14 +3,14 @@
 </div>
 
 <div *ngIf="account" class="tab-pane active" role="tabpanel">
-  <h4 class="head text-center">{{title}}</h4>
+  <h4 class="head text-center">{{'pay_flow_options.select_amount_to_pay' | translate}}</h4>
 
   <form #optionsForm="ngForm">
     <div class="form-check">
       <input class="form-check-input" type="radio" [(ngModel)]="options.paymentOption" name="paymentOption"
              id="fullPaymentRadio" value="fullPayment" required>
       <label class="form-check-label" for="fullPaymentRadio">
-        Pay full amount
+         {{'pay_flow_options.pay_full_amount' | translate}}
       </label>
     </div>
 
@@ -19,24 +19,30 @@
         <input class="form-check-input" type="radio" [(ngModel)]="options.paymentOption" name="paymentOption"
                id="partialPaymentRadio" value="partialPayment" required>
         <label class="form-check-label" for="partialPaymentRadio">
-          Pay another amount
+           {{'pay_flow_options.pay_another_amount' | translate}}
         </label>
       </div>
       <input type="text" class="form-control" [(ngModel)]="options.partialAmount" name="partialAmount" #partialAmountInput="ngModel" autocomplete="off"
              [disabled]="options.paymentOption === 'fullPayment'" required pattern="^[0-9]+\.?[0-9]{0,2}$" gt="0" [lte]="account.amountDueCents / 100">
     </div>
     <div *ngIf="partialAmountInput.enabled && partialAmountInput.invalid && partialAmountInput.dirty">
-      <div *ngIf="partialAmountInput.errors.required" class="help-block text-danger">Amount is required</div>
-      <div *ngIf="partialAmountInput.errors.pattern" class="help-block text-danger">Please enter a valid positive number</div>
-      <div *ngIf="partialAmountInput.errors.gt && !partialAmountInput.errors.pattern" class="help-block text-danger">Amount should be higher than 0</div>
-     <div *ngIf="partialAmountInput.errors.lte && !partialAmountInput.errors.pattern" class="help-block text-danger">Max payment amount is {{account.amountDueFormatted}}</div>
+      <div *ngIf="partialAmountInput.errors.required" class="help-block text-danger">{{'pay_flow_options.amount_is_required' | translate}}</div>
+      <div *ngIf="partialAmountInput.errors.pattern" class="help-block text-danger">{{'pay_flow_options.please_enter_a_valid_positive_number' | translate}}</div>
+      <div *ngIf="partialAmountInput.errors.gt && !partialAmountInput.errors.pattern" class="help-block text-danger">{{'pay_flow_options.amount_should_be_higher_than' | translate}} 0</div>
+     <div *ngIf="partialAmountInput.errors.lte && !partialAmountInput.errors.pattern" class="help-block text-danger">{{'pay_flow_options.max_payment_amount_is' | translate}} {{account.amountDueFormatted}}</div>
     </div>
 
-    <p *ngIf="partialAmountInput.disabled || partialAmountInput.valid">Payment Amount: {{options.paymentOption === 'fullPayment' ? account.amountDueFormatted : options.partialAmount | currency:account.currencyCode:'symbol':'1.2-2'}}</p>
+    <p *ngIf="partialAmountInput.disabled || partialAmountInput.valid">
+      {{'common.amount_to_pay' | translate}}:
+      {{
+        options.paymentOption === 'fullPayment' ? account.amountDueFormatted :
+                                                  options.partialAmount | currency:account.currencyCode:'symbol':'1.2-2'
+      }}
+    </p>
 
     <div class="form-group text-center">
       <button class="btn btn-success btn-outline-rounded btn-info" [disabled]="optionsForm.invalid" (click)="goToNext(optionsForm)">
-        Next
+        {{'common.next' | translate}}
         <span style="margin-left:10px;" class="fa fa-arrow-right"></span>
       </button>
     </div>

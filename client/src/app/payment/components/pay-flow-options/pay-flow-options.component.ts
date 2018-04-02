@@ -15,7 +15,6 @@ import { TRANSLATE } from '../../../translation-marker';
   styleUrls: ['./pay-flow-options.component.css']
 })
 export class PayFlowOptionsComponent implements OnInit {
-  title = 'Select amount to pay.';
   account: any;
   options: Options;
   amountPattern = "^[1-9]+\\.?[0-9]{0,2}$"

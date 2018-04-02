@@ -16,7 +16,6 @@ import { TRANSLATE } from '../../../translation-marker';
   styleUrls: ['./pay-flow-payment-method.component.css']
 })
 export class PayFlowPaymentMethodComponent implements OnInit {
-  title = 'How do you want to pay?';
   payFlowData: PayFlowData;
   paymentMethod: PaymentMethod;
   cardType: string;

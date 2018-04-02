@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
   <div class="container">
     <a class="navbar-brand" routerLink="/">
-      Home
+      {{'navbar.home' | translate}}
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -12,13 +12,13 @@
       <ul class="navbar-nav mr-auto">
         <ng-template #annonymousUser>
           <li class="nav-item" routerLinkActive="active">
-            <a routerLink="/login" class="nav-link">Login</a>
+            <a routerLink="/login" class="nav-link">{{'navbar.login' | translate}}</a>
           </li>
         </ng-template>
         <ng-container *ngIf='authService.isLoggedIn(); else annonymousUser'>
           <li class="nav-item" routerLinkActive="active">
             <a routerLink="/accounts" class="nav-link">
-              Accounts
+              {{'navbar.accounts' | translate}}
             </a>
           </li>
           <li ngbDropdown class="nav-item dropdown">
@@ -26,8 +26,8 @@
               {{authService.currentUser.name}}
             </a>
             <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownBasic1">
-              <a class="dropdown-item" routerLink="/my/payments">My Payments</a>
-              <a class="dropdown-item clickable" (click)="logout()">Logout</a>
+              <a class="dropdown-item" routerLink="/my/payments">{{'navbar.my_payments' | translate}}</a>
+              <a class="dropdown-item clickable" (click)="logout()">{{'navbar.logout' | translate}}</a>
             </div>
           </li>
         </ng-container>

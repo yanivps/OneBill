@@ -1,17 +1,17 @@
 <div *ngIf="isLoading">
-  <h1>Payments</h1>
+  <h1>{{'common.payments' | translate}}</h1>
   <i class="fa fa-spinner fa-spin fa-3x"></i>
 </div>
 
-<h4 *ngIf="payments && payments.length == 0">No payments were made on this account</h4>
+<h4 *ngIf="payments && payments.length == 0">{{'account_payments.no_payments_were_made_on_this_account' | translate}}</h4>
 <div *ngIf="payments && payments.length > 0">
-  <h1>Payments</h1>
+  <h1>{{'common.payments' | translate}}</h1>
   <table class="table">
     <thead>
       <tr>
-        <th>Amount</th>
-        <th>Date</th>
-        <th>User</th>
+        <th>{{'common.amount' | translate}}</th>
+        <th>{{'common.date' | translate}}</th>
+        <th>{{'common.user' | translate}}</th>
       </tr>
     </thead>
     <tbody>

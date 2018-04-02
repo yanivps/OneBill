@@ -1,15 +1,14 @@
-<!-- <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto"> -->
   <div id="pay-invoice" class="card">
     <div class="card-body">
       <div class="card-title">
-        <h3 class="text-center">{{title}}</h3>
+        <h3 class="text-center">{{'pay_flow_payment_method.how_do_you_want_to_pay?' | translate}}</h3>
       </div>
       <div class="mt-4 text-center">
         <i *ngIf="isLoadingCards" class="fa fa-spinner fa-spin fa-3x align-middle"></i>
       </div>
       <ng-container *ngIf="!isLoadingCards">
         <div class="form-group">
-          <label>Payment amount</label>
+          <label>{{'common.amount_to_pay' | translate}}</label>
           <h2>{{payFlowData.amountToPay | currency:payFlowData.currencyCode:'symbol':'1.2-2'}}</h2>
         </div>
         <form class="mb-4">
@@ -17,7 +16,7 @@
             <input [disabled]="isLoadingPaypal" class="form-check-input" type="radio" [(ngModel)]="payFlowData.paymentMethodSection" name="paymentMethodSection" id="storedCardRadio"
               value="storedCard" required>
             <label class="form-check-label" for="storedCardRadio">
-              Pay with a saved credit cards
+               {{'pay_flow_payment_method.pay_with_a_saved_credit_card' | translate}}
             </label>
           </div>
 
@@ -25,7 +24,7 @@
             <input [disabled]="isLoadingPaypal" class="form-check-input" type="radio" [(ngModel)]="payFlowData.paymentMethodSection" name="paymentMethodSection" id="newCardRadio"
               value="newCard" required>
             <label class="form-check-label" for="newCardRadio">
-              Enter a new credit card
+               {{'pay_flow_payment_method.enter_a_new_credit_card' | translate}}
             </label>
           </div>
 
@@ -33,27 +32,27 @@
             <input [disabled]="isLoadingPaypal" class="form-check-input" type="radio" [(ngModel)]="payFlowData.paymentMethodSection" name="paymentMethodSection" id="paypalRadio"
               value="paypal" required>
             <label class="form-check-label" for="paypalRadio">
-              Pay with PayPal
+               {{'pay_flow_payment_method.pay_with_paypal' | translate}}
             </label>
           </div>
         </form>
 
         <form *ngIf="payFlowData.paymentMethodSection === 'storedCard' && storedCards && storedCards.length" #storedCardForm="ngForm"
           novalidate>
-          <h4>Saved Credit Cards</h4>
+          <h4>{{'pay_flow_payment_method.saved_credit_cards' | translate}}</h4>
           <div *ngFor="let card of storedCards" class="form-check">
             <input class="form-check-input" type="radio" [(ngModel)]="paymentMethod.storedCardId" name="storedCardId" id="storedCardIdRadio{{card.id}}"
               [value]="card.id" required>
             <label class="form-check-label" for="storedCardIdRadio{{card.id}}">
-              xx{{card.last4}}{{card.creditCardType !== "unknown" ? ' ' + card.creditCardType : ''}} Expires At: {{card.expiresAt | date:'MM/yy'}}
+              xx{{card.last4}}{{card.creditCardType !== "unknown" ? ' ' + card.creditCardType : ''}} {{'pay_flow_payment_method.expires_at' | translate}}: {{card.expiresAt | date:'MM/yy'}}
             </label>
             <i class="ml-2 fa fa-times clickable" (click)='deleteStoredCard(card)'></i>
           </div>
           <div class="form-group text-center">
             <button type="button" class="btn btn-outline-rounded btn-default" (click)="goToPrevious()">
-              <span style="margin-right:10px;" class="fa fa-arrow-left"></span> Previous</button>
+              <span style="margin-right:10px;" class="fa fa-arrow-left"></span>{{'common.previous' | translate}}</button>
             <button type="submit" class="btn btn-outline-rounded btn-info" [disabled]="!storedCardForm.valid" (click)="goToNext(storedCardForm)">
-            Next
+             {{'common.next' | translate}}
               <span style="margin-left:10px;" class="fa fa-arrow-right"></span>
             </button>
           </div>
@@ -62,58 +61,58 @@
         <form *ngIf="payFlowData.paymentMethodSection === 'newCard'" #newCardForm="ngForm" novalidate>
           <div class="form-row">
             <div class="form-group has-success col-sm-6">
-              <label for="cc-first-name" class="control-label mb-1">First Name on card</label>
+              <label for="cc-first-name" class="control-label mb-1">{{'pay_flow_payment_method.first_name_on_card' | translate}}</label>
               <input id="cc-first-name" [(ngModel)]="paymentMethod.cardHolderFirstName" #ccFirstName="ngModel" [ngClass]="{ 'is-invalid': ccFirstName.touched && ccFirstName.invalid }"
                 name="cc-first-name" type="text" class="form-control" required>
               <div *ngIf="ccFirstName.touched && ccFirstName.invalid">
-                <div *ngIf="ccFirstName.errors.required" class="help-block text-danger">Please enter the first name on card</div>
+                <div *ngIf="ccFirstName.errors.required" class="help-block text-danger">{{'pay_flow_payment_method.please_enter_the_first_name_on_card' | translate}}</div>
               </div>
             </div>
             <div class="form-group has-success col-sm-6">
-              <label for="cc-last-name" class="control-label mb-1">Last Name on card</label>
+              <label for="cc-last-name" class="control-label mb-1">{{'pay_flow_payment_method.last_name_on_card' | translate}}</label>
               <input id="cc-last-name" [(ngModel)]="paymentMethod.cardHolderLastName" #ccLastName="ngModel" [ngClass]="{ 'is-invalid': ccLastName.touched && ccLastName.invalid }"
                 name="cc-last-name" type="text" class="form-control" required>
               <div *ngIf="ccLastName.touched && ccLastName.invalid">
-                <div *ngIf="ccLastName.errors.required" class="help-block text-danger">Please enter the last name on card</div>
+                <div *ngIf="ccLastName.errors.required" class="help-block text-danger">{{'pay_flow_payment_method.please_enter_the_last_name_on_card' | translate}}</div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-5">
               <div class="form-group">
-                <label for="cc-number" class="control-label mb-1">Card number</label>
+                <label for="cc-number" class="control-label mb-1">{{'pay_flow_payment_method.credit_card_number' | translate}}</label>
                 <input id="cc-number" [(ngModel)]="paymentMethod.creditCardNumber" #ccNumber="ngModel" [ngClass]="[ccNumber.valid && knownCardType() ? 'identified ' + cardType : '', ccNumber.touched && ccNumber.invalid ? 'is-invalid' : '']"
                   name="cc-number" type="tel" class="form-control cc-number" value="" autocomplete="off" required creditCard pattern="[0-9 ]+">
                 <div *ngIf="ccNumber.touched && ccNumber.invalid">
-                  <div *ngIf="ccNumber.errors.required || ccNumber.errors.creditCard" class="help-block text-danger">Please enter a valid card number</div>
+                  <div *ngIf="ccNumber.errors.required || ccNumber.errors.creditCard" class="help-block text-danger">{{'pay_flow_payment_method.please_enter_a_valid_credit_card_number' | translate}}</div>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="cc-exp" class="control-label mb-1">Expiration</label>
+                <label for="cc-exp" class="control-label mb-1">{{'pay_flow_payment_method.expiration' | translate}}</label>
                 <input id="cc-exp" [(ngModel)]="paymentMethod.creditCardExpirationDate" #ccExpiration="ngModel" [ngClass]="{ 'is-invalid': ccExpiration.touched && ccExpiration.invalid }"
                   name="cc-exp" type="tel" class="form-control" value="" maxlength="9" placeholder="MM / YY" required nonExpired pattern="[0-9]{1,2} ?\/ ?[0-9]{2}(?:[0-9]{2})?">
                 <div *ngIf="ccExpiration.touched && ccExpiration.invalid">
-                  <div *ngIf="ccExpiration.errors.required" class="help-block text-danger">Please enter the card expiration</div>
-                  <div *ngIf="ccExpiration.errors.notExpired || ccExpiration.errors.pattern" class="help-block text-danger">Please enter a valid month and year</div>
+                  <div *ngIf="ccExpiration.errors.required" class="help-block text-danger">{{'pay_flow_payment_method.please_enter_the_card_expiration_date' | translate}}</div>
+                  <div *ngIf="ccExpiration.errors.notExpired || ccExpiration.errors.pattern" class="help-block text-danger">{{'pay_flow_payment_method.please_enter_a_valid_month_and_year' | translate}}</div>
                 </div>
               </div>
             </div>
             <div class="col-md-3">
-              <label for="cc-cvv" class="control-label mb-1">Security code</label>
+              <label for="cc-cvv" class="control-label mb-1">{{'pay_flow_payment_method.security_code' | translate}}</label>
               <input id="cc-cvv" [(ngModel)]="paymentMethod.creditCardSecurityCode" #ccCvv="ngModel" [ngClass]="{ 'is-invalid': ccCvv.touched && ccCvv.invalid }"
                 name="cc-cvv" type="tel" class="form-control cc-cvc" value="" autocomplete="off" maxlength="4" required pattern="[0-9]{3,4}">
               <div *ngIf="ccCvv.touched && ccCvv.invalid">
-                <div *ngIf="ccCvv.errors.required || ccCvv.errors.pattern" class="help-block text-danger">Please enter a valid security code</div>
+                <div *ngIf="ccCvv.errors.required || ccCvv.errors.pattern" class="help-block text-danger">{{'pay_flow_payment_method.please_enter_a_valid_security_code' | translate}}</div>
               </div>
             </div>
           </div>
           <div class="form-group text-center">
             <button type="button" class="btn btn-outline-rounded btn-default" (click)="goToPrevious()">
-              <span style="margin-right:10px;" class="fa fa-arrow-left"></span> Previous</button>
+              <span style="margin-right:10px;" class="fa fa-arrow-left"></span>{{'common.previous' | translate}}</button>
             <button type="submit" class="btn btn-outline-rounded btn-info" [disabled]="!newCardForm.valid" (click)="goToNext(newCardForm)">
-            Next
+             {{'common.next' | translate}}
               <span style="margin-left:10px;" class="fa fa-arrow-right"></span>
             </button>
           </div>
@@ -122,8 +121,8 @@
         <div *ngIf="payFlowData.paymentMethodSection === 'paypal'">
           <ng-container *ngIf="!isLoadingPaypal; else loading">
             <button type="button" class="btn btn-outline-rounded btn-default" (click)="goToPrevious()">
-              <span style="margin-right:10px;" class="fa fa-arrow-left"></span> Previous</button>
-            <button type="button" class="btn btn-primary" (click)="generatePaypalLink()">Pay with PayPal</button>
+              <span style="margin-right:10px;" class="fa fa-arrow-left"></span>{{'common.previous' | translate}}</button>
+            <button type="button" class="btn btn-primary" (click)="generatePaypalLink()">{{'pay_flow_payment_method.pay_with_paypal' | translate}}</button>
           </ng-container>
           <ng-template #loading>
             <i class="fa fa-spinner fa-spin fa-2x align-middle"></i>
@@ -132,4 +131,3 @@
       </ng-container>
     </div>
   </div>
-<!-- </div> -->
