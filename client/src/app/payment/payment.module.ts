@@ -23,7 +23,6 @@ import { PayFlowValidatorService } from './services/pay-flow.service';
 import { PaymentService } from './services/payment.service';
 import { ExpirationDateValidator } from './validators/expiration-date-validator.directive';
 import { CustomFormsModule } from 'ng2-validation';
-import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -31,7 +30,6 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     CoreModule,
     AuthModule,
-    FormsModule,
     CustomFormsModule,
     RouterModule.forChild([
       { path: 'accounts/:id/payments', component: AccountPaymentsComponent, canActivate: [AuthGuard, VerifiedUserGuard] },

@@ -1,0 +1,41 @@
+{
+  "an_unexpected_error_occurred": "אירעה שגיאה לא ידועה",
+  "auth": {
+    "oauth": {
+      "must_grant_permissions": "יש לתת הרשאות לאפליקציה זאת על מנת להתחבר"
+    }
+  },
+  "common": {
+    "invitation_token_is_invalid": "קוד ההזמנה אינו תקין",
+    "page_was_not_found": "העמוד לא נמצא",
+    "invitation_was_already_used": "בוצע כבר שימוש בהזמנה זאת",
+    "invitation_was_expired": "פג תוקף ההזמנה"
+  },
+  "invitation_sign_up": {
+    "registration_successful": "המשתמש נוצר בהצלחה",
+    "some_of_the_input_fields_are_invalid": "חלק המשדות אינם תקינים"
+  },
+  "login": {
+    "invalid_credentials": "שם משתמש או סיסמא שגויים"
+  },
+  "pay_flow_confirmation": {
+    "credit_card_declined": "כרטיס האשראי שסיפקת נדחה. יש לבדוק שנית את הפרטים ולנסות שוב",
+    "credit_card_not_valid": "כרטיס האשראי שסיפקת אינו תקין. יש לבדוק שנית את הפרטים ולנסות שוב",
+    "your_transaction_could_not_be_processed": "ביצוע העסקה נכשל"
+  },
+  "pay_flow_options": {
+    "paypal_payment_was_canceled": "תשלום פייפל בוטל"
+  },
+  "pay_flow_payment": {
+    "card_could_not_be_deleted": "נכשלה מחיקת הכרטיס xx{{params.card.last4}}",
+    "could_not_load_saved_credit_cards": "המערכת לא הצליחה לטעון את כרטיסי האשראי השמורים"
+  },
+  "paypal_callback": {
+    "error_has_occured_in_paypal_payment": "אירעה שגיאה בתשלום הפייפל"
+  },
+  "verify": {
+    "phone_number_is_incorrect": "מספר הטלפון שגוי",
+    "user_was_verified": "המשתמש אומת",
+    "verification_code_is_incorrect": "קוד האימות שגוי"
+  }
+}

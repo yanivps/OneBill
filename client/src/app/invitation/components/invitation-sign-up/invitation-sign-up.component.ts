@@ -9,6 +9,7 @@ import { UserService } from '../../../core/services/user.service';
 import { ValidationError } from '../../../shared/models/validation-error';
 import { InvitationExpiredError } from '../../models/invitation-errors';
 import { InvitationService } from '../../services/invitation.service';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'app-invitation-sign-up',
@@ -44,14 +45,14 @@ export class InvitationSignUpComponent implements OnInit {
     this.isLoadingRegister = true;
     this.userService.create(this.model, this.token).subscribe(
       data => {
-        this.alertService.success('Registration successful', true);
+        this.alertService.success(TRANSLATE('invitation_sign_up.registration_successful'), true);
         this.router.navigate(['/login'], { queryParams: { returnUrl: `/invitation?token=${this.token}&account=${this.invitation.account.id}` } });
       },
       (error: AppError) => {
         this.isLoadingRegister = false;
         if (error instanceof ValidationError) {
           this.validationErrors = error.validations;
-          this.alertService.error("Some of the input fields are invalid");
+          this.alertService.error(TRANSLATE("invitation_sign_up.some_of_the_input_fields_are_invalid"));
         } else throw error;
       }
     );
@@ -72,9 +73,9 @@ export class InvitationSignUpComponent implements OnInit {
       (error: AppError) => {
         this.router.navigate(['/']);
         if (error instanceof NotFoundError) {
-          this.alertService.error("Invitation token is invalid", true);
+          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"), true);
         } else if (error instanceof InvitationExpiredError) {
-          this.alertService.error("Invitation was expired", true);
+          this.alertService.error(TRANSLATE("common.invitation_was_expired"), true);
         } else throw error;
       }
     );
@@ -98,7 +99,7 @@ export class InvitationSignUpComponent implements OnInit {
   }
 
   private handleInvitationAlreadyUsed() {
-    this.alertService.error("Invitation was already used", true);
+    this.alertService.error(TRANSLATE("common.invitation_was_already_used"), true);
     this.router.navigate(['/']);
   }
 }

@@ -9,7 +9,6 @@ import { VerifiedUserGuard } from '../core/services/verified-user-guard.service'
 import { CoreModule } from '../core/core.module';
 import { AuthModule } from '../auth/auth.module';
 import { InvitationService } from './services/invitation.service';
-import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { CustomFormsModule } from 'ng2-validation';
     SharedModule,
     CoreModule,
     AuthModule,
-    FormsModule,
     CustomFormsModule,
     RouterModule.forChild([
       { path: 'invitation/signup', component: InvitationSignUpComponent },

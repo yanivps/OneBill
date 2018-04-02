@@ -4,6 +4,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { AlertService } from '../../../shared/services/alert.service';
 import { AuthError } from '../../../auth/models/auth-error';
 import { UnauthorizedError } from '../../../auth/models/unauthorized-error';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
         (error: AuthError) => {
           this.loading = false;
           if (error instanceof UnauthorizedError) {
-            this.alertService.error("Invalid credentials");
+            this.alertService.error(TRANSLATE("login.invalid_credentials"));
           } else throw error;
         });
   }

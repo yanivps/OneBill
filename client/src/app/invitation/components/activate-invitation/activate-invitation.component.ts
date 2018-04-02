@@ -10,6 +10,7 @@ import {
   InvitationTokenInvalidError,
 } from '../../models/invitation-errors';
 import { InvitationService } from '../../services/invitation.service';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'app-activate-invitation',
@@ -40,9 +41,9 @@ export class ActivateInvitationComponent implements OnInit {
       (error: AppError) => {
         this.router.navigate(['/']);
         if (error instanceof NotFoundError) {
-          this.alertService.error("Invitation token is invalid", true);
+          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"), true);
         } else if (error instanceof InvitationExpiredError) {
-          this.alertService.error("Invitation was expired", true);
+          this.alertService.error(TRANSLATE("common.invitation_was_expired"), true);
         } else throw error;
       }
     )
@@ -54,13 +55,13 @@ export class ActivateInvitationComponent implements OnInit {
       (error: AppError) => {
         this.router.navigate(['/']);
         if (error instanceof NotFoundError) {
-          this.alertService.error("Invitation token is invalid", true);
+          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"), true);
         } else if (error instanceof InvitationExpiredError) {
-          this.alertService.error("Invitation was expired", true);
+          this.alertService.error(TRANSLATE("common.invitation_was_expired"), true);
         } else if (error instanceof InvitationAlreadyUsedError) {
-          this.alertService.error("Invitation token was already used", true);
+          this.alertService.error(TRANSLATE("common.invitation_was_already_used"), true);
         } else if (error instanceof InvitationTokenInvalidError) {
-          this.alertService.error("Invitation token is invalid", true);
+          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"), true);
         } else throw error;
       }
     );

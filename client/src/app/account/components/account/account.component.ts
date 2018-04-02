@@ -5,6 +5,7 @@ import { AppError } from '../../../shared/models/app-error';
 import { NotFoundError } from '../../../shared/models/not-found-error';
 import { AlertService } from '../../../shared/services/alert.service';
 import { AccountService } from '../../services/account.service';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'app-account',
@@ -37,7 +38,7 @@ export class AccountComponent implements OnInit {
       (error: AppError) => {
         this.router.navigate(['accounts']);
         if (error instanceof NotFoundError) {
-          this.alertService.error("Page was not found", true);
+          this.alertService.error(TRANSLATE("common.page_was_not_found"), true);
         } else throw error;
       }
     );

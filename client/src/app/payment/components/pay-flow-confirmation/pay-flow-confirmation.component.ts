@@ -7,6 +7,7 @@ import { PayFlowData } from '../../models/pay-flow-data';
 import { CreditCardDeclinedError, CreditCardInvalidError, PaymentProcessorError } from '../../models/payment-errors';
 import { PayFlowDataService } from '../../services/pay-flow-data.service';
 import { PaymentService } from '../../services/payment.service';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'app-pay-flow-confirmation',
@@ -45,7 +46,7 @@ export class PayFlowConfirmationComponent implements OnInit {
         (error: AppError) => {
           this.router.navigate(['../method'], { relativeTo: this.route })
           if (error instanceof PaymentProcessorError) {
-            this.alertService.error("Your transaction could not be processed", true);
+            this.alertService.error(TRANSLATE("pay_flow_confirmation.your_transaction_could_not_be_processed"), true);
           } else throw error;
         }
       )
@@ -55,11 +56,11 @@ export class PayFlowConfirmationComponent implements OnInit {
         (error: AppError) => {
           this.router.navigate(['../method'], { relativeTo: this.route })
           if (error instanceof PaymentProcessorError) {
-            this.alertService.error("Your transaction could not be processed", true);
+            this.alertService.error(TRANSLATE("pay_flow_confirmation.your_transaction_could_not_be_processed"), true);
           } else if (error instanceof CreditCardInvalidError) {
-            this.alertService.error("The credit card information you provided is not valid. Please double check the information you provided and then try again", true);
+            this.alertService.error(TRANSLATE("pay_flow_confirmation.credit_card_not_valid"), true);
           } else if (error instanceof CreditCardDeclinedError) {
-            this.alertService.error("The credit card you provided was declined. Please double check your information and try again", true);
+            this.alertService.error(TRANSLATE("pay_flow_confirmation.credit_card_declined"), true);
           } else throw error;
         }
       );

@@ -8,7 +8,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VerifiedUserGuard } from './services/verified-user-guard.service';
 import { UserService } from './services/user.service';
-import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { InternationalPhoneModule } from 'ng4-intl-phone';
 import { AuthGuard } from '../auth/services/auth-guard.service';
@@ -19,7 +18,6 @@ import { AuthModule } from 'angular2-jwt';
   imports: [
     SharedModule,
     AuthModule,
-    FormsModule,
     CustomFormsModule,
     NgbModule.forRoot(),
     InternationalPhoneModule,

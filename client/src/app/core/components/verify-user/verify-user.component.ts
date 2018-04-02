@@ -8,6 +8,7 @@ import { AppError } from '../../../shared/models/app-error';
 import { AlertService } from '../../../shared/services/alert.service';
 import { UserService } from '../../services/user.service';
 import { IncorrectVerificationCodeError, VerificationIncorrectPhoneNumberError } from '../../models/verification-errors';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'app-verify-user',
@@ -50,7 +51,7 @@ export class VerifyUserComponent {
       (error: AppError) => {
         this.isLoading = false;
         if (error instanceof VerificationIncorrectPhoneNumberError) {
-          this.alertService.error("Phone number is incorrect");
+          this.alertService.error(TRANSLATE("verify.phone_number_is_incorrect"));
         } else throw error;
       }
     );
@@ -61,14 +62,14 @@ export class VerifyUserComponent {
     let userId = this.authService.currentUser.user_id;
     this.userService.verify(userId, this.verificationCode).subscribe(
       res => {
-        this.alertService.success("User was verified");
+        this.alertService.success(TRANSLATE("verify.user_was_verified"));
         this.authService.refreshToken()
           .subscribe(res => this.navigate());
       },
       (error: AppError) => {
         this.isLoading = false;
         if (error instanceof IncorrectVerificationCodeError) {
-          this.alertService.error("Verification code is incorrect",);
+          this.alertService.error(TRANSLATE("verify.verification_code_is_incorrect"));
         } else throw error;
       }
     );

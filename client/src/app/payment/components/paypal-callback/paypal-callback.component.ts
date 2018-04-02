@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PayFlowDataService } from '../../services/pay-flow-data.service';
 import { PayFlowValidatorService } from '../../services/pay-flow.service';
 import { AlertService } from '../../../shared/services/alert.service';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'paypal-callback',
@@ -29,7 +30,7 @@ export class PaypalCallbackComponent implements OnInit {
     let token = this.route.snapshot.queryParamMap.get('token');
     let payerId = this.route.snapshot.queryParamMap.get('PayerID');
     if (!accountId || !amount || !currencyCode || !token || !payerId) {
-      this.alertService.error("Error has occured in paypal payment", true);
+      this.alertService.error(TRANSLATE("paypal_callback.error_has_occured_in_paypal_payment"), true);
       this.router.navigate([accountId ? `/accounts/${accountId}/pay/options` : '/accounts/']);
       return;
     }

@@ -8,6 +8,7 @@ import { PayFlowData, PaymentMethod } from '../../models/pay-flow-data';
 import { CreditCardService } from '../../services/credit-card.service';
 import { PayFlowDataService } from '../../services/pay-flow-data.service';
 import { PaymentService } from '../../services/payment.service';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'pay-flow-payment-method',
@@ -45,7 +46,7 @@ export class PayFlowPaymentMethodComponent implements OnInit {
       },
       (error: AppError) => {
         this.isLoadingCards = false;
-        this.alertService.error("Could not load saved credit cards. Try refresh the page");
+        this.alertService.error(TRANSLATE("pay_flow_payment.could_not_load_saved_credit_cards"));
         if (!this.payFlowData.paymentMethodSection)
           this.payFlowData.paymentMethodSection = "newCard";
       }
@@ -86,7 +87,7 @@ export class PayFlowPaymentMethodComponent implements OnInit {
           if (error instanceof NotFoundError) {
             // Do nothing
           } else {
-            this.alertService.error("Error: Card xx" + card.last4 + " could not be deleted");
+            this.alertService.error(TRANSLATE("pay_flow_payment.card_could_not_be_deleted"), false, {card: card});
             this.storedCards.splice(index, 0, card);
           }
         }

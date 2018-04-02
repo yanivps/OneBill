@@ -1,0 +1,41 @@
+{
+  "an_unexpected_error_occurred": "An unexpected error occurred",
+  "auth": {
+    "oauth": {
+      "must_grant_permissions": "You must grant permissions to this application in order to login"
+    }
+  },
+  "common": {
+    "invitation_token_is_invalid": "Invitation token is invalid",
+    "page_was_not_found": "Page was not found",
+    "invitation_was_already_used": "Invitation was already used",
+    "invitation_was_expired": "Invitation was expired"
+  },
+  "invitation_sign_up": {
+    "registration_successful": "Registration successful",
+    "some_of_the_input_fields_are_invalid": "Some of the input fields are invalid"
+  },
+  "login": {
+    "invalid_credentials": "Invalid credentials"
+  },
+  "pay_flow_confirmation": {
+    "credit_card_declined": "The credit card you provided was declined. Please double check your information and try again",
+    "credit_card_not_valid": "The credit card information you provided is not valid. Please double check the information you provided and then try again",
+    "your_transaction_could_not_be_processed": "Your transaction could not be processed"
+  },
+  "pay_flow_options": {
+    "paypal_payment_was_canceled": "Paypal payment was canceled"
+  },
+  "pay_flow_payment": {
+    "card_could_not_be_deleted": "Card xx{{params.card.last4}} could not be deleted",
+    "could_not_load_saved_credit_cards": "Could not load saved credit cards"
+  },
+  "paypal_callback": {
+    "error_has_occured_in_paypal_payment": "Error has occured in paypal payment"
+  },
+  "verify": {
+    "phone_number_is_incorrect": "Phone number is incorrect",
+    "user_was_verified": "User was verified",
+    "verification_code_is_incorrect": "Verification code is incorrect"
+  }
+}

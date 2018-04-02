@@ -7,6 +7,7 @@ import { NotFoundError } from '../../../shared/models/not-found-error';
 import { AlertService } from '../../../shared/services/alert.service';
 import { Options } from '../../models/pay-flow-data';
 import { PayFlowDataService } from '../../services/pay-flow-data.service';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'app-pay-flow-options',
@@ -29,7 +30,7 @@ export class PayFlowOptionsComponent implements OnInit {
 
   ngOnInit() {
     if (this.route.snapshot.queryParamMap.get('token'))
-      this.alertService.error("Paypal payment was canceled");
+      this.alertService.error(TRANSLATE("pay_flow_options.paypal_payment_was_canceled"));
 
     let accountId = this.route.parent.snapshot.paramMap.get('id');
     this.options = this.payFlowDataService.getOptions();
@@ -41,7 +42,7 @@ export class PayFlowOptionsComponent implements OnInit {
       (error: AppError) => {
         this.router.navigate(['accounts']);
         if (error instanceof NotFoundError) {
-          this.alertService.error("Page was not found", true);
+          this.alertService.error(TRANSLATE("common.page_was_not_found"), true);
         } else throw error;
       }
     );

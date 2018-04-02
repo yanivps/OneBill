@@ -7,5 +7,5 @@
     'alert-danger': message.type === 'error'
   }"
   tabindex="-1">
-  {{message.text}}
+  {{ message.text | translate:{'params':message.params} }}
 </div>

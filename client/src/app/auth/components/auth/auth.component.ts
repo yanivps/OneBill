@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OAuthAccessDenied } from '../../models/oauth-errors';
 import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../../shared/services/alert.service';
+import { TRANSLATE } from '../../../translation-marker';
 
 @Component({
   selector: 'auth',
@@ -34,7 +35,7 @@ export class AuthComponent implements OnInit {
         error => {
           this.router.navigate(['login']);
           if (error instanceof OAuthAccessDenied) {
-            this.alertService.error('You must grant permissions to this application in order to login');
+            this.alertService.error(TRANSLATE('auth.oauth.must_grant_permissions'));
           } else throw error;
         }
       );
