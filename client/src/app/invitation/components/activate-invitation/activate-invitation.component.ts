@@ -41,9 +41,9 @@ export class ActivateInvitationComponent implements OnInit {
       (error: AppError) => {
         this.router.navigate(['/']);
         if (error instanceof NotFoundError) {
-          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"), true);
+          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"));
         } else if (error instanceof InvitationExpiredError) {
-          this.alertService.error(TRANSLATE("common.invitation_was_expired"), true);
+          this.alertService.error(TRANSLATE("common.invitation_was_expired"));
         } else throw error;
       }
     )
@@ -55,13 +55,13 @@ export class ActivateInvitationComponent implements OnInit {
       (error: AppError) => {
         this.router.navigate(['/']);
         if (error instanceof NotFoundError) {
-          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"), true);
+          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"));
         } else if (error instanceof InvitationExpiredError) {
-          this.alertService.error(TRANSLATE("common.invitation_was_expired"), true);
+          this.alertService.error(TRANSLATE("common.invitation_was_expired"));
         } else if (error instanceof InvitationAlreadyUsedError) {
-          this.alertService.error(TRANSLATE("common.invitation_was_already_used"), true);
+          this.alertService.error(TRANSLATE("common.invitation_was_already_used"));
         } else if (error instanceof InvitationTokenInvalidError) {
-          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"), true);
+          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"));
         } else throw error;
       }
     );

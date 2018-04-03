@@ -45,7 +45,7 @@ export class PayFlowConfirmationComponent implements OnInit {
         (error: AppError) => {
           this.router.navigate(['../method'], { relativeTo: this.route })
           if (error instanceof PaymentProcessorError) {
-            this.alertService.error(TRANSLATE("pay_flow_confirmation.your_transaction_could_not_be_processed"), true);
+            this.alertService.error(TRANSLATE("pay_flow_confirmation.your_transaction_could_not_be_processed"));
           } else throw error;
         }
       )
@@ -55,11 +55,11 @@ export class PayFlowConfirmationComponent implements OnInit {
         (error: AppError) => {
           this.router.navigate(['../method'], { relativeTo: this.route })
           if (error instanceof PaymentProcessorError) {
-            this.alertService.error(TRANSLATE("pay_flow_confirmation.your_transaction_could_not_be_processed"), true);
+            this.alertService.error(TRANSLATE("pay_flow_confirmation.your_transaction_could_not_be_processed"));
           } else if (error instanceof CreditCardInvalidError) {
-            this.alertService.error(TRANSLATE("pay_flow_confirmation.credit_card_not_valid"), true);
+            this.alertService.error(TRANSLATE("pay_flow_confirmation.credit_card_not_valid"));
           } else if (error instanceof CreditCardDeclinedError) {
-            this.alertService.error(TRANSLATE("pay_flow_confirmation.credit_card_declined"), true);
+            this.alertService.error(TRANSLATE("pay_flow_confirmation.credit_card_declined"));
           } else throw error;
         }
       );

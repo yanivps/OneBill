@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthModule } from 'angular2-jwt';
+import { CustomFormsModule } from 'ng2-validation';
 
+import { AuthModule } from '../auth/auth.module';
 import { AuthGuard } from '../auth/services/auth-guard.service';
 import { CoreModule } from '../core/core.module';
 import { VerifiedUserGuard } from '../core/services/verified-user-guard.service';
@@ -22,7 +23,6 @@ import { PayFlowGuard } from './services/pay-flow-guard.service';
 import { PayFlowValidatorService } from './services/pay-flow.service';
 import { PaymentService } from './services/payment.service';
 import { ExpirationDateValidator } from './validators/expiration-date-validator.directive';
-import { CustomFormsModule } from 'ng2-validation';
 
 @NgModule({
   imports: [

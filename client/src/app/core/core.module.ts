@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CustomFormsModule } from 'ng2-validation';
+import { InternationalPhoneModule } from 'ng4-intl-phone';
 
+import { AuthModule } from '../auth/auth.module';
+import { AuthGuard } from '../auth/services/auth-guard.service';
 import { SharedModule } from '../shared/shared.module';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { VerifiedUserGuard } from './services/verified-user-guard.service';
-import { UserService } from './services/user.service';
-import { CustomFormsModule } from 'ng2-validation';
-import { InternationalPhoneModule } from 'ng4-intl-phone';
-import { AuthGuard } from '../auth/services/auth-guard.service';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
-import { AuthModule } from 'angular2-jwt';
+import { UserService } from './services/user.service';
+import { VerifiedUserGuard } from './services/verified-user-guard.service';
 
 @NgModule({
   imports: [

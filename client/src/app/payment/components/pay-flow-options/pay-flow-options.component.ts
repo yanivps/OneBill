@@ -41,7 +41,7 @@ export class PayFlowOptionsComponent implements OnInit {
       (error: AppError) => {
         this.router.navigate(['accounts']);
         if (error instanceof NotFoundError) {
-          this.alertService.error(TRANSLATE("common.page_was_not_found"), true);
+          this.alertService.error(TRANSLATE("common.page_was_not_found"));
         } else throw error;
       }
     );

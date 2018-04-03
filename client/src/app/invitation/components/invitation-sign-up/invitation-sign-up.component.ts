@@ -45,7 +45,7 @@ export class InvitationSignUpComponent implements OnInit {
     this.isLoadingRegister = true;
     this.userService.create(this.model, this.token).subscribe(
       data => {
-        this.alertService.success(TRANSLATE('invitation_sign_up.registration_successful'), true);
+        this.alertService.success(TRANSLATE('invitation_sign_up.registration_successful'));
         this.router.navigate(['/login'], { queryParams: { returnUrl: `/invitation?token=${this.token}&account=${this.invitation.account.id}` } });
       },
       (error: AppError) => {
@@ -73,9 +73,9 @@ export class InvitationSignUpComponent implements OnInit {
       (error: AppError) => {
         this.router.navigate(['/']);
         if (error instanceof NotFoundError) {
-          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"), true);
+          this.alertService.error(TRANSLATE("common.invitation_token_is_invalid"));
         } else if (error instanceof InvitationExpiredError) {
-          this.alertService.error(TRANSLATE("common.invitation_was_expired"), true);
+          this.alertService.error(TRANSLATE("common.invitation_was_expired"));
         } else throw error;
       }
     );
@@ -99,7 +99,7 @@ export class InvitationSignUpComponent implements OnInit {
   }
 
   private handleInvitationAlreadyUsed() {
-    this.alertService.error(TRANSLATE("common.invitation_was_already_used"), true);
+    this.alertService.error(TRANSLATE("common.invitation_was_already_used"));
     this.router.navigate(['/']);
   }
 }

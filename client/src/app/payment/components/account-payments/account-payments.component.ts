@@ -32,7 +32,7 @@ export class AccountPaymentsComponent implements OnInit {
       },
       (error: AppError) => {
         if (error instanceof NotFoundError) {
-          this.alertService.error(TRANSLATE("common.page_was_not_found"), true);
+          this.alertService.error(TRANSLATE("common.page_was_not_found"));
           this.router.navigate(['accounts']);
         } else {
           this.router.navigate(['accounts', accountId]);
