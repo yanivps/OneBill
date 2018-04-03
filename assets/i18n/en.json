@@ -1,0 +1,141 @@
+{
+	"account": {
+		"finance_charge_may_be_applied_on_unpaid_balances": "A finance charge may be applied on unpaid balances after due date.",
+		"pay_now": "Pay Now",
+		"payments_history": "Payments History"
+	},
+	"account_payments": {
+		"no_payments_were_made_on_this_account": "No payments were made on this account"
+	},
+	"accounts": {
+		"you_are_an_excellent_citizen": "You are an excellent citizen!",
+		"you_have_no_open_accounts": "You have no open accounts"
+	},
+	"an_unexpected_error_occurred": "An unexpected error occurred",
+	"auth": {
+		"oauth": {
+			"must_grant_permissions": "You must grant permissions to this application in order to login"
+		}
+	},
+	"common": {
+		"account_#": "Account #",
+		"accounts": "Accounts",
+		"address": "Address",
+		"amount": "Amount",
+		"amount_to_pay": "Amount to Pay",
+		"bill_number": "Bill number",
+		"cancel": "Cancel",
+		"category": "Category",
+		"date": "Date",
+		"email": "Email",
+		"first_name": "First Name",
+		"invitation_token_is_invalid": "Invitation token is invalid",
+		"invitation_was_already_used": "Invitation was already used",
+		"invitation_was_expired": "Invitation was expired",
+		"last_name": "Last Name",
+		"login": "Login",
+		"next": "Next",
+		"notice": "Notice",
+		"page_was_not_found": "Page was not found",
+		"password": "Password",
+		"pay_until": "Pay Until",
+		"payment_method": "Payment Method",
+		"payments": "Payments",
+		"period": "Period",
+		"phone_number": "Phone Number",
+		"previous": "Previous",
+		"send": "Send",
+		"submit": "Submit",
+		"unique_id": "Unique ID",
+		"user": "User"
+	},
+	"home": {
+		"welcome_to_onebill": "Welcome to OneBill"
+	},
+	"invitation_sign_up": {
+		"a_valid_email_is_required": "A valid email is required",
+		"confirm_password": "Confirm Password",
+		"last_name_is_required": "Last Name is required",
+		"password_confirmation_does_not_match_password": "Password confirmation does not match password",
+		"password_confirmation_is_required": "Password confirmation is required",
+		"password_is_required": "Password is required",
+		"password_should_be_at_least_x_characters": "Password should be at leat {{characters}} characters",
+		"register": "Register",
+		"register_button": "Register",
+		"registration_successful": "Registration successful",
+		"some_of_the_input_fields_are_invalid": "Some of the input fields are invalid"
+	},
+	"login": {
+		"email_is_required": "Email is required",
+		"invalid_credentials": "Invalid credentials",
+		"password_is_required": "Password is required"
+	},
+	"navbar": {
+		"accounts": "Accounts",
+		"home": "Home",
+		"login": "Login",
+		"logout": "Logout",
+		"my_payments": "My Payments"
+	},
+	"pay_flow_confirmation": {
+		"confirm_your_payment": "Confirm your payment",
+		"credit_card_declined": "The credit card you provided was declined. Please double check your information and try again",
+		"credit_card_not_valid": "The credit card information you provided is not valid. Please double check the information you provided and then try again",
+		"make_payment": "Make Payment",
+		"save_credit_card_for_faster_future_payments": "Save credit card for faster future payments",
+		"your_transaction_could_not_be_processed": "Your transaction could not be processed"
+	},
+	"pay_flow_options": {
+		"amount_is_required": "Amount is required",
+		"amount_should_be_higher_than": "Amount should be higher than",
+		"max_payment_amount_is": "Max payment amount is",
+		"pay_another_amount": "Pay another amount",
+		"pay_full_amount": "Pay full amount",
+		"paypal_payment_was_canceled": "Paypal payment was canceled",
+		"please_enter_a_valid_positive_number": "Please enter a valid positive number",
+		"select_amount_to_pay": "Select amount to pay"
+	},
+	"pay_flow_payment": {
+		"card_could_not_be_deleted": "Card xx{{params.card.last4}} could not be deleted",
+		"could_not_load_saved_credit_cards": "Could not load saved credit cards"
+	},
+	"pay_flow_payment_method": {
+		"credit_card_number": "CreditCard number",
+		"enter_a_new_credit_card": "Enter a new credit card",
+		"expiration": "Expiration",
+		"expires_at": "Expires At",
+		"first_name_on_card": "First Name on card",
+		"how_do_you_want_to_pay?": "How do you want to pay?",
+		"last_name_on_card": "Last Name on card",
+		"pay_with_a_saved_credit_card": "Pay with a saved credit card",
+		"pay_with_paypal": "Pay with PayPal",
+		"please_enter_a_valid_credit_card_number": "Please enter a valid credit card number",
+		"please_enter_a_valid_month_and_year": "Please enter a valid month and year",
+		"please_enter_a_valid_security_code": "Please enter a valid security code",
+		"please_enter_the_card_expiration_date": "Please enter the card expiration date",
+		"please_enter_the_first_name_on_card": "Please enter the first name on card",
+		"please_enter_the_last_name_on_card": "Please enter the last name on card",
+		"saved_credit_cards": "Saved credit cards",
+		"security_code": "Security code"
+	},
+	"payment_confirmation": {
+		"back_to_account": "Back to Account",
+		"payment_amount": "Payment Amount",
+		"payment_unique_id": "Payment Unique ID",
+		"thank_you_for_your_payment": "Thank you for your payment!"
+	},
+	"paypal_callback": {
+		"error_has_occured_in_paypal_payment": "Error has occured in paypal payment"
+	},
+	"remaining_balance": "Remaining Balance",
+	"verify": {
+		"country_code_is_missing": "Country code is missing",
+		"enter_verification_code": "Enter verification code",
+		"enter_your_phone_number": "Enter your phone number",
+		"phone_number_is_incorrect": "Phone number is incorrect",
+		"user_was_verified": "User was verified",
+		"verification_code_is_incorrect": "Verification code is incorrect",
+		"verification_code_sent_to_your_phone": "A verification code has been sent to your phone",
+		"verify_your_mobile_number": "Verify your mobile number"
+	}
+}
