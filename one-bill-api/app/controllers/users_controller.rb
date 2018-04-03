@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   def send_verification_code_sms
     raise ExceptionHandler::BadRequest, Message.missing_parameter(:phone_number) if params[:phone_number].blank?
-    raise ExceptionHandler::Forbidden Message.not_allowed if current_user.id != params[:id]
+    raise ExceptionHandler::Forbidden, Message.not_allowed if current_user.id != params[:id]
 
     phone_number_match = compare_phone_numbers(params[:phone_number], current_user.phone_number)
     raise ExceptionHandler::InvalidOperation, Message.incorrect_phone_number if !phone_number_match
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 
   def verify
     raise ExceptionHandler::BadRequest, Message.missing_parameter(:code) if params[:code].blank?
-    raise ExceptionHandler::Forbidden Message.not_allowed if current_user.id != params[:id]
+    raise ExceptionHandler::Forbidden, Message.not_allowed if current_user.id != params[:id]
     raise ExceptionHandler::InvalidOperation, Message.incorrect_verification_code if current_user.verification_code != params[:code]
 
     current_user.update(is_verified: true, verification_code: nil)
