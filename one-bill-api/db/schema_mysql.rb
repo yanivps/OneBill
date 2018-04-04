@@ -12,10 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20180309123525) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "accounts", force: :cascade do |t|
+  create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "account_number", null: false
     t.string "owner_name"
     t.string "owner_phone"
@@ -26,7 +23,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["physical_address_id"], name: "index_accounts_on_physical_address_id"
   end
 
-  create_table "bills", force: :cascade do |t|
+  create_table "bills", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "municipality_account_id", null: false
     t.string "bill_account_number", null: false
     t.integer "amount_cents", default: 0, null: false
@@ -40,14 +37,14 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["municipality_account_id"], name: "index_bills_on_municipality_account_id"
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
-  create_table "cities", force: :cascade do |t|
+  create_table "cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "code"
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -56,7 +53,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
-  create_table "credit_card_transactions", force: :cascade do |t|
+  create_table "credit_card_transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "payment_processor_id", null: false
     t.string "processor_authorization_code"
     t.bigint "credit_card_id"
@@ -68,14 +65,14 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["unique_id"], name: "index_credit_card_transactions_on_unique_id", unique: true
   end
 
-  create_table "credit_card_types", force: :cascade do |t|
+  create_table "credit_card_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_credit_card_types_on_name", unique: true
   end
 
-  create_table "credit_cards", force: :cascade do |t|
+  create_table "credit_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "credit_card_type_id", null: false
     t.string "last_4", limit: 4, null: false
     t.string "token"
@@ -87,7 +84,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
-  create_table "invitations", force: :cascade do |t|
+  create_table "invitations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "account_id", null: false
     t.string "phone_number", null: false
     t.string "token", null: false
@@ -99,7 +96,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["token"], name: "index_invitations_on_token", unique: true
   end
 
-  create_table "municipality_accounts", force: :cascade do |t|
+  create_table "municipality_accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "municipality_account_number", null: false
     t.bigint "account_id", null: false
     t.bigint "category_id", null: false
@@ -110,7 +107,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["category_id"], name: "index_municipality_accounts_on_category_id"
   end
 
-  create_table "payment_applications", force: :cascade do |t|
+  create_table "payment_applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "amount_cents", default: 0, null: false
     t.string "amount_currency", default: "ILS", null: false
     t.bigint "payment_id", null: false
@@ -121,21 +118,21 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["payment_id"], name: "index_payment_applications_on_payment_id"
   end
 
-  create_table "payment_processors", force: :cascade do |t|
+  create_table "payment_processors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_payment_processors_on_name", unique: true
   end
 
-  create_table "payment_sources", force: :cascade do |t|
+  create_table "payment_sources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_payment_sources_on_name", unique: true
   end
 
-  create_table "payments", force: :cascade do |t|
+  create_table "payments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "amount_cents", default: 0, null: false
     t.string "amount_currency", default: "ILS", null: false
     t.bigint "account_id", null: false
@@ -153,7 +150,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
-  create_table "paypal_transactions", force: :cascade do |t|
+  create_table "paypal_transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "token"
     t.string "payer"
     t.string "processor_authorization_code"
@@ -168,7 +165,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["user_id"], name: "index_paypal_transactions_on_user_id"
   end
 
-  create_table "physical_addresses", force: :cascade do |t|
+  create_table "physical_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "city_id", null: false
     t.bigint "street_id", null: false
     t.integer "house_number", null: false
@@ -180,7 +177,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["street_id"], name: "index_physical_addresses_on_street_id"
   end
 
-  create_table "streets", force: :cascade do |t|
+  create_table "streets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "code"
     t.string "name", null: false
     t.integer "official_code"
@@ -192,7 +189,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["code"], name: "index_streets_on_code"
   end
 
-  create_table "user_of_accounts", force: :cascade do |t|
+  create_table "user_of_accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
     t.bigint "account_id"
     t.boolean "is_removed", default: false, null: false
@@ -203,7 +200,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["user_id"], name: "index_user_of_accounts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"
