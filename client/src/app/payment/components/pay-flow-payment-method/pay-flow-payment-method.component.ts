@@ -20,7 +20,6 @@ export class PayFlowPaymentMethodComponent implements OnInit {
   paymentMethod: PaymentMethod;
   cardType: string;
   storedCards: any[];
-  selectedCardId;
   isLoadingCards: boolean = true;
   isLoadingPaypal: boolean = false;
 
@@ -57,6 +56,7 @@ export class PayFlowPaymentMethodComponent implements OnInit {
       return false;
     }
 
+    this.cleanUnusedPaymentMethodData();
     this.payFlowDataService.setPaymentMethodSection(this.payFlowData.paymentMethodSection);
     this.payFlowDataService.setPaymentMethod(this.paymentMethod);
     return true;
@@ -120,6 +120,19 @@ export class PayFlowPaymentMethodComponent implements OnInit {
   knownCardType() {
     this.cardType = this.detectCardType(this.paymentMethod.creditCardNumber)
     return this.cardType;
+  }
+
+  private cleanUnusedPaymentMethodData() {
+    if (this.payFlowData.paymentMethodSection != "storedCard") {
+      this.paymentMethod.storedCardId = '';
+    }
+    if (this.payFlowData.paymentMethodSection != "newCard") {
+      this.paymentMethod.creditCardNumber = ''
+      this.paymentMethod.creditCardSecurityCode = ''
+      this.paymentMethod.creditCardExpirationDate = ''
+      this.paymentMethod.cardHolderFirstName = ''
+      this.paymentMethod.cardHolderLastName = ''
+    }
   }
 
   private detectCardType(number: string) {

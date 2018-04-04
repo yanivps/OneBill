@@ -101,7 +101,7 @@ create_cities_and_streets(10)
     processor_authorization_code: "ET164365;2244957440;#{payment_amount.cents}", credit_card: credit_card1,
     payment_processor: PaymentProcessor.all.sample)
   credit_card2 = CreditCard.create!(card_type: CreditCardType.all.sample,
-    last_4: random_digits_string(4), token: "CREDIT_CARD_TOKEN", expires_at: 1.year.from_now, user: User.first)
+    last_4: random_digits_string(4), token: nil, expires_at: 1.year.from_now, user: User.first)
   credit_card_transaction2 = CreditCardTransaction.create!(
     processor_authorization_code: "ET275476;3355068551;#{payment_application_amounts.sum.cents}", credit_card: credit_card2,
     payment_processor: PaymentProcessor.all.sample)
