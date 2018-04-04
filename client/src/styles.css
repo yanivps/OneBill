@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~bootstrap/dist/css/bootstrap.css";
+@import "assets/css/bootstrap/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
 @import "assets/css/wizard.css";
 
@@ -54,6 +54,7 @@ body {
 }
 
 /* flag selector arrow */
+
 .flagInput .dropdown::after {
   content: "";
   position: absolute;
