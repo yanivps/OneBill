@@ -40,10 +40,16 @@ module OneBillApi
       "PaypalTransaction" => { prefix: '2', initial_value: 1000 }
     }
 
-    # TODO: Change to production url
-    config.x.invitation_urls = {
-      register: "http://localhost:4200/invitation/signup/",
-      login: "http://localhost:4200/invitation/"
-    }
+    if Rails.env.production?
+      config.x.invitation_urls = {
+        register: "https://one-bill-api.herokuapp.com/invitation/signup/",
+        login: "https://one-bill-api.herokuapp.com/invitation/"
+      }
+    else
+      config.x.invitation_urls = {
+        register: "http://localhost:4200/invitation/signup/",
+        login: "http://localhost:4200/invitation/"
+      }
+    end
   end
 end
