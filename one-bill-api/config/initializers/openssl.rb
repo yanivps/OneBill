@@ -1,1 +1,1 @@
-OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ssl_version] = :TLSv1
+OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ssl_version] = :SSLv23
