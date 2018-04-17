@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from '../../../auth/services/auth.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,11 +9,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  
+  show: boolean = false;
+
+
   constructor(public authService: AuthService, private router: Router) { }
+
+  toggleCollapse() {
+    this.show = !this.show;
+  }
 
   logout() {
     this.authService.logout();
     this.router.navigate(['/']);
+  }
+
+  close() {
+    this.show = false;
   }
 }

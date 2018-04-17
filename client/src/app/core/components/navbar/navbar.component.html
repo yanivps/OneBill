@@ -1,15 +1,15 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">
+    <a class="navbar-brand" routerLink="/"  (click)='close()'>
       {{'navbar.home' | translate}}
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler" type="button" (click)="toggleCollapse()" aria-expanded="false" aria-label="Toggle navigation">
+      <i *ngIf="!show" class="fa fa-bars" aria-hidden="true"></i>
+      <i *ngIf="show" class="fa fa-times" aria-hidden="true"></i>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div class="navbar-collapse" [class.collapse]="!show">
+      <ul class="navbar-nav mr-auto"  (click)='close()'>
         <ng-container *ngIf='authService.isLoggedIn()'>
           <li class="nav-item" routerLinkActive="active">
             <a routerLink="/accounts" class="nav-link">
@@ -20,8 +20,11 @@
       </ul>
       <ul class="navbar-nav">
         <ng-template #annonymousUser>
-          <li class="nav-item" routerLinkActive="active">
+          <li class="nav-item" routerLinkActive="active" (click)='close()'>
             <a routerLink="/login" class="nav-link">{{'navbar.login' | translate}}</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active" (click)='close()'>
+            <a routerLink="/contact-us" class="nav-link">{{'navbar.contact_us' | translate}}</a>
           </li>
         </ng-template>
         <li *ngIf='authService.isLoggedIn(); else annonymousUser' ngbDropdown class="nav-item dropdown">
@@ -29,8 +32,8 @@
             {{authService.currentUser.name}}
           </a>
           <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownBasic1">
-            <a class="dropdown-item" routerLink="/my/payments">{{'navbar.my_payments' | translate}}</a>
-            <a class="dropdown-item clickable" (click)="logout()">{{'navbar.logout' | translate}}</a>
+            <a class="dropdown-item" routerLink="/my/payments" (click)='close()'>{{'navbar.my_payments' | translate}}</a>
+            <a class="dropdown-item clickable" (click)="logout()" (click)='close()'>{{'navbar.logout' | translate}}</a>
           </div>
         </li>
       </ul>

@@ -1,5 +1,5 @@
 @font-face {
-  font-family: SourceSansPro;
+  font-family: SourceSansPro, sans-serif;
   src: url("../../../../assets/fonts/SourceSansPro-Regular.ttf");
 }
 
@@ -24,7 +24,11 @@ a {
   background: #FFFFFF;
   font-family: Arial, sans-serif;
   font-size: 14px;
-  font-family: SourceSansPro;
+  font-family: SourceSansPro, sans-serif;
+}
+
+table > thead {
+  font-size: 1.1em;
 }
 
 header {
@@ -33,28 +37,13 @@ header {
   border-bottom: 1px solid #AAAAAA;
 }
 
-#logo {
-  float: left;
-  margin-top: 8px;
-}
-
-#logo img {
-  height: 70px;
-}
-
-#company {
-  float: right;
-  text-align: right;
-}
-
 #details {
   margin-bottom: 25px;
 }
 
-#client {
-  padding-left: 6px;
-  border-left: 6px solid #0087C3;
-  float: left;
+.section-border {
+  border-width: 6px !important;
+  border-color: #0087C3 !important;
 }
 
 #client .to {
@@ -65,24 +54,6 @@ h2.name {
   font-size: 1.4em;
   font-weight: normal;
   margin: 0;
-}
-
-#invoice {
-  float: right;
-  text-align: right;
-}
-
-#invoice h1 {
-  color: #0087C3;
-  font-size: 2.4em;
-  line-height: 1em;
-  font-weight: normal;
-  margin: 0 0 10px 0;
-}
-
-#invoice .date {
-  font-size: 1.1em;
-  color: #777777;
 }
 
 table {
@@ -204,11 +175,6 @@ table tfoot tr td:first-child {
 #thanks {
   font-size: 2em;
   margin-bottom: 50px;
-}
-
-#notices {
-  padding-left: 6px;
-  border-left: 6px solid #0087C3;
 }
 
 #notices .notice {

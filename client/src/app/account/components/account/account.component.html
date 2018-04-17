@@ -3,7 +3,7 @@
   <div *ngIf="account" class="invoice-container col-md-10 offset-md-1">
     <main>
       <div id="details" class="clearfix">
-        <div id="client">
+        <div class="float-left pl-2 border-left section-border">
           <div class="to"></div>
           <h4 class="address">{{displayPrimaryAddress(account.address)}}</h4>
           <h6 class="email">{{displaySecondaryAddress(account.address)}}</h6>
@@ -49,7 +49,7 @@
         </tfoot>
       </table>
       <button *ngIf="account.paymentsCount > 0" class="btn btn-primary mb-3" [routerLink]="['payments']">{{'account.payments_history' | translate}}</button>
-      <div id="notices">
+      <div class="pl-2 border-left section-border section-border">
         <div>{{'common.notice' | translate | uppercase}}:</div>
         <div class="notice">{{'account.finance_charge_may_be_applied_on_unpaid_balances' | translate}}</div>
       </div>
