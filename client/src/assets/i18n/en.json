@@ -72,6 +72,8 @@
 	},
 	"navbar": {
 		"accounts": "Accounts",
+		"admin_panel": "Admin Panel",
+		"contact_us": "Contact Us",
 		"home": "Home",
 		"login": "Login",
 		"logout": "Logout",

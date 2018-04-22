@@ -72,6 +72,8 @@
 	},
 	"navbar": {
 		"accounts": "חשבונות",
+		"admin_panel": "ממשק ניהול",
+		"contact_us": "צור קשר",
 		"home": "בית",
 		"login": "התחבר",
 		"logout": "התנתק",

@@ -13,6 +13,7 @@
 #  phone_number      :string(255)      not null
 #  is_verified       :boolean
 #  verification_code :string(255)
+#  is_admin          :boolean
 #
 
 class User < ApplicationRecord

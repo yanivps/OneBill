@@ -1,0 +1,193 @@
+<div class="row">
+  <!-- Form -->
+  <div class="col-md-6 mb-4">
+    <form #f="ngForm" (ngSubmit)='savePendingBill()'>
+
+      <form>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" [(ngModel)]="addressSelection"
+            name="addressSelection" id="newAddressRadio" value="newAddress" required>
+          <label class="form-check-label" for="newAddressRadio">
+             Enter new address
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" [(ngModel)]="addressSelection" name="addressSelection" id="existingAddressRadio"
+            value="existingAddress" required>
+          <label class="form-check-label" for="existingAddressRadio">
+            Choose from existing address
+          </label>
+        </div>
+      </form>
+
+      <ng-container *ngIf="addressSelection == 'newAddress'">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="inputCity" name="city" #city='ngModel' [(ngModel)]="bill.city" required>
+            <div *ngIf="city.touched && city.invalid" class="help-block text-danger">
+              City is required
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputStreet">Street</label>
+            <input type="text" class="form-control" id="inputStreet" name="street" #street='ngModel' [(ngModel)]="bill.street" required>
+            <div *ngIf="street.touched && street.invalid" class="help-block text-danger">
+              Street is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputHouseNumber">HouseNumber</label>
+            <input type="text" class="form-control" id="inputHouseNumber" name="houseNumber" #houseNumber='ngModel' [(ngModel)]="bill.houseNumber" required>
+            <div *ngIf="houseNumber.touched && houseNumber.invalid" class="help-block text-danger">
+              House Number is required
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputEntrance">Entrance</label>
+            <input type="text" class="form-control" id="inputEntrance" name="entrance" #entrance='ngModel' [(ngModel)]="bill.entrance">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputApartment">Apartment</label>
+            <input type="text" class="form-control" id="inputApartment" name="apartment" #apartment='ngModel' [(ngModel)]="bill.apartment">
+          </div>
+        </div>
+      </ng-container>
+
+      <div *ngIf="addressSelection == 'existingAddress'" class="form-group">
+        <label for="existingAddress">Address</label>
+        <select [(ngModel)]='bill.physicalAddressId' name='physicalAddressId' class="form-control" id="existingAddress" #existingAddressInput='ngModel' required>
+          <option value=""></option>
+          <option *ngFor="let address of existingAddresses" [value]="address.key">{{address.value}}</option>
+        </select>
+        <div *ngIf="existingAddressInput.touched && existingAddressInput.invalid" class="help-block text-danger">
+          Address is required
+        </div>
+      </div>
+
+      <hr>
+      <div class="form-group">
+        <label for="municipalityAccountNumber">Account Number (Mispar Hoze)</label>
+        <input type="text" class="form-control" id="municipalityAccountNumber" name="municipalityAccountNumber" #municipalityAccountNumber='ngModel' [(ngModel)]="bill.municipalityAccountNumber" required>
+        <div *ngIf="municipalityAccountNumber.touched && municipalityAccountNumber.invalid" class="help-block text-danger">
+          Account Number is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="billNumber">Bill Number (Mispar Kabala)</label>
+        <input type="text" class="form-control" id="billNumber" name="billNumber" #billNumber='ngModel' [(ngModel)]="bill.billNumber" required>
+        <div *ngIf="billNumber.touched && billNumber.invalid" class="help-block text-danger">
+          Bill Number is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="periodStart">Period Start</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="periodStart" [(ngModel)]="bill.periodStart" ngbDatepicker #periodStart="ngModel" #periodStartPicker="ngbDatepicker" required>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="periodStartPicker.toggle()" type="button">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="periodStart.touched && periodStart.invalid" class="help-block text-danger">
+          Period Start is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="periodEnd">Period End</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="periodEnd" [(ngModel)]="bill.periodEnd" ngbDatepicker #periodEnd="ngModel" #periodEndPicker="ngbDatepicker" required>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="periodEndPicker.toggle()" type="button">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="periodEnd.touched && periodStart.invalid" class="help-block text-danger">
+          Period End is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select [(ngModel)]='bill.category' name='category' class="form-control" id="category" #category='ngModel' required>
+          <option value=""></option>
+          <option *ngFor="let category of categories" [value]="category.key">{{category.name}}</option>
+        </select>
+        <div *ngIf="category.touched && category.invalid" class="help-block text-danger">
+          Category is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="amount">Amount</label>
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">$</span>
+          </div>
+          <input type="number" class="form-control" id="amount" aria-describedby="inputGroupAmount" name="amount" #amount='ngModel' [(ngModel)]="bill.amount"
+            required min='0'>
+        </div>
+        <div *ngIf="amount.touched && amount.invalid" class="help-block text-danger">
+          <div *ngIf="amount.errors.required">Amount is required</div>
+          <div *ngIf="amount.errors.min">Amount should be 0 or higher</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="payUntil">Pay Until</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="payUntil" [(ngModel)]="bill.payUntil" ngbDatepicker #payUntil="ngModel"
+            #payUntilPicker="ngbDatepicker" required>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="payUntilPicker.toggle()" type="button">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="payUntil.touched && payUntil.invalid" class="help-block text-danger">
+          Pay Until is required
+        </div>
+      </div>
+
+      <button class="btn btn-primary" [disabled]='f.invalid'>Save</button>
+    </form>
+  </div>
+
+  <table *ngIf="bills && existingAddresses" class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th></th>
+        <th>Address</th>
+        <th>Account Number</th>
+        <th>Bill Number</th>
+        <th>Period Start</th>
+        <th>Period End</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Pay Until</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bill of bills; index as i">
+        <td>{{ i + 1 }}</td>
+        <td><i class="ml-2 fa fa-times clickable" (click)='deleteTemporaryBill(bill)'></i></td>
+        <td>{{ displayAddress(bill) }}</td>
+        <td>{{ bill.municipalityAccountNumber }}</td>
+        <td>{{ bill.billNumber }}</td>
+        <td>{{ bill.periodStart }}</td>
+        <td>{{ bill.periodEnd }}</td>
+        <td>{{ displayCategory(bill.categoryId) }}</td>
+        <td>{{ bill.amountCents / 100.0 | currency:bill.amountCurrency:'symbol':'1.2-2' }}</td>
+        <td>{{ bill.billNumber }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -32,6 +32,7 @@
             {{authService.currentUser.name}}
           </a>
           <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownBasic1">
+            <a *ngIf="authService.currentUser.admin" class="dropdown-item" routerLink="/admin/" (click)='close()'>{{'navbar.admin_panel' | translate}}</a>
             <a class="dropdown-item" routerLink="/my/payments" (click)='close()'>{{'navbar.my_payments' | translate}}</a>
             <a class="dropdown-item clickable" (click)="logout()" (click)='close()'>{{'navbar.logout' | translate}}</a>
           </div>

@@ -20,6 +20,7 @@ module OneBillApi
   class Application < Rails::Application
     config.autoload_paths << "#{Rails.root}/app/auth/providers"
     config.autoload_paths << "#{Rails.root}/app/payments/processors"
+    config.autoload_paths << "#{Rails.root}/app/lib/core_extensions"
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
