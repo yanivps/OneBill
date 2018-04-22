@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309123525) do
+ActiveRecord::Schema.define(version: 20180422103427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,25 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.index ["code"], name: "index_streets_on_code"
   end
 
+  create_table "temporary_bills", force: :cascade do |t|
+    t.bigint "physical_address_id"
+    t.string "city"
+    t.string "street"
+    t.integer "house_number"
+    t.string "entrance"
+    t.integer "apartment_number"
+    t.string "municipality_account_number"
+    t.string "bill_number"
+    t.date "period_start"
+    t.date "period_end"
+    t.bigint "category_id"
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "ILS", null: false
+    t.date "pay_until"
+    t.index ["category_id"], name: "index_temporary_bills_on_category_id"
+    t.index ["physical_address_id"], name: "index_temporary_bills_on_physical_address_id"
+  end
+
   create_table "user_of_accounts", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "account_id"
@@ -214,6 +233,7 @@ ActiveRecord::Schema.define(version: 20180309123525) do
     t.string "phone_number", null: false
     t.boolean "is_verified"
     t.string "verification_code"
+    t.boolean "is_admin"
     t.index ["email", "provider"], name: "index_users_on_email_and_provider", unique: true
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
@@ -238,6 +258,8 @@ ActiveRecord::Schema.define(version: 20180309123525) do
   add_foreign_key "physical_addresses", "cities"
   add_foreign_key "physical_addresses", "streets"
   add_foreign_key "streets", "cities"
+  add_foreign_key "temporary_bills", "categories"
+  add_foreign_key "temporary_bills", "physical_addresses"
   add_foreign_key "user_of_accounts", "accounts"
   add_foreign_key "user_of_accounts", "users"
 end

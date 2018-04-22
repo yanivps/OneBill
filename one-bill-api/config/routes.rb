@@ -38,4 +38,7 @@ Rails.application.routes.draw do
 
   resources :credit_cards, only: [:index, :destroy], defaults: {format: :json}
 
+  resources :temporary_bills, only: [:index, :create, :destroy], defaults: {format: :json}
+  get 'temporary_bills/addresses', to: 'temporary_bills#addresses'
+
 end

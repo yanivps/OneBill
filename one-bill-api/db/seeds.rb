@@ -25,10 +25,10 @@ def create_cities_and_streets(cities_count = 10, streets_per_city_count = 10, si
     city = City.create!(code: i * 10, name: Faker::Address.city)
 
     official_streets = []
-    1.upto(streets_per_city_count) do |i|
+    1.upto(streets_per_city_count) do |j|
       official_streets <<
-        Street.create!(code: i * 10, name: Faker::Address.street_name,
-                       official_code: i * 10, city_id: city.id)
+        Street.create!(code: j * 10, name: Faker::Address.street_name,
+                       official_code: j * 10, city_id: city.id)
     end
 
     official_streets.last(sinonim_streets_count).each do |official_street|
@@ -54,7 +54,7 @@ def create_bills(municipality_account, bills_count: 3, bill_period_in_days: 60, 
   end
 end
 
-User.create!(name: 'Test User', email: 'test@email.com', password: 'test1234', is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
+User.create!(name: 'Test User', email: 'test@email.com', password: 'test1234', is_admin: true, is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
 User.create!(name: 'Test User2', email: 'test2@email.com', password: 'test1234', is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
 User.create!(name: 'Test User3', email: 'test3@email.com', password: 'test1234', is_verified: true, phone_number: Faker::PhoneNumber.cell_phone)
 

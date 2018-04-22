@@ -61,7 +61,7 @@ module ExceptionHandler
       json_response(json, :bad_request)
     end
 
-    # JSON response with message; Status code 400 - Bad Request
+    # JSON response with message; Status code 403 - Forbidden
     def forbidden(e)
       json = JSON.parse(e.message) rescue nil || { message: e.message }
       json_response(json, :forbidden)

@@ -9,6 +9,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { FacebookAuthProvider } from './services/facebook-auth-provider';
 import { GoogleAuthProvider } from './services/google-auth-provider';
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { GoogleAuthProvider } from './services/google-auth-provider';
     FacebookAuthProvider,
     AuthService,
     AuthGuard,
+    AdminAuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ]
 })

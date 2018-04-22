@@ -8,8 +8,7 @@ class AuthenticationController < ApplicationController
   end
 
   def refresh_token
-    u = current_user
-    token = JsonWebToken.encode({ user_id: u.id, name: u.name, verified: u.is_verified }, token_expiration)
+    token = JsonWebToken.encode(AuthenticateUserCommand.auth_token_data(current_user), token_expiration)
     json_response({auth_token: token})
   end
 
