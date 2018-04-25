@@ -32,5 +32,6 @@ class Invitation < ApplicationRecord
     else
       SmsSender.register_invitation(invitation.phone_number, invitation)
     end
+    invitation
   end
 end

@@ -15,6 +15,7 @@
 class PhysicalAddress < ApplicationRecord
   belongs_to :city
   belongs_to :street
+  has_one :account
 
   validates_presence_of :house_number
 end

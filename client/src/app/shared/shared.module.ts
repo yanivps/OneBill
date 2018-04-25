@@ -7,6 +7,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AlertComponent } from './components/alert/alert.component';
 import { AlertService } from './services/alert.service';
+import { FileUploadService } from './services/file-upload.service';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { AlertService } from './services/alert.service';
     })
   ],
   providers: [
-    AlertService
+    AlertService,
+    FileUploadService
   ],
   declarations: [
     AlertComponent

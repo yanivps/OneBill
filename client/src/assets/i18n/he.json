@@ -77,7 +77,8 @@
 		"home": "בית",
 		"login": "התחבר",
 		"logout": "התנתק",
-		"my_payments": "התשלומים שלי"
+		"my_payments": "התשלומים שלי",
+		"scan_bill": "סרוק חשבון"
 	},
 	"pay_flow_confirmation": {
 		"confirm_your_payment": "אשר את התשלום",

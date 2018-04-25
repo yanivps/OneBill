@@ -30,6 +30,11 @@ export class InvitationService {
       .catch(this.handleError);
   }
 
+  create(phoneNumber: string, accountId: string) {
+    return this.http.post(this.baseUrl, {phoneNumber: phoneNumber, accountId: accountId})
+      .catch(this.handleError);
+  }
+
   private handleError(response: HttpErrorResponse) {
     if (response.status == 404) {
       return Observable.throw(new NotFoundError(response.error));

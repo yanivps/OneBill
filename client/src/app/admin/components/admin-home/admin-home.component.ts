@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TemporaryBillService } from '../../services/temporary-bill.service';
+import { NgForm, NgModel } from '@angular/forms';
+import { IntPhonePrefixComponent } from 'ng4-intl-phone';
+import { InvitationService } from '../../../invitation/services/invitation.service';
+import { AlertService } from '../../../shared/services/alert.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -7,11 +11,15 @@ import { TemporaryBillService } from '../../services/temporary-bill.service';
   styleUrls: ['./admin-home.component.css']
 })
 export class AdminHomeComponent implements OnInit {
+  sendInvitationLoading: boolean = false;
+  phoneNumber: string = '';
+  accountIdToInvite: string = '';
+
   addressSelection = 'newAddress';
   existingAddresses: any[];
 
   existingAddressId = '';
-  bill = {};
+  bill: any = {};
   // BILL_EXAMPLE = {
   //   municipalityAccountNumber: "1",
   //   amount: 30.5,
@@ -29,7 +37,10 @@ export class AdminHomeComponent implements OnInit {
     { key: "1", name: "Electricity" },
     { key: "2", name: "Water" }
   ]
-  constructor(private temporaryBillSerivce: TemporaryBillService) { }
+  constructor(
+    private temporaryBillSerivce: TemporaryBillService,
+    private invitationService: InvitationService,
+    private alertService: AlertService) { }
 
   ngOnInit() {
     this.temporaryBillSerivce.getAddresses().subscribe(
@@ -40,12 +51,15 @@ export class AdminHomeComponent implements OnInit {
     );
   }
 
-  savePendingBill() {
+  savePendingBill(form: NgForm) {
     this.bill['periodStart'] = `${this.bill['periodStart'].year}-${this.bill['periodStart'].month}-${this.bill['periodStart'].day}`
     this.bill['periodEnd'] = `${this.bill['periodEnd'].year}-${this.bill['periodEnd'].month}-${this.bill['periodEnd'].day}`
     this.bill['payUntil'] = `${this.bill['payUntil'].year}-${this.bill['payUntil'].month}-${this.bill['payUntil'].day}`
     this.temporaryBillSerivce.create(this.bill).subscribe(
-      res => this.bills.push(res),
+      res => {
+        this.bills.push(res)
+        form.reset();
+      },
       error => {
         alert("Failed to create bill: " + error.error.exception);
         console.log(error);
@@ -84,5 +98,32 @@ export class AdminHomeComponent implements OnInit {
       if (category.key == categoryId) return category.name;
     }
     return '';
+  }
+
+  sendInvitation(phoneNumberInput: NgModel) {
+    let selectedCountry = (phoneNumberInput.valueAccessor as IntPhonePrefixComponent).selectedCountry;
+    if (!selectedCountry) {
+      phoneNumberInput.control.setErrors({ 'requiredCountryCode': true });
+      return;
+    }
+
+    let formattedPhoneNumber = this.phoneNumber;
+    if (formattedPhoneNumber.indexOf("+" + selectedCountry.dialCode + " ") == -1) {
+      formattedPhoneNumber = formattedPhoneNumber.replace("+" + selectedCountry.dialCode, "+" + selectedCountry.dialCode + " ")
+    }
+    this.sendInvitationLoading = true;
+    this.invitationService.create(formattedPhoneNumber, this.accountIdToInvite).subscribe(
+      res => {
+        this.sendInvitationLoading = false;
+        this.accountIdToInvite = '';
+        this.phoneNumber = '';
+        this.alertService.success('Invitation was sent!');
+      },
+      error => {
+        this.sendInvitationLoading = false;
+        alert("Failed to invite: " + error.originalError.description);
+        console.log(error);
+      }
+    );
   }
 }

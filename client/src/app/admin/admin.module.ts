@@ -8,11 +8,13 @@ import { AuthGuard } from '../auth/services/auth-guard.service';
 import { AdminAuthGuard } from '../auth/services/admin-auth-guard.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TemporaryBillService } from './services/temporary-bill.service';
+import { InternationalPhoneModule } from 'ng4-intl-phone';
 
 @NgModule({
   imports: [
     SharedModule,
     AuthModule,
+    InternationalPhoneModule,
     NgbModule.forRoot(),
     RouterModule.forChild([
       { path: 'admin', component: AdminHomeComponent, canActivate: [AuthGuard, AdminAuthGuard] }

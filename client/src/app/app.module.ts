@@ -17,7 +17,7 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
-    VerifyUserComponent,
+    VerifyUserComponent
   ],
   imports: [
     RouterModule.forRoot([
