@@ -13,12 +13,12 @@
   </thead>
   <tbody>
     <tr *ngFor="let payment of payments">
-      <td>{{ payment.amountFormatted }}</td>
-      <td>{{ payment.createdAt | date:'MMM d, y HH:mm' }}</td>
-      <td>{{ payment.account.accountNumber }}</td>
-      <td>{{ formatAddress(payment.account.address) }}</td>
-      <td>{{ formatPaymentMethod(payment.paymentMethodType, payment.paymentMethod) }}</td>
-      <td>{{ payment.paymentMethod.uniqueId }}</td>
+      <td [attr.data-label]="'common.amount' | translate">{{ payment.amountFormatted }}</td>
+      <td [attr.data-label]="'common.date' | translate">{{ payment.createdAt | date:'MMM d, y HH:mm' }}</td>
+      <td [attr.data-label]="'common.account_#' | translate">{{ payment.account.accountNumber }}</td>
+      <td [attr.data-label]="'common.address' | translate">{{ formatAddress(payment.account.address) }}</td>
+      <td [attr.data-label]="'common.payment_method' | translate">{{ formatPaymentMethod(payment.paymentMethodType, payment.paymentMethod) }}</td>
+      <td [attr.data-label]="'common.unique_id' | translate">{{ payment.paymentMethod.uniqueId }}</td>
     </tr>
   </tbody>
 </table>

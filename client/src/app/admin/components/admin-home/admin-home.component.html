@@ -1,7 +1,33 @@
 <div class="row">
+  <div class="col-md-6 mb-4">
+    <form #invitationForm="ngForm">
+      <div class="form-row">
+        <div class="form-group col-sm-9">
+          <label for="existingAddress">Address</label>
+          <select [(ngModel)]='accountIdToInvite' name='accountIdToInvite' class="form-control" id="accountIdToInvite" #accountIdToInviteInput='ngModel'
+            required>
+            <option value=""></option>
+            <option *ngFor="let address of existingAddresses" [value]="address.account_id">{{address.value}}</option>
+          </select>
+          <label for="phoneNumber">Phone Number</label>
+          <int-phone-prefix #phoneNumberInput="ngModel" name="phoneNumber" [(ngModel)]="phoneNumber" required pattern="^\+[1-9].*"></int-phone-prefix>
+          <div *ngIf="phoneNumberInput.errors?.pattern || phoneNumberInput.errors?.requiredCountryCode" class="help-block text-danger">Country code is missing</div>
+        </div>
+        <div class="form-group col-sm-3 align-self-end">
+          <button *ngIf="!sendInvitationLoading; else loading" class="btn btn-primary" [disabled]="invitationForm.invalid" (click)="sendInvitation(phoneNumberInput)">Send</button>
+          <ng-template #loading>
+            <i class="fa fa-spinner fa-spin fa-2x align-middle"></i>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
   <!-- Form -->
   <div class="col-md-6 mb-4">
-    <form #f="ngForm" (ngSubmit)='savePendingBill()'>
+    <form #f="ngForm" (ngSubmit)='savePendingBill(f)'>
 
       <form>
         <div class="form-check">
@@ -160,34 +186,36 @@
     </form>
   </div>
 
-  <table *ngIf="bills && existingAddresses" class="table">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th></th>
-        <th>Address</th>
-        <th>Account Number</th>
-        <th>Bill Number</th>
-        <th>Period Start</th>
-        <th>Period End</th>
-        <th>Category</th>
-        <th>Amount</th>
-        <th>Pay Until</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let bill of bills; index as i">
-        <td>{{ i + 1 }}</td>
-        <td><i class="ml-2 fa fa-times clickable" (click)='deleteTemporaryBill(bill)'></i></td>
-        <td>{{ displayAddress(bill) }}</td>
-        <td>{{ bill.municipalityAccountNumber }}</td>
-        <td>{{ bill.billNumber }}</td>
-        <td>{{ bill.periodStart }}</td>
-        <td>{{ bill.periodEnd }}</td>
-        <td>{{ displayCategory(bill.categoryId) }}</td>
-        <td>{{ bill.amountCents / 100.0 | currency:bill.amountCurrency:'symbol':'1.2-2' }}</td>
-        <td>{{ bill.billNumber }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table *ngIf="bills && existingAddresses" class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th></th>
+          <th>Address</th>
+          <th>Account Number</th>
+          <th>Bill Number</th>
+          <th>Period Start</th>
+          <th>Period End</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Pay Until</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bill of bills; index as i">
+          <td>{{ i + 1 }}</td>
+          <td><i class="ml-2 fa fa-times clickable" (click)='deleteTemporaryBill(bill)'></i></td>
+          <td>{{ displayAddress(bill) }}</td>
+          <td>{{ bill.municipalityAccountNumber }}</td>
+          <td>{{ bill.billNumber }}</td>
+          <td>{{ bill.periodStart }}</td>
+          <td>{{ bill.periodEnd }}</td>
+          <td>{{ displayCategory(bill.categoryId) }}</td>
+          <td>{{ bill.amountCents / 100.0 | currency:bill.amountCurrency:'symbol':'1.2-2' }}</td>
+          <td>{{ bill.billNumber }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

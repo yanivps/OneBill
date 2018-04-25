@@ -8,22 +8,14 @@ class InvitationsController < ApplicationController
   def show
   end
 
-  # TODO: Uncomment this method when we support invitation from the client app (either by an admin console or for all users)
   # POST /invitations
-  # def create
-  #   token = SecureRandom.urlsafe_base64(32, false)
-  #   expires_at = 1.month.from_now
-  #   @invitation = Invitation.create!(
-  #     invitation_params.merge(account_id: @account.id, token: token, expires_at: expires_at))
+  def create
+    account = Account.find(params[:account_id])
+    phone_number = params[:phone_number]
+    @invitation = Invitation.create_invitation(account, phone_number)
 
-  #   if @invited_user
-  #     SmsSender.login_to_new_account_invitation(@invitation.phone_number, @invitation)
-  #   else
-  #     SmsSender.register_invitation(@invitation.phone_number, @invitation)
-  #   end
-
-  #   render :show, status: :created
-  # end
+    render :show, status: :created
+  end
 
   private
     def invitation_params

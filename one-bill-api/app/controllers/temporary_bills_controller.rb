@@ -20,8 +20,10 @@ class TemporaryBillsController < ApplicationController
 
   # GET /accounts/1
   def addresses
-    @addresses = PhysicalAddress.preload([:city, :street]).all.map do |addr|
-      {key: addr.id, value: "#{addr.street.name} #{addr.house_number}, #{addr.city.name}"}
+    PhysicalAddress.joins(:account).select('accounts.id as account_id, physical_addresses.*')
+    @addresses = PhysicalAddress.preload([:city, :street]).joins(:account).
+                 select('accounts.id as account_id, physical_addresses.*').all.map do |addr|
+      {key: addr.id, value: "#{addr.street.name} #{addr.house_number}, #{addr.city.name}", account_id: addr.account_id}
     end
     json_response(@addresses)
   end

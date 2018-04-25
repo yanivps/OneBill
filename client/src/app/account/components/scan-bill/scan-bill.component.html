@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-6 mx-auto">
+
+    <form #f="ngForm" (ngSubmit)='uploadFile(f)'>
+      <input type="file" (change)="onFileSelected($event.target.files)" type="file" id="file" class="form-control">
+      <button *ngIf="isLoaded" class="btn btn-primary mx-auto my-4 d-block" [disabled]="uploadLoading || loadingOcr">Upload</button>
+    </form>
+
+    <h3 *ngIf="uploadLoading">Uploading...</h3>
+    <div *ngIf="loadingOcr">
+      <h3>Upload Done</h3>
+      <h3>Scanning Bill...</h3>
+    </div>
+    <img *ngIf="imgSrc && !loadingOcr" [src]="imgSrc" class="img-fluid">
+
+    <ng-container *ngIf="pdfSrc && !loadingOcr">
+      <pdf-viewer [src]="pdfSrc" [show-all]="false" [page]="currentPage" (after-load-complete)="onPdfLoadComplete($event)"
+        [original-size]="false" [render-text]="true" style="display: block;"></pdf-viewer>
+      <!-- PDF Pagination buttons -->
+      <div class="form-group text-center mt-2">
+        <button type="button" class="btn btn-outline-rounded btn-default" (click)="previousPage()" [disabled]="currentPage == 1">
+          <span style="margin-right:10px;" class="fa fa-arrow-left"></span>{{'common.previous' | translate}}
+        </button>
+        <span>{{currentPage}} / {{numOfPages}}</span>
+        <button type="submit" class="btn btn-outline-rounded btn-info" [disabled]="currentPage == numOfPages" (click)="nextPage()">
+          {{'common.next' | translate}}
+          <span style="margin-left:10px;" class="fa fa-arrow-right"></span>
+        </button>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

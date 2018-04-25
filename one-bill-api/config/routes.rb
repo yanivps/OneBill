@@ -41,4 +41,6 @@ Rails.application.routes.draw do
   resources :temporary_bills, only: [:index, :create, :destroy], defaults: {format: :json}
   get 'temporary_bills/addresses', to: 'temporary_bills#addresses'
 
+  post 'files/bill', to: 'file_uploader#upload_bill', defaults: {format: :json}
+
 end
