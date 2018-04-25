@@ -21,7 +21,7 @@ class FileUploaderController < ApplicationController
             account_number: Account.last.id + 1, physical_address: address)
           account.save!
         end
-        if account.users.find(current_user.id).blank?
+        if account.users.where(:id => current_user.id).blank?
           account.users << current_user
           account.save!
         end

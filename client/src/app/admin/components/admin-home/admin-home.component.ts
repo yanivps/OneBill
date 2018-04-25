@@ -120,6 +120,7 @@ export class AdminHomeComponent implements OnInit {
         this.alertService.success('Invitation was sent!');
       },
       error => {
+        this.sendInvitationLoading = false;
         alert("Failed to invite: " + error.originalError.description);
         console.log(error);
       }
