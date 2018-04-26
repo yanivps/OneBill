@@ -72,10 +72,13 @@
 	},
 	"navbar": {
 		"accounts": "Accounts",
+		"admin_panel": "Admin Panel",
+		"contact_us": "Contact Us",
 		"home": "Home",
 		"login": "Login",
 		"logout": "Logout",
-		"my_payments": "My Payments"
+		"my_payments": "My Payments",
+		"scan_bill": "Scan Bill"
 	},
 	"pay_flow_confirmation": {
 		"confirm_your_payment": "Confirm your payment",
